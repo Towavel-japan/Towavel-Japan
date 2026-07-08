@@ -1,0 +1,1519 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>Towavel Japan｜国内弾丸ドライブ旅プランナー</title>
+<style>
+:root{
+--teal:#2E6BDF;--teal-dk:#1E4FB8;--teal-bg:#E9F0FD;--teal-bd:#5583E8;
+--orange:#F8861D;--ink:#333F52;--ink2:#5B6878;--mut:#98A5B2;--mut2:#C2CBD3;
+--bg:#F3F5F6;--line:#E9EDF0;--red:#E5443C;--blue:#4A7CF0;--amber:#F5A623;
+--sh:0 8px 24px rgba(51,63,82,.07);--sh2:0 2px 10px rgba(51,63,82,.06);
+--teal-dis:#B7CCF5;--ring:rgba(46,107,223,.5);--want-bg:#A9C4F6;--want-bd:#6E93EC;--want-tx:#1D3E8F;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{background:#E7EBEE;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue","Hiragino Kaku Gothic ProN","Hiragino Sans","Noto Sans JP",Meiryo,sans-serif}
+button{font-family:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--ring);outline-offset:2px;border-radius:8px}
+.stage{display:flex;justify-content:center;min-height:100vh}
+.phone{width:100%;max-width:430px;min-height:100vh;background:var(--bg);position:relative;box-shadow:0 0 44px rgba(30,45,60,.14)}
+@media(max-width:480px){body{background:var(--bg)}.phone{max-width:none;box-shadow:none}}
+.screen{display:none;min-height:100vh;animation:fadein .22s ease}
+.screen.active{display:block}
+@keyframes fadein{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.hd{position:sticky;top:0;z-index:60;background:#fff;display:flex;align-items:center;gap:8px;padding:10px 14px;min-height:60px}
+.hd .back{background:none;border:0;padding:6px;cursor:pointer;display:flex;border-radius:10px}
+.hd .ttl{font-size:21px;font-weight:800;line-height:1.2}
+.hd .sub{font-size:13.5px;color:var(--mut);font-weight:600;margin-top:2px}
+.hd.center .ttl{position:absolute;left:56px;right:56px;text-align:center;font-size:19px}
+.prog{position:absolute;left:0;bottom:0;height:4px;background:var(--teal);border-radius:0 3px 3px 0;transition:width .35s}
+.home-top{padding:16px 20px 8px;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:10px}
+.brand b{font-size:23px;font-weight:800;letter-spacing:.3px}
+.iconbtn{width:46px;height:46px;border-radius:50%;background:#fff;border:0;box-shadow:var(--sh2);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.sec-head{display:flex;align-items:baseline;justify-content:space-between;padding:12px 20px 10px;font-size:17px;font-weight:700}
+.sec-head .link{background:none;border:0;color:var(--ink2);font-size:14.5px;font-weight:600;cursor:pointer;padding:4px 2px}
+.hrow{display:flex;gap:13px;overflow-x:auto;padding:2px 20px 12px;scrollbar-width:thin;scrollbar-color:#C7D0D6 transparent}
+.hrow::-webkit-scrollbar{height:5px}
+.hrow::-webkit-scrollbar-thumb{background:#C7D0D6;border-radius:99px}
+.hrow::-webkit-scrollbar-track{background:transparent;margin:0 22px}
+.live-card{flex:0 0 auto;width:186px;cursor:pointer}
+.live-ph{position:relative;height:116px;border-radius:18px;overflow:hidden;box-shadow:var(--sh2);background:#DDE7EC}
+.live-ph svg{width:100%;height:100%;display:block}
+.badge-live{position:absolute;top:9px;left:9px;background:var(--red);color:#fff;font-size:11px;font-weight:800;letter-spacing:.5px;padding:3.5px 9px;border-radius:7px;display:flex;align-items:center;gap:4.5px}
+.badge-live:before{content:"";width:5px;height:5px;border-radius:50%;background:#fff;animation:blink 1.5s infinite}
+@keyframes blink{50%{opacity:.25}}
+.live-name{margin-top:8px;font-size:15.5px;padding-left:2px}
+.jmap-wrap{padding:4px 10px 0}
+.jmap-wrap svg{display:block;width:100%;height:auto}
+.jp-p{cursor:pointer;fill:#FFFFFF;stroke:#C3CFD6;stroke-width:1.1;stroke-linejoin:round;transition:fill .18s}
+.jp-p.on-base{fill:#F5BBCF;stroke:#E48FAF}
+.jp-p.on-vis{fill:#F6A75C;stroke:#E8924A}
+.jp-p.on-want{fill:var(--want-bg);stroke:var(--want-bd)}
+.map-legend{display:flex;flex-wrap:wrap;gap:7px;align-items:center;padding:8px 20px 6px}
+.lg{font-size:11.5px;font-weight:700;color:#5B6878;padding:5px 11px;border-radius:999px;border:1.5px solid #D9E2E8;background:#fff}
+.lg.on-base{background:#F5BBCF;border-color:#E48FAF;color:#5A3A2E}
+.lg.on-vis{background:#F6A75C;border-color:#E8924A;color:#5A3A2E}
+.lg.on-want{background:var(--want-bg);border-color:var(--want-bd);color:var(--want-tx)}
+.lg-edit{margin-left:auto;border:1.6px solid var(--teal);background:#fff;color:var(--teal-dk);font-size:12px;font-weight:700;padding:6px 12px;border-radius:999px;cursor:pointer}
+.m-note{color:var(--mut);font-size:12.5px;line-height:1.7;margin:0 0 12px}
+.pref-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.pchip{padding:10px 2px;border-radius:11px;font-size:12.5px;font-weight:700;border:1.5px solid #E2E8EC;background:#fff;color:#5B6878;cursor:pointer}
+.pchip.on-base{background:#F5BBCF;border-color:#E48FAF;color:#5A3A2E}
+.pchip.on-vis{background:#F6A75C;border-color:#E8924A;color:#fff}
+.pchip.on-want{background:var(--want-bg);border-color:var(--want-bd);color:var(--want-tx)}
+.stats-card{margin:4px 20px 2px;background:#fff;border-radius:20px;box-shadow:0 10px 26px rgba(51,63,82,.10);display:flex;padding:15px 0}
+.stat-half{flex:1;text-align:center;cursor:pointer}
+.stat-half+.stat-half{border-left:1px solid #EDF0F3}
+.stat-num{font-size:30px;font-weight:800;line-height:1.05}
+.stat-num.teal{color:var(--teal)}.stat-num.org{color:var(--orange)}
+.stat-lab{font-size:14.5px;color:var(--ink2);font-weight:700;margin-top:4px}
+.cta-wrap{padding:16px 20px 12px;position:sticky;bottom:0;z-index:50;background:linear-gradient(to top,var(--bg) 62%,rgba(243,245,246,0))}
+.cta-wrap.static{position:static;background:none;padding-top:22px}
+.cta{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;height:58px;border:0;border-radius:999px;background:var(--teal);color:#fff;font-size:18px;font-weight:800;letter-spacing:.6px;cursor:pointer;box-shadow:0 0 0 5px rgba(255,140,130,.13),0 12px 26px rgba(255,116,105,.32);transition:transform .12s,background .2s,box-shadow .2s}
+.cta:active{transform:scale(.985)}
+.cta.disabled{background:var(--teal-dis);box-shadow:none;pointer-events:none}
+.empty{padding:66px 24px 46px;text-align:center}
+.empty .pl{color:var(--teal);margin-bottom:22px}
+.empty h3{font-size:21px;font-weight:800;margin:0 0 10px}
+.empty p{font-size:15px;color:var(--mut);margin:0}
+.form{padding:16px 20px 130px}
+.q-lab{display:flex;align-items:center;gap:8px;color:var(--mut);font-size:15.5px;font-weight:600;margin:22px 2px 10px}
+.qic{display:inline-flex;font-size:18px}
+.q-box{display:block;width:100%;text-align:left;background:var(--teal-bg);border:2px solid var(--teal-bd);border-radius:14px;padding:19px 20px;font-size:17.5px;font-weight:700;color:var(--ink);cursor:pointer}
+.q-h2{font-size:25px;font-weight:800;margin:32px 0 8px}
+.q-sub{font-size:15px;color:var(--mut);margin:0 0 18px}
+.opt{display:flex;align-items:center;gap:16px;width:100%;background:#fff;border:1px solid var(--line);border-radius:16px;padding:19px 22px;margin-bottom:14px;font-size:18px;font-weight:600;cursor:pointer;box-shadow:var(--sh2);text-align:left;transition:border-color .15s,background .15s}
+.opt:active{transform:scale(.99)}
+.opt.on{border-color:var(--teal);background:var(--teal-bg)}
+.oi{display:inline-flex;font-size:26px;flex:0 0 auto}
+.panel{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:var(--sh2)}
+.panel h4{margin:4px 0 10px;font-size:14px;color:var(--mut);font-weight:700}
+.panel h4+.chips{margin-bottom:14px}
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip{border:1.6px solid #D7DDE2;background:#fff;color:var(--ink2);border-radius:999px;padding:10px 16px;font-size:15px;font-weight:700;cursor:pointer}
+.chip.on{border-color:var(--teal);background:var(--teal-bg);color:var(--teal-dk)}
+.date-inp{border:1.6px solid #D7DDE2;border-radius:999px;padding:9px 14px;font-size:14.5px;font-family:inherit;color:var(--ink);background:#fff}
+.budget-h{font-size:26px;font-weight:800;margin:36px 0 6px}
+.budget-sub{color:var(--mut);font-size:15px;margin:0 0 30px}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:99px;background:#E2E7EA;outline:none;margin:8px 0 4px}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;border-radius:50%;background:var(--teal);cursor:pointer;box-shadow:0 3px 9px var(--ring)}
+input[type=range]::-moz-range-thumb{width:26px;height:26px;border-radius:50%;background:var(--teal);border:0;cursor:pointer}
+.slider-labs{display:flex;justify-content:space-between;margin-top:14px;font-size:15px;color:var(--mut);font-weight:600}
+.slider-labs .on{color:var(--orange);font-weight:800}
+.swipe-body{padding:14px 18px 34px;display:flex;flex-direction:column;min-height:calc(100vh - 74px)}
+.dest-card{background:#fff;border-radius:24px;box-shadow:0 14px 36px rgba(51,63,82,.11);padding:20px 18px;touch-action:pan-y;user-select:none;-webkit-user-select:none;cursor:grab}
+.dc-title{font-size:23px;font-weight:800;margin:2px 4px 14px}
+.ph{position:relative;border-radius:14px;overflow:hidden;background:#DDE7EC}
+.ph svg{width:100%;height:100%;display:block}
+.ph.hero{height:200px}
+.badge{position:absolute;top:12px;left:12px;background:rgba(255,255,255,.95);color:var(--ink);font-size:13px;font-weight:700;padding:6px 14px;border-radius:999px}
+.badge,.badge-live{z-index:2}
+img.real{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .4s}
+img.real.on{opacity:1}
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:16px 0 14px}
+.stat{background:#F5F7F8;border-radius:15px;padding:13px 4px 12px;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
+.mk{width:19px;height:19px;display:block}
+.mk-g{width:12px;height:12px;border:3.4px solid var(--blue);border-radius:50%;box-sizing:content-box}
+.stat-l{display:flex;align-items:center;gap:4px;color:var(--mut);font-size:11px;font-weight:600;line-height:1}
+.stat-l svg{width:12px;height:12px}
+.stat-v{font-size:14.5px;font-weight:800;line-height:1.25}
+.stat-sub{font-size:10.5px;font-weight:700}
+.warn{color:var(--orange)}.ok{color:var(--teal-dk)}
+.bb{border:1.5px solid #E4E9EC;border-radius:18px;padding:16px;background:#fff}
+.bb-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:13px}
+.bb-head .l{font-size:15.5px;font-weight:800}
+.bb-head em{font-style:normal;color:var(--mut);font-weight:600;font-size:13px}
+.bb-total{color:var(--orange);font-weight:800;font-size:15px;white-space:nowrap}
+.bb-total b{font-size:29px;letter-spacing:.3px}
+.bb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.bb-cell{background:#F5F7F8;border-radius:13px;text-align:center;padding:12px 4px}
+.bb-cell .k{font-size:12px;color:var(--mut);font-weight:600;margin-bottom:5px}
+.bb-cell .v{font-size:15px;font-weight:800}
+.bb-note{font-size:11.5px;color:var(--mut);margin-top:11px}
+.swipe-btns{display:flex;justify-content:center;gap:32px;margin-top:auto;padding-top:28px}
+.cbtn{width:72px;height:72px;border-radius:50%;border:0;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .1s}
+.cbtn:active{transform:scale(.9)}
+.cbtn.skip{background:#7C8794;box-shadow:0 9px 22px rgba(124,135,148,.38)}
+.cbtn.like{background:#F0862C;box-shadow:0 9px 22px rgba(240,134,44,.42)}
+.swipe-count{text-align:center;color:var(--mut);font-size:13px;font-weight:600;margin-top:14px}
+.fly-r{transform:translateX(150%) rotate(15deg)!important;opacity:0;transition:transform .34s ease,opacity .34s ease!important}
+.fly-l{transform:translateX(-150%) rotate(-15deg)!important;opacity:0;transition:transform .34s ease,opacity .34s ease!important}
+.res-list{padding:14px 18px 44px}
+.res-card{background:#fff;border-radius:22px;box-shadow:var(--sh);padding:18px;margin-bottom:18px;cursor:pointer}
+.res-top{display:flex;gap:14px}
+.res-th{flex:0 0 96px;height:96px;border-radius:16px;overflow:hidden;background:#DDE7EC;position:relative}
+.res-th svg{width:100%;height:100%;display:block}
+.res-tt{flex:1;min-width:0;position:relative;padding-right:22px}
+.res-name{font-size:19px;font-weight:800;line-height:1.25}
+.res-desc{font-size:13.5px;color:var(--ink2);line-height:1.55;margin-top:6px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.res-chev{position:absolute;right:-6px;top:0;color:#C2CBD3}
+.res-stats{display:grid;grid-template-columns:1.2fr 1fr 1fr .85fr;border-top:1px solid #EFF2F4;border-bottom:1px solid #EFF2F4;margin:15px 0 13px;padding:12px 0}
+.rs{text-align:center;padding:0 3px}
+.rs+.rs{border-left:1px solid #EFF2F4}
+.rs .k{font-size:12px;color:var(--mut);font-weight:600;margin-bottom:5px}
+.rs .v{font-size:14px;font-weight:800}
+.rs .s{font-size:10.5px;font-weight:700;margin-top:3px}
+.res-foot{display:flex;justify-content:space-between;align-items:baseline}
+.res-foot .k{font-size:15px;font-weight:800}
+.res-foot .v{color:var(--orange);font-weight:800;font-size:15px}
+.res-foot .v b{font-size:27px}
+.dt-body{padding:0 0 46px}
+.dt-hero{height:206px;margin:8px 18px 0;border-radius:18px}
+.dt-sum{margin:16px 18px 6px;background:#FEF6EC;border:1.5px solid #F6C68C;border-radius:18px;padding:16px}
+.dt-sum .bb-cell{background:#fff}
+.dt-note{font-size:12.5px;color:var(--mut);margin:10px 22px 2px;line-height:1.6}
+.dt-actions{display:flex;gap:9px;padding:12px 18px 6px;flex-wrap:wrap}
+.pill-btn{display:inline-flex;align-items:center;gap:6px;border-radius:999px;border:1.6px solid var(--teal);color:var(--teal-dk);background:#fff;padding:10px 15px;font-size:13.5px;font-weight:700;cursor:pointer;text-decoration:none}
+.pill-btn svg{width:15px;height:15px}
+.pill-btn.fill{background:var(--teal);border-color:var(--teal);color:#fff}
+.pill-btn.done{border-color:#D7DDE2;color:var(--mut);background:#F5F7F8}
+.band{background:#fff;padding:22px 0 16px;margin-top:14px}
+.band h3{font-size:20px;font-weight:800;margin:0 20px 15px}
+.spot-card{flex:0 0 auto;width:300px;background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:var(--sh2)}
+.spot-ph{height:156px;border-radius:0}
+.spot-bd{padding:13px 15px 16px}
+.spot-n{font-size:17px;font-weight:800}
+.spot-d{font-size:13px;color:var(--ink2);line-height:1.65;margin-top:6px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.hotel-ph{height:184px;border-radius:0}
+.stars{color:var(--orange);font-size:15px;letter-spacing:2.5px;margin-top:7px}
+.price-y{color:var(--orange);font-weight:800;font-size:21px;margin-top:11px;padding-top:11px;border-top:1px solid #EFF2F4}
+.price-y span{color:var(--mut);font-weight:600;font-size:13px}
+.eat-meta{display:flex;gap:12px;align-items:baseline;margin-top:9px;font-size:13.5px;font-weight:800}
+.eat-meta .st{color:var(--orange)}
+.eat-meta .pr{color:var(--ink2);font-weight:700}
+.course{margin:0 18px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:6px 16px;box-shadow:var(--sh2)}
+.c-row{display:flex;gap:14px;padding:13px 2px;border-bottom:1px dashed #E8ECEF;align-items:baseline}
+.c-row:last-child{border-bottom:0}
+.c-t{color:var(--teal-dk);font-weight:800;font-size:13.5px;flex:0 0 46px}
+.c-x{font-size:14.5px;font-weight:600;line-height:1.5}
+.alt-divider{display:flex;align-items:center;gap:12px;color:var(--teal);font-weight:800;font-size:14.5px;margin:28px 2px 18px}
+.alt-divider:before,.alt-divider:after{content:"";flex:1;height:1.5px;background:var(--want-bd);opacity:.65}
+.foot-note{color:var(--mut2);font-size:11.5px;text-align:center;margin:24px 20px 0;line-height:1.7}
+.veil{position:fixed;inset:0;background:rgba(24,34,45,.46);display:flex;align-items:flex-end;justify-content:center;z-index:120;animation:fadein .18s}
+.veil.hidden{display:none}
+.modal{width:100%;max-width:430px;background:#fff;border-radius:26px 26px 0 0;padding:22px 20px 30px;max-height:80vh;overflow:auto;animation:up .26s ease}
+@keyframes up{from{transform:translateY(36px);opacity:.5}to{transform:none;opacity:1}}
+.m-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}
+.m-head b{font-size:19px}
+.m-x{border:0;background:#F0F3F5;width:34px;height:34px;border-radius:50%;font-size:15px;cursor:pointer;color:var(--ink2)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.m-sub{margin:14px 0 10px;color:var(--mut);font-size:14px;font-weight:700}
+.toast{position:fixed;left:50%;transform:translateX(-50%) translateY(16px);bottom:34px;background:#2A3547;color:#fff;font-size:14px;font-weight:600;padding:12px 20px;border-radius:999px;opacity:0;pointer-events:none;transition:.28s;z-index:200;max-width:86%;text-align:center;box-shadow:0 10px 26px rgba(0,0,0,.25)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="stage"><div class="phone">
+<section id="scr-home" class="screen active"></section>
+<section id="scr-setup" class="screen"></section>
+<section id="scr-swipe" class="screen"></section>
+<section id="scr-results" class="screen"></section>
+<section id="scr-detail" class="screen"></section>
+<div id="veil" class="veil hidden"><div class="modal" id="modalBox"></div></div>
+<div id="toast" class="toast" role="status"></div>
+</div></div>
+<script>
+'use strict';
+const $=s=>document.querySelector(s);
+const p2=n=>String(n).padStart(2,'0');
+const fdate=d=>d.getFullYear()+'/'+p2(d.getMonth()+1)+'/'+p2(d.getDate());
+const sdate=d=>(d.getMonth()+1)+'/'+d.getDate();
+const isoDate=d=>d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate());
+const addD=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x;};
+const man=v=>v.toFixed(1);
+const yen=v=>v.toLocaleString('ja-JP');
+const fh=h=>(h%1?h.toFixed(1):String(h));
+let toastT=null;
+function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),2300);}
+/* ============================================================
+   ★写真の差し替えはここに追加（USER_PHOTOS）★
+   'キー':'画像URL' を書くだけで、その場所の写真が置き換わります。
+   利用許可を得た画像のURLや、このHTMLと同じ場所に置いた
+   画像 './img/xxx.jpg' も指定できます。
+   キーの種類:
+     大きな写真(一覧・スワイプ・詳細) → 旅先id
+       kamakura hakone kawaguchiko chichibu izu choshi nikko
+       karuizawa kusatsu matsumoto sendai kanazawa kyoto
+     詳細の観光スポット3枚 → '旅先id-1' '旅先id-2' '旅先id-3'
+   例:
+     nikko:'https://example.com/chuzenji.jpg',
+     'nikko-2':'./img/kegon.jpg',
+   ============================================================ */
+const USER_PHOTOS={
+};
+const ICO={
+back:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#333F52" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H6"/><path d="M11.5 5.5 5 12l6.5 6.5"/></svg>',
+chev:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>',
+gear:'<svg width="22" height="22" viewBox="0 0 24 24" fill="#8A97A3"><path d="M19.4 13c.04-.33.06-.66.06-1s-.02-.67-.06-1l2.03-1.58a.5.5 0 0 0 .12-.64l-1.92-3.32a.5.5 0 0 0-.6-.22l-2.39.96a7.3 7.3 0 0 0-1.73-1l-.36-2.54A.5.5 0 0 0 14.05 2h-3.84a.5.5 0 0 0-.5.42l-.36 2.54c-.62.26-1.2.6-1.73 1l-2.39-.96a.5.5 0 0 0-.6.22L2.71 8.54a.5.5 0 0 0 .12.64l2.03 1.58c-.04.33-.06.66-.06 1s.02.67.06 1l-2.03 1.58a.5.5 0 0 0-.12.64l1.92 3.32c.13.22.39.31.6.22l2.39-.96c.53.4 1.11.74 1.73 1l.36 2.54c.04.24.25.42.5.42h3.84c.25 0 .46-.18.5-.42l.36-2.54c.62-.26 1.2-.6 1.73-1l2.39.96c.21.09.47 0 .6-.22l1.92-3.32a.5.5 0 0 0-.12-.64L19.4 13Z"/><circle cx="12" cy="12" r="3.1" fill="#fff"/></svg>',
+plane:'<svg width="1em" height="1em" viewBox="0 0 24 24" fill="currentColor"><path d="M21.7 2.3a1 1 0 0 0-1.05-.23L2.9 8.7a1 1 0 0 0 .05 1.9l7 2.2 2.2 7a1 1 0 0 0 1.9.05l6.6-17.7a1 1 0 0 0-.95-1.85Z"/></svg>',
+people:'<svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="9" cy="8.2" r="3.1"/><path d="M3.6 19c.6-3 2.9-4.7 5.4-4.7s4.8 1.7 5.4 4.7"/><circle cx="16.6" cy="9.2" r="2.3"/><path d="M15.8 14.7c2.2.3 4 1.7 4.6 4.3"/></svg>',
+target:'<svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="8.2"/><circle cx="12" cy="12" r="3.6"/></svg>',
+car:'<svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4.6 13.4 6 9.3a2 2 0 0 1 1.9-1.4h8.2a2 2 0 0 1 1.9 1.4l1.4 4.1"/><path d="M4.6 13.4h14.8v3.8h-1.5m-11.8 0H4.6v-3.8M9.2 17.2h5.6"/><circle cx="7.4" cy="17.2" r="1.5"/><circle cx="16.6" cy="17.2" r="1.5"/></svg>',
+pin:'<svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21.2S5.6 15.6 5.6 11a6.4 6.4 0 1 1 12.8 0c0 4.6-6.4 10.2-6.4 10.2Z"/><circle cx="12" cy="10.9" r="2.3"/></svg>',
+clock:'<svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="8.4"/><path d="M12 7.4V12l3 1.9"/></svg>',
+wea:'<svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="3.6"/><path d="M12 3.5v2M12 18.5v2M3.5 12h2M18.5 12h2M6 6l1.4 1.4M16.6 16.6 18 18M18 6l-1.4 1.4M7.4 16.6 6 18"/></svg>',
+wal:'<svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3.4" y="6" width="17.2" height="13" rx="2.6"/><path d="M3.4 9.6h17.2M15.4 14.6h2.4"/></svg>',
+gas:'<svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="4" width="9" height="16.5" rx="1.8"/><path d="M6.8 7h4.4v4H6.8zM13.5 9.5h2.2a1.6 1.6 0 0 1 1.6 1.6v5.2a1.3 1.3 0 0 0 2.6 0V9.2L17.6 6"/></svg>',
+map:'<svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><path d="M9 4 3.8 6v14L9 18l6 2 5.2-2V4L15 6 9 4Zm0 0v14m6-12v14"/></svg>',
+check:'<svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12.5 9.5 17.5 19.5 6.5"/></svg>',
+hsm:'<svg width="1em" height="1em" viewBox="0 0 24 24" fill="currentColor"><path d="M12 20.8 4.7 13.4a4.9 4.9 0 0 1 6.9-6.9l.4.4.4-.4a4.9 4.9 0 0 1 6.9 6.9L12 20.8Z"/></svg>',
+heart:'<svg width="30" height="30" viewBox="0 0 24 24" fill="#fff"><path d="M12 20.8 4.7 13.4a4.9 4.9 0 0 1 6.9-6.9l.4.4.4-.4a4.9 4.9 0 0 1 6.9 6.9L12 20.8Z"/></svg>',
+xmark:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>',
+t_sun:'<svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="#F5A623" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.8v2.4M12 18.8v2.4M2.8 12h2.4M18.8 12h2.4M5.6 5.6l1.7 1.7M16.7 16.7l1.7 1.7M18.4 5.6l-1.7 1.7M7.3 16.7l-1.7 1.7"/></svg>',
+t_fork:'<svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="#E9564B" stroke-width="2" stroke-linecap="round"><path d="M6 2.8v5.4M9.4 2.8v5.4M6 8.2a1.7 1.7 0 0 0 1.7 1.7A1.7 1.7 0 0 0 9.4 8.2M7.7 9.9v11.3M15.8 21.2V13m0 0c-1.5-.5-2.3-2-2.3-4.3 0-2.6 1-5 2.3-5.9V13Z"/></svg>',
+t_mus:'<svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="#5B6BF0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 9.2 12 4l8.5 5.2h-17ZM5 9.2V17M9.7 9.2V17M14.3 9.2V17M19 9.2V17M3.5 17h17M2.8 20.2h18.4"/></svg>',
+t_cam:'<svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="#EC4E8A" stroke-width="2" stroke-linejoin="round"><rect x="3" y="6.8" width="18" height="13" rx="2.6"/><path d="M8.4 6.8 9.9 4h4.2l1.5 2.8"/><circle cx="12" cy="13.2" r="3.6"/></svg>',
+t_ons:'<svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="#E9822B" stroke-width="2" stroke-linecap="round"><path d="M4 15.5c0 3 3.6 5 8 5s8-2 8-5-3.6-4.6-8-4.6-8 1.6-8 4.6Z"/><path d="M8.5 3.5c-1 1.4-1 2.6 0 4M12 3.5c-1 1.4-1 2.6 0 4M15.5 3.5c-1 1.4-1 2.6 0 4"/></svg>',
+t_mt:'<svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="#2BB673" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><path d="m2.8 19 6-10.4L12 13l2.6-4.4L21.2 19Z"/><path d="m7.2 11.4 1.6 1.4 1.5-1.6"/></svg>'
+};
+const LOGO='<svg width="44" height="44" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="22" style="fill:var(--teal)"/><path d="M12 35.5 q12 4.6 24.5 -1.2" stroke="rgba(255,255,255,.55)" stroke-width="2.4" fill="none" stroke-linecap="round"/><path fill="#fff" d="M8.5 30 C10 19, 21.5 12.4, 31.5 14.2 C36.5 15.1, 40.5 17.2, 42.2 19.3 C43.5 19.8, 44.5 20.6, 44.8 21.4 C43.3 22, 41.8 22, 40.7 21.7 C38.9 23.3, 36.5 23.7, 34.4 23.2 C33 26, 29 28.6, 24 30 C19 31.5, 12.5 32, 8.5 30 Z"/><path fill="#fff" d="M25.5 13.8 C27.3 8.9, 31.8 7.7, 33.8 8.6 C31.8 11.1, 30.3 13.5, 29.6 15.3 Z"/><path fill="#fff" d="M9.5 29.5 C6 28.8, 3.5 26.5, 2.8 23.8 C5.8 24.4, 8 25.6, 9.6 27.2 C9 24.6, 9.6 21.8, 11.4 19.8 C12.2 22.6, 12.1 25.8, 11 28.6 Z"/><path style="fill:var(--teal)" d="M24.5 22.8 C27 24.7, 28 27.1, 27.4 29 C25 27.9, 23.5 25.9, 23.1 23.8 Z" opacity=".92"/><circle cx="36.8" cy="18.9" r="1.5" style="fill:var(--teal)"/><path d="M40.6 22.6 q1.7 .1 2.5 .8" style="stroke:var(--teal)" stroke-width="1.3" fill="none" stroke-linecap="round"/></svg>';
+const PLANE_BIG='<svg width="62" height="62" viewBox="0 0 24 24" fill="none" stroke="#2E6BDF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4 20-7Z"/></svg>';
+/* ---------- japan map (shape data: geolonia/japanese-prefectures, MIT License) ---------- */
+const PREF_LIST=["北海道", "青森", "岩手", "宮城", "秋田", "山形", "福島", "茨城", "栃木", "群馬", "埼玉", "千葉", "東京", "神奈川", "新潟", "富山", "石川", "福井", "山梨", "長野", "岐阜", "静岡", "愛知", "三重", "滋賀", "京都", "大阪", "兵庫", "奈良", "和歌山", "鳥取", "島根", "岡山", "広島", "山口", "徳島", "香川", "愛媛", "高知", "福岡", "佐賀", "長崎", "熊本", "大分", "宮崎", "鹿児島", "沖縄"];
+const JP_PATHS={
+'北海道':{t:'602,10',d:'M4,240 L3,245 L0,246 L0,237 L6,235 L4,240 Z M33,261 L32,250 L28,243 L23,242 L21,237 L17,236 L15,231 L19,223 L17,212 L19,209 L28,207 L34,198 L37,202 L39,201 L43,192 L49,187 L39,173 L40,166 L47,164 L60,174 L71,171 L71,174 L78,177 L83,174 L89,165 L83,140 L86,135 L93,132 L97,126 L96,103 L100,95 L101,85 L98,67 L90,48 L93,39 L92,33 L94,36 L99,35 L105,28 L131,55 L139,68 L155,85 L184,104 L213,109 L214,113 L219,118 L238,118 L260,91 L262,96 L252,119 L252,129 L255,135 L265,138 L263,140 L264,137 L258,137 L263,149 L269,156 L273,157 L280,149 L287,148 L277,156 L275,163 L258,166 L256,172 L252,177 L247,177 L245,175 L246,173 L243,172 L240,178 L243,180 L228,181 L220,178 L205,186 L191,202 L182,216 L179,225 L180,240 L178,248 L164,237 L141,228 L113,211 L100,209 L103,206 L88,214 L72,230 L69,227 L73,227 L68,226 L66,220 L58,212 L47,213 L42,220 L39,230 L40,234 L52,242 L62,242 L71,254 L80,257 L82,260 L76,265 L72,267 L63,263 L60,265 L60,261 L57,260 L55,265 L48,269 L48,278 L40,282 L37,287 L30,284 L27,278 L28,269 L33,261 Z M71,48 L73,45 L77,47 L79,52 L75,55 L71,52 L71,48 Z M65,35 L65,33 L67,35 L66,45 L63,35 L65,35 Z M369,17 L367,13 L365,13 L363,17 L365,23 L364,26 L359,28 L357,35 L350,34 L351,41 L341,50 L341,54 L335,54 L335,56 L339,58 L339,62 L336,65 L332,64 L332,69 L329,66 L330,71 L327,78 L331,79 L336,70 L341,69 L346,59 L356,50 L358,40 L363,43 L369,41 L384,24 L397,15 L406,13 L407,10 L404,6 L407,2 L402,0 L396,2 L384,20 L373,22 L369,17 Z M290,99 L295,93 L303,91 L308,84 L311,85 L314,79 L304,82 L296,77 L293,79 L289,89 L280,104 L280,107 L266,122 L268,129 L273,128 L273,132 L274,119 L282,114 L283,109 L286,109 L287,102 L290,99 Z M322,125 L334,115 L329,113 L325,116 L326,117 L319,119 L319,123 L321,122 L322,125 Z M300,142 L304,137 L297,139 L300,142 Z M291,146 L293,143 L289,144 L291,146 Z'},
+'青森':{t:'624,287',d:'M3,71 L3,63 L0,60 L6,51 L12,51 L18,47 L21,31 L17,27 L20,26 L21,19 L27,23 L31,20 L35,23 L37,38 L40,45 L46,41 L45,37 L47,33 L58,42 L61,39 L65,23 L61,16 L55,22 L41,25 L47,0 L64,11 L73,6 L71,37 L73,51 L77,62 L81,61 L86,67 L80,74 L75,72 L71,75 L69,72 L56,82 L52,81 L53,70 L48,70 L48,65 L38,72 L35,70 L32,72 L25,67 L22,70 L10,68 L7,72 Z'},
+'岩手':{t:'664,354',d:'M48,92 L41,91 L39,105 L33,102 L29,107 L23,103 L25,99 L17,100 L7,95 L8,89 L5,84 L8,81 L0,68 L3,57 L7,51 L5,46 L8,42 L5,38 L10,37 L8,19 L12,14 L16,15 L29,5 L31,8 L35,5 L40,7 L46,0 L54,11 L52,16 L57,19 L55,23 L61,28 L64,43 L62,53 L65,49 L66,54 L68,55 L62,60 L64,62 L67,59 L67,63 L63,63 L63,68 L60,69 L65,68 L60,71 L62,73 L60,75 L64,74 L58,81 L62,83 L57,83 L60,86 L57,86 L59,88 L53,89 L52,86 L54,91 L52,91 L52,94 L50,90 Z'},
+'宮城':{t:'648,445',d:'M33,70 L29,70 L29,76 L25,76 L26,78 L21,76 L20,70 L11,70 L7,66 L1,66 L0,61 L7,59 L10,53 L9,47 L16,35 L12,24 L15,24 L17,16 L12,8 L16,9 L23,4 L33,9 L41,8 L39,12 L45,16 L49,11 L55,14 L57,0 L64,1 L67,8 L62,5 L63,10 L59,14 L62,19 L60,17 L56,20 L60,22 L57,28 L61,28 L61,32 L58,30 L60,34 L57,35 L58,38 L61,37 L59,39 L61,41 L61,45 L57,43 L58,40 L55,41 L57,39 L56,37 L39,40 L36,43 L40,45 L35,46 L38,47 L32,57 L33,70 Z M43,41 L44,43 L42,43 L43,41 Z'},
+'秋田':{t:'617,352',d:'M54,97 L47,102 L43,101 L39,100 L37,95 L23,92 L19,87 L9,88 L11,78 L16,69 L17,47 L11,39 L3,42 L0,33 L6,36 L12,28 L15,19 L15,11 L10,6 L14,7 L17,3 L29,5 L32,2 L39,7 L42,5 L45,7 L55,0 L55,5 L60,5 L59,16 L55,21 L57,39 L52,40 L55,44 L52,48 L54,53 L50,59 L47,70 L55,83 L52,86 L55,91 Z'},
+'山形':{t:'612,439',d:'M14,1 L24,0 L28,5 L42,8 L44,13 L48,14 L53,22 L51,30 L48,30 L52,41 L45,53 L46,59 L43,65 L36,67 L37,72 L36,81 L38,82 L35,86 L29,87 L26,85 L22,86 L20,82 L14,83 L7,81 L4,76 L7,68 L7,60 L15,57 L17,53 L8,47 L8,40 L0,37 L13,14 Z'},
+'福島':{t:'594,511',d:'M82,69 L72,64 L72,68 L66,74 L56,65 L55,59 L49,55 L37,52 L12,68 L4,66 L5,52 L0,47 L4,41 L2,37 L3,34 L12,33 L13,30 L21,30 L19,21 L28,11 L25,9 L32,11 L38,10 L40,14 L44,13 L47,15 L53,14 L56,10 L54,9 L55,0 L61,0 L65,4 L74,4 L75,10 L80,12 L79,10 L83,10 L83,4 L87,4 L93,18 L93,45 L91,61 Z'},
+'茨城':{t:'622,575',d:'M5,54 L5,54 L2,55 L0,48 L7,45 L8,41 L11,41 L14,36 L25,34 L28,27 L26,17 L29,15 L28,12 L28,1 L38,10 L44,4 L44,0 L54,5 L46,29 L47,35 L44,42 L46,52 L51,61 L49,63 L51,66 L52,62 L60,74 L42,62 L42,65 L24,69 L13,64 Z'},
+'栃木':{t:'603,563',d:'M19,60 L18,59 L16,55 L7,56 L2,49 L8,36 L0,33 L1,24 L4,21 L1,19 L3,16 L28,0 L40,3 L46,7 L47,13 L47,24 L48,27 L45,29 L47,39 L44,46 L33,48 L30,53 L27,53 L26,57 Z'},
+'群馬':{t:'557,570',d:'M64,52 L54,54 L48,50 L37,48 L32,58 L16,67 L12,65 L12,59 L9,56 L12,55 L10,49 L13,47 L12,41 L3,41 L0,36 L1,29 L6,25 L5,23 L14,20 L26,14 L26,11 L29,10 L28,5 L32,4 L34,0 L41,7 L49,9 L47,12 L50,14 L47,17 L46,26 L54,29 L48,42 L53,49 L62,48 Z'},
+'埼玉':{t:'573,618',d:'M48,4 L49,5 L51,12 L54,11 L54,11 L60,24 L60,31 L54,29 L52,31 L48,30 L42,33 L42,29 L35,32 L30,28 L15,24 L12,27 L1,24 L0,19 L16,10 L21,0 L32,2 L38,6 Z'},
+'千葉':{t:'627,629',d:'M5,29 L7,25 L6,20 L6,13 L0,0 L8,10 L19,15 L37,11 L37,8 L55,20 L55,24 L45,24 L34,35 L32,57 L19,61 L7,75 L0,71 L5,69 L3,66 L4,63 L3,58 L5,53 L1,49 L4,45 L7,46 L7,42 L13,39 L18,33 L11,26 L6,30 Z'},
+'東京':{t:'585,642',d:'M49,173 L49,178 L44,171 L49,173 Z M34,113 L32,115 L29,114 L31,111 L34,113 Z M11,104 L13,106 L11,107 L11,104 Z M18,98 L16,96 L18,92 L18,98 Z M22,75 L22,69 L26,70 L26,76 L22,75 Z M48,7 L49,12 L47,16 L41,15 L43,19 L39,20 L43,20 L43,23 L29,16 L26,18 L29,20 L27,20 L27,25 L23,20 L9,14 L4,11 L0,3 L3,0 L18,4 L23,8 L30,5 L30,9 L36,6 L40,7 L42,5 L48,7 Z'},
+'神奈川':{t:'584,656',d:'M10,0 L24,6 L28,11 L28,6 L30,6 L27,4 L30,2 L44,9 L40,13 L36,12 L39,16 L36,16 L36,23 L42,26 L38,30 L39,33 L35,33 L36,28 L33,24 L26,22 L15,25 L11,28 L12,34 L10,34 L4,30 L4,17 L0,17 L9,9 Z'},
+'新潟':{t:'518,476',d:'M7,113 L4,102 L0,99 L14,94 L23,87 L30,87 L45,75 L55,60 L60,46 L79,34 L80,36 L79,35 L85,28 L94,0 L102,3 L102,10 L111,16 L109,20 L101,23 L101,31 L98,39 L101,44 L104,46 L95,56 L97,65 L89,65 L88,68 L79,69 L78,72 L80,76 L76,82 L81,87 L80,101 L73,94 L71,98 L67,99 L68,104 L65,105 L65,108 L53,114 L53,107 L48,103 L48,98 L45,96 L38,98 L33,103 L33,108 L29,106 L21,110 L19,109 L19,104 L12,103 L12,106 L7,113 Z M36,46 L28,47 L35,38 L33,35 L30,37 L30,31 L34,23 L43,14 L39,30 L46,31 L43,40 L36,46 Z'},
+'富山':{t:'475,575',d:'M41,37 L31,33 L27,35 L27,33 L22,35 L19,33 L10,44 L9,40 L5,38 L1,43 L0,35 L2,27 L1,23 L3,20 L1,16 L4,14 L6,4 L14,2 L11,8 L23,15 L31,11 L33,3 L43,0 L47,3 L50,14 L49,25 L46,26 L47,29 Z'},
+'石川':{t:'448,541',d:'M37,26 L34,23 L41,23 L37,26 Z M28,77 L31,80 L26,90 L21,91 L16,86 L6,85 L0,77 L15,62 L26,44 L27,33 L25,29 L25,24 L22,23 L27,10 L52,0 L56,1 L57,5 L51,6 L50,15 L46,14 L39,22 L37,18 L34,19 L32,28 L38,30 L41,26 L41,36 L33,38 L31,48 L28,50 L30,54 L28,57 L29,61 L27,69 L28,77 Z'},
+'福井':{t:'408,618',d:'M40,0 L46,8 L56,9 L61,14 L66,13 L64,19 L70,27 L67,31 L54,32 L53,34 L47,31 L42,40 L35,37 L36,45 L33,44 L33,47 L27,50 L24,48 L21,55 L18,54 L15,58 L3,56 L0,51 L1,45 L3,49 L10,46 L6,49 L13,50 L15,47 L13,48 L13,45 L19,47 L17,45 L20,43 L18,40 L26,41 L25,35 L28,33 L29,38 L31,39 L32,32 L25,19 L34,6 L34,2 Z'},
+'山梨':{t:'546,638',d:'M2,21 L0,16 L3,14 L0,11 L10,0 L15,5 L21,3 L25,6 L28,4 L39,7 L43,15 L48,18 L47,27 L38,35 L26,38 L21,33 L17,41 L18,48 L13,50 L9,41 L4,40 L5,29 Z'},
+'長野':{t:'503,572',d:'M68,18 L59,21 L60,23 L55,27 L54,34 L57,39 L66,39 L67,45 L64,47 L66,53 L63,54 L66,57 L66,63 L70,65 L71,70 L68,72 L64,69 L58,71 L53,66 L43,77 L46,80 L43,82 L45,87 L41,92 L41,104 L26,114 L18,112 L13,115 L12,109 L14,106 L12,102 L15,102 L13,99 L15,95 L9,89 L11,86 L6,79 L0,76 L2,71 L7,71 L13,64 L14,60 L11,56 L16,46 L13,40 L19,32 L18,29 L21,28 L22,17 L27,10 L27,7 L34,8 L34,13 L36,14 L44,10 L48,12 L48,7 L53,2 L60,0 L63,2 L63,7 L68,11 Z'},
+'岐阜':{t:'450,608',d:'M66,4 L69,10 L64,20 L67,24 L66,28 L60,35 L55,35 L53,40 L59,43 L64,50 L62,53 L68,59 L66,63 L68,66 L65,66 L67,70 L65,73 L58,77 L52,73 L45,75 L40,73 L34,65 L24,68 L20,76 L19,82 L12,75 L6,77 L4,76 L8,66 L7,63 L4,56 L1,56 L0,50 L5,41 L11,44 L12,42 L25,41 L28,37 L22,29 L24,23 L29,13 L26,10 L30,5 L34,7 L35,11 L44,0 L47,2 L52,0 L52,2 L56,0 Z'},
+'静岡':{t:'511,659',d:'M73,14 L77,14 L77,27 L83,31 L81,36 L85,42 L85,46 L78,55 L77,61 L70,65 L64,59 L67,45 L65,41 L66,38 L72,37 L62,31 L55,33 L51,38 L53,41 L44,45 L42,54 L36,61 L38,65 L25,61 L0,60 L0,52 L8,47 L18,27 L33,17 L33,5 L37,0 L40,8 L39,19 L44,20 L48,29 L53,27 L52,20 L56,12 L61,17 Z'},
+'愛知':{t:'469,673',d:'M42,46 L18,52 L20,47 L23,49 L31,43 L33,46 L35,43 L34,40 L28,37 L26,41 L18,40 L14,37 L16,29 L12,40 L16,45 L13,45 L9,41 L10,36 L8,33 L8,28 L12,21 L5,25 L0,17 L1,11 L5,3 L15,0 L21,8 L26,10 L33,8 L39,12 L46,8 L47,14 L52,11 L60,13 L50,33 L42,38 Z'},
+'三重':{t:'426,683',d:'M8,95 L3,92 L0,86 L1,86 L1,83 L3,83 L8,80 L8,77 L13,76 L14,73 L13,66 L15,62 L13,59 L15,58 L12,53 L20,47 L11,42 L12,38 L10,37 L13,36 L11,32 L10,28 L13,27 L14,22 L21,25 L27,22 L31,12 L30,2 L36,0 L43,7 L48,15 L42,16 L43,20 L36,32 L35,40 L51,47 L53,52 L56,51 L55,55 L50,55 L55,56 L55,61 L51,62 L53,60 L50,58 L49,60 L43,61 L46,57 L42,57 L39,62 L39,60 L36,63 L34,61 L34,64 L32,62 L25,66 L22,68 L23,73 L21,72 L22,70 L18,73 L22,77 L20,77 L22,80 L19,78 L20,81 L13,85 Z'},
+'滋賀':{t:'423,655',d:'M20,0 L27,3 L28,9 L31,9 L34,16 L35,19 L31,29 L33,30 L34,40 L30,50 L24,53 L17,50 L16,55 L13,56 L9,50 L5,50 L2,40 L5,26 L0,21 L3,17 L6,18 L9,11 L12,13 L18,10 L18,7 L21,8 L20,0 Z M20,13 L20,16 L18,13 L14,16 L16,24 L8,32 L8,36 L5,42 L7,45 L9,36 L15,35 L16,31 L25,25 L26,21 L20,13 Z'},
+'京都':{t:'377,649',d:'M44,63 L41,55 L37,54 L38,51 L34,54 L26,46 L27,41 L17,39 L15,32 L10,34 L3,29 L4,23 L10,23 L10,17 L9,15 L4,16 L0,11 L1,7 L3,10 L2,8 L19,0 L23,7 L15,14 L18,15 L20,11 L20,15 L24,17 L23,21 L25,18 L27,19 L25,14 L31,11 L32,14 L31,20 L34,25 L46,27 L51,32 L48,46 L51,56 L55,56 L59,62 L60,66 L58,68 L54,65 L50,68 Z'},
+'大阪':{t:'387,695',d:'M16,0 L24,8 L28,5 L27,8 L31,9 L34,17 L29,28 L31,37 L29,42 L3,48 L0,45 L7,44 L14,37 L17,28 L19,30 L17,22 L20,20 L18,9 L20,8 L14,5 L13,1 Z'},
+'兵庫':{t:'345,655',d:'M31,90 L23,93 L23,88 L20,89 L20,86 L38,67 L39,69 L32,79 L35,88 L31,90 Z M3,59 L4,56 L0,50 L2,47 L1,40 L9,32 L8,26 L14,24 L14,20 L7,3 L16,0 L33,1 L32,5 L36,10 L41,9 L42,11 L42,17 L36,17 L35,23 L42,28 L47,26 L49,33 L59,35 L58,40 L55,41 L56,45 L62,48 L60,49 L62,60 L59,62 L53,60 L40,66 L25,56 L11,57 L11,53 L8,58 L5,56 L3,59 Z'},
+'奈良':{t:'410,712',d:'M24,48 L19,51 L19,54 L17,54 L17,57 L16,57 L3,55 L5,49 L0,42 L6,35 L10,34 L6,25 L8,20 L6,11 L11,0 L17,5 L21,2 L25,5 L27,3 L29,7 L26,8 L28,9 L27,13 L36,18 L28,24 L31,29 L29,30 L31,33 L29,37 L30,44 L29,47 Z'},
+'和歌山':{t:'385,737',d:'M41,32 L44,38 L49,41 L45,46 L46,50 L38,55 L37,59 L35,59 L36,56 L19,51 L14,44 L17,41 L9,37 L4,30 L0,30 L3,25 L0,24 L6,21 L1,18 L5,16 L4,14 L8,14 L0,6 L2,3 L5,6 L31,0 L35,9 L31,10 L25,17 L30,24 L28,30 L41,32 Z M49,23 L49,26 L44,29 L44,26 L49,23 Z'},
+'鳥取':{t:'288,658',d:'M7,33 L0,31 L4,25 L2,22 L10,20 L11,11 L5,3 L7,2 L9,6 L15,8 L23,4 L34,6 L55,5 L64,0 L71,17 L71,21 L65,23 L53,27 L52,21 L45,18 L46,16 L36,22 L32,17 L25,15 L22,21 L20,22 L21,25 L14,25 L15,29 L8,30 Z'},
+'島根':{t:'211,610',d:'M74,14 L78,13 L75,17 L72,15 L73,19 L71,16 L74,14 Z M79,16 L77,19 L77,15 L79,14 L81,17 L79,16 Z M83,5 L88,0 L93,5 L92,9 L89,9 L91,11 L86,12 L83,5 Z M2,100 L10,98 L25,84 L35,78 L41,70 L52,65 L55,59 L53,55 L70,51 L76,46 L79,49 L87,48 L84,50 L82,51 L88,59 L87,68 L79,70 L81,73 L77,79 L64,77 L57,85 L51,88 L54,93 L46,95 L41,93 L39,96 L31,94 L25,99 L26,101 L24,107 L19,112 L21,114 L17,116 L18,120 L15,124 L13,122 L7,124 L5,120 L7,115 L2,115 L0,111 L4,106 L2,100 Z'},
+'岡山':{t:'295,673',d:'M58,8 L59,14 L51,22 L52,29 L50,32 L54,38 L53,41 L46,39 L49,42 L43,49 L34,48 L39,49 L36,53 L34,52 L33,57 L27,55 L25,58 L23,52 L23,55 L19,51 L15,55 L10,52 L12,56 L8,54 L4,38 L5,33 L1,28 L3,21 L0,18 L1,15 L8,14 L7,10 L14,10 L13,7 L15,6 L18,0 L25,2 L29,7 L39,1 L38,3 L45,6 L46,12 Z'},
+'広島':{t:'230,687',d:'M73,40 L72,42 L69,40 L72,43 L70,42 L68,47 L63,45 L63,42 L54,44 L51,48 L39,49 L37,53 L30,55 L28,53 L25,56 L26,53 L23,47 L25,45 L17,44 L9,51 L10,54 L5,52 L4,46 L2,44 L2,37 L0,35 L5,30 L7,24 L6,22 L12,17 L20,19 L22,16 L27,18 L35,16 L32,11 L38,8 L45,0 L58,2 L65,4 L68,7 L66,14 L70,19 L69,24 L73,40 Z M45,53 L43,56 L41,53 L46,51 L45,53 Z M21,54 L20,50 L23,51 L22,59 L19,59 L21,56 L17,51 L21,54 Z M15,48 L16,50 L12,52 L15,48 Z M35,57 L33,56 L36,56 L35,57 Z M24,58 L26,58 L25,61 L28,61 L26,63 L20,62 L23,56 L26,56 L24,58 Z M59,49 L59,52 L56,49 L59,49 Z M57,50 L53,52 L54,50 L57,50 Z M60,44 L62,45 L59,47 L60,44 Z'},
+'山口':{t:'168,710',d:'M45,0 L47,6 L43,11 L45,15 L50,15 L48,20 L50,24 L56,22 L58,24 L61,20 L60,16 L64,14 L64,21 L66,23 L67,29 L72,31 L72,36 L69,36 L70,44 L65,46 L65,54 L61,48 L57,48 L52,42 L47,44 L50,41 L46,38 L35,42 L32,39 L30,42 L29,40 L27,42 L27,38 L25,43 L21,45 L19,43 L16,45 L15,40 L9,36 L3,43 L3,36 L0,32 L4,27 L1,21 L4,17 L10,17 L5,15 L7,12 L16,14 L17,17 L24,17 L30,15 L29,12 L41,1 L43,2 L45,0 Z M64,54 L59,56 L62,52 L64,54 Z M75,50 L83,48 L78,50 L77,53 L73,50 L69,53 L67,48 L70,46 L75,50 Z M18,15 L18,13 L22,14 L18,15 Z M51,46 L48,46 L51,43 L51,46 Z'},
+'徳島':{t:'312,744',d:'M50,2 L52,0 L51,4 L50,2 Z M41,2 L49,0 L49,3 L52,4 L48,13 L55,20 L50,24 L57,26 L38,36 L33,43 L27,42 L25,38 L27,34 L20,33 L19,25 L13,27 L0,21 L2,13 L11,7 L18,10 L27,3 L40,5 L41,2 Z'},
+'香川':{t:'308,724',d:'M6,33 L1,31 L4,21 L0,17 L6,20 L19,10 L26,13 L30,9 L31,14 L34,11 L37,14 L36,17 L45,22 L44,25 L31,23 L22,30 L15,27 L6,33 Z M27,5 L25,4 L29,4 L27,5 Z M40,0 L42,0 L40,8 L38,7 L38,5 L35,9 L35,5 L31,3 L40,0 Z'},
+'愛媛':{t:'225,737',d:'M34,21 L31,20 L35,17 L34,21 Z M55,6 L51,6 L55,0 L57,3 L55,6 Z M60,5 L61,5 L60,7 L57,6 L60,5 Z M58,10 L54,12 L55,7 L60,8 L58,10 Z M32,85 L25,83 L25,86 L23,86 L24,81 L27,82 L21,76 L24,76 L22,72 L25,72 L22,71 L23,69 L20,67 L24,70 L28,66 L28,63 L24,63 L27,60 L19,60 L21,57 L19,56 L22,51 L16,50 L8,56 L0,57 L35,37 L41,18 L50,15 L48,11 L51,10 L59,24 L70,20 L80,22 L84,18 L89,20 L87,28 L63,32 L56,41 L53,51 L42,52 L46,61 L41,64 L35,72 L31,69 L34,82 L32,85 Z'},
+'高知':{t:'251,765',d:'M61,0 L74,6 L80,4 L81,12 L88,13 L86,17 L88,21 L94,22 L87,41 L75,25 L65,21 L55,23 L55,21 L56,24 L44,28 L50,28 L44,29 L42,32 L41,29 L38,33 L39,38 L37,44 L34,44 L30,52 L25,53 L25,61 L22,64 L25,70 L21,66 L14,68 L9,65 L5,67 L6,61 L10,60 L9,57 L6,57 L8,54 L5,41 L9,44 L15,36 L20,33 L16,24 L27,23 L30,13 L37,4 L61,0 Z M1,69 L0,70 L0,67 L1,69 Z'},
+'福岡':{t:'123,752',d:'M40,53 L32,48 L31,52 L27,51 L22,55 L23,58 L18,58 L18,52 L15,49 L17,42 L25,37 L26,31 L19,33 L13,27 L0,27 L7,23 L3,20 L10,15 L13,21 L20,20 L21,15 L17,17 L14,14 L19,15 L23,12 L25,5 L35,3 L36,0 L42,1 L38,5 L41,5 L43,2 L46,4 L53,0 L49,8 L52,10 L50,11 L55,22 L60,22 L59,29 L52,28 L45,32 L41,38 L42,43 L40,45 L43,48 Z'},
+'佐賀':{t:'108,773',d:'M15,6 L28,6 L34,12 L41,10 L40,16 L32,21 L30,28 L25,23 L19,29 L22,39 L14,36 L8,29 L9,25 L2,23 L0,16 L2,13 L5,17 L4,13 L6,9 L2,6 L3,4 L6,6 L6,0 L7,2 L11,2 L12,7 Z'},
+'長崎':{t:'44,700',d:'M53,1 L55,0 L57,2 L54,5 L55,9 L49,15 L48,19 L51,18 L49,22 L51,21 L48,25 L48,20 L46,22 L46,19 L45,22 L42,20 L44,20 L45,15 L47,15 L45,14 L49,10 L46,8 L48,3 L52,3 L53,1 Z M46,29 L43,35 L37,36 L40,22 L41,24 L45,25 L44,22 L45,26 L48,25 L46,29 Z M67,59 L68,61 L64,63 L60,59 L62,59 L61,56 L64,53 L67,55 L66,57 L68,58 L67,59 Z M28,110 L25,115 L26,110 L23,107 L26,106 L26,102 L28,102 L30,94 L28,105 L33,106 L30,108 L28,106 L28,110 Z M24,112 L21,111 L21,109 L23,111 L22,108 L24,112 Z M19,113 L20,110 L19,116 L16,111 L19,113 Z M6,118 L9,117 L10,119 L12,115 L16,125 L9,124 L9,129 L0,126 L1,124 L3,126 L4,125 L2,125 L5,122 L4,116 L6,118 Z M65,80 L62,81 L64,78 L65,80 Z M67,82 L70,84 L67,86 L67,82 Z M29,88 L31,85 L33,87 L29,88 Z M54,76 L51,77 L55,74 L54,76 Z M66,86 L64,89 L66,96 L73,98 L72,102 L78,109 L86,112 L79,117 L92,118 L94,123 L92,130 L82,134 L80,128 L85,124 L84,122 L79,121 L71,123 L68,129 L60,134 L64,129 L63,126 L65,127 L67,123 L64,125 L63,118 L59,117 L56,111 L59,100 L63,104 L62,108 L63,106 L66,108 L64,115 L75,118 L71,112 L72,107 L69,103 L66,105 L65,99 L62,99 L62,97 L58,100 L60,98 L57,96 L57,93 L57,95 L53,93 L57,87 L54,86 L55,83 L60,82 L60,85 L65,84 L66,86 Z M49,88 L48,92 L42,94 L47,91 L45,89 L48,84 L52,84 L54,81 L55,84 L49,88 Z M15,115 L15,113 L18,116 L15,118 L15,115 Z M64,101 L63,104 L62,101 L64,98 L64,101 Z'},
+'熊本':{t:'115,800',d:'M8,37 L13,38 L13,48 L5,57 L1,58 L1,52 L5,51 L0,50 L4,40 L3,37 L8,37 Z M20,47 L14,47 L12,43 L19,39 L26,39 L23,47 L20,47 Z M24,34 L26,34 L26,38 L23,38 L24,34 Z M38,67 L33,61 L24,65 L19,61 L32,46 L30,40 L32,41 L31,39 L37,34 L26,34 L34,28 L35,23 L27,15 L26,10 L31,10 L30,7 L35,3 L39,4 L40,0 L48,5 L56,10 L58,7 L57,1 L63,1 L70,14 L69,20 L73,24 L69,24 L60,38 L55,40 L55,47 L60,54 L56,59 L59,65 L38,67 Z'},
+'大分':{t:'163,771',d:'M0,34 L3,29 L0,26 L2,24 L1,19 L5,13 L12,9 L19,10 L20,3 L33,7 L38,0 L47,4 L49,10 L46,18 L43,17 L43,20 L35,22 L36,26 L40,28 L56,27 L50,36 L56,36 L53,38 L56,40 L61,38 L62,41 L57,41 L55,45 L65,49 L59,49 L61,51 L57,54 L60,55 L54,56 L54,60 L52,60 L52,55 L48,54 L45,58 L37,58 L32,53 L27,54 L25,53 L21,49 L22,43 L15,30 L9,30 L10,36 L8,39 Z'},
+'宮崎':{t:'152,824',d:'M36,0 L38,1 L43,0 L48,5 L56,5 L59,1 L63,2 L63,7 L65,7 L54,17 L53,21 L56,22 L52,23 L51,25 L53,26 L47,34 L41,51 L39,74 L34,79 L32,91 L27,89 L22,84 L24,81 L24,74 L17,73 L14,64 L9,62 L10,57 L5,52 L0,45 L1,43 L22,41 L19,35 L23,30 L18,23 L18,16 L23,14 L32,0 Z'},
+'鹿児島':{t:'96,17',d:'M23,949 L26,951 L23,952 Z M33,960 L32,954 L39,950 L48,956 L47,961 L41,965 L35,964 Z M64,953 L64,958 L59,959 L58,952 L62,949 L63,939 L70,929 L71,938 Z M38,844 L43,848 L52,844 L57,850 L56,852 L61,859 L66,864 L65,869 L70,871 L73,880 L80,881 L80,888 L78,891 L75,890 L70,896 L75,899 L73,903 L76,902 L69,905 L66,910 L50,918 L50,913 L55,910 L59,898 L53,889 L54,884 L48,881 L53,879 L54,883 L57,884 L61,878 L54,872 L50,874 L44,887 L46,898 L51,901 L49,906 L43,907 L40,901 L27,901 L28,897 L25,896 L27,894 L22,890 L31,890 L35,880 L32,871 L27,867 L30,860 L28,848 L31,846 L35,848 Z M31,837 L34,836 L33,838 Z M27,848 L24,842 L29,840 L30,844 Z M4,868 L6,865 L7,867 L2,875 L0,874 Z M12,864 L9,861 L14,861 Z M284,149 L280,150 L279,146 L289,144 Z M301,126 L301,118 L306,118 L305,122 L309,126 L308,129 L303,132 L300,128 Z M363,98 L360,99 L359,97 L365,93 Z M344,90 L331,98 L335,101 L330,104 L327,103 L329,107 L323,102 L325,99 L316,97 L324,97 L325,95 L321,94 L335,88 L337,90 L339,86 L344,85 L342,89 L344,87 L345,89 L347,82 L349,88 Z M324,108 L322,106 L320,108 L318,101 L323,102 L322,105 L328,107 L325,109 L326,107 Z M355,12 L352,16 L352,13 Z M361,1 L363,0 L365,4 Z'},
+'沖縄':{t:'52,193',d:'M4,109 L6,110 L4,111 L0,110 Z M48,121 L55,123 L51,129 L39,124 L42,122 L44,125 L46,118 Z M132,113 L130,110 L132,110 L130,108 L133,105 L132,100 L135,108 L142,114 Z M225,23 L224,28 L219,23 L223,21 Z M73,117 L77,112 L79,113 L73,120 L72,126 L66,127 L64,125 L67,122 L63,119 L71,120 Z M287,20 L291,17 L286,15 L285,8 L292,10 L292,14 L299,13 L298,11 L307,0 L309,5 L309,9 L305,15 L300,15 L299,19 L293,19 L294,21 L288,25 L281,25 L286,34 L281,31 L276,39 L280,41 L270,46 L270,38 L277,32 L275,24 L280,25 Z M127,106 L126,103 L128,104 Z M279,8 L279,6 L283,8 Z M293,11 L294,13 L292,12 Z'}
+};
+const ORIGIN_PREF=[['神奈川'],['東京'],['千葉','埼玉']];
+function basePrefs(){return state.search.origin==null?['神奈川']:ORIGIN_PREF[state.search.origin];}
+function prefClass(p){
+ if(basePrefs().indexOf(p)>=0)return 'on-base';
+ if(state.visited.indexOf(p)>=0)return 'on-vis';
+ for(var i=0;i<state.favs.length;i++){if(byId(state.favs[i]).pref===p)return 'on-want';}
+ return '';
+}
+function buildJmap(){
+ var out='<svg viewBox="0 0 1000 1000" role="img" aria-label="日本地図（都道府県の記録）">';
+ out+='<g transform="matrix(1.028807,0,0,1.028807,-47.544239,-28.806583)"><g transform="translate(6,18)">';
+ out+='<line x1="320.2" y1="362" x2="582.4" y2="109.4" stroke="#C3CFD6" stroke-width="2.5" stroke-linecap="round"/>';
+ out+='<line x1="277.3" y1="380.2" x2="46.2" y2="380.2" stroke="#C3CFD6" stroke-width="2.5" stroke-linecap="round"/>';
+ for(var i=0;i<PREF_LIST.length;i++){
+  var p=PREF_LIST[i],o=JP_PATHS[p];
+  out+='<g class="jp-p '+prefClass(p)+'" id="jp-'+p+'" transform="translate('+o.t+')" onclick="togglePref(\''+p+'\')"><title>'+p+'</title><path d="'+o.d+'"/></g>';
+ }
+ out+='</g></g></svg>';
+ return out;
+}
+function togglePref(p){
+ if(basePrefs().indexOf(p)>=0){toast('拠点の県です 🏠');return;}
+ var i=state.visited.indexOf(p);
+ if(i>=0){state.visited.splice(i,1);toast(p+'を未踏に戻しました');}
+ else{state.visited.push(p);toast(p+'を「行った県」に追加しました');}
+ var el=document.getElementById('jp-'+p);
+ if(el)el.setAttribute('class','jp-p '+prefClass(p));
+ var ch=document.getElementById('pc-'+p);
+ if(ch)ch.setAttribute('class','pchip '+prefClass(p));
+ var c=document.getElementById('cntVisited');
+ if(c)c.textContent=state.visited.length;
+}
+const SCENES={
+fuji:'<svg viewBox="0 0 200 120" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="sfj" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#A9DEF7"/><stop offset="1" stop-color="#EAF8FF"/></linearGradient></defs><rect width="200" height="120" fill="url(#sfj)"/><circle cx="162" cy="24" r="11" fill="#FFDA8E"/><path d="M28 94 82 32q18-16 36 0l54 62Z" fill="#7FA9CB"/><path d="M84 35 100 22l16 13-7 9-9-6-9 6Z" fill="#FFFFFF"/><rect y="94" width="200" height="26" fill="#9FD2E6"/><path d="M60 102h80" stroke="#C6E6F2" stroke-width="3" stroke-linecap="round"/></svg>',
+torii:'<svg viewBox="0 0 200 120" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="sto" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFD9A6"/><stop offset="1" stop-color="#FF9E78"/></linearGradient></defs><rect width="200" height="120" fill="url(#sto)"/><circle cx="100" cy="66" r="17" fill="#FFF0CC" opacity=".9"/><rect y="76" width="200" height="44" fill="#E28A63"/><rect y="76" width="200" height="4" fill="#F2AE85"/><rect x="64" y="30" width="72" height="9" rx="3.5" fill="#A63A2E"/><rect x="72" y="46" width="56" height="6" fill="#A63A2E"/><rect x="78" y="36" width="8" height="46" fill="#A63A2E"/><rect x="114" y="36" width="8" height="46" fill="#A63A2E"/><rect x="78" y="84" width="8" height="24" fill="#A63A2E" opacity=".28"/><rect x="114" y="84" width="8" height="24" fill="#A63A2E" opacity=".28"/></svg>',
+onsen:'<svg viewBox="0 0 200 120" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="son" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F4E8D5"/><stop offset="1" stop-color="#E7CFAE"/></linearGradient></defs><rect width="200" height="120" fill="url(#son)"/><ellipse cx="100" cy="98" rx="98" ry="34" fill="#C0A07D"/><ellipse cx="100" cy="94" rx="76" ry="24" fill="#8FD3D6"/><ellipse cx="100" cy="90" rx="76" ry="22" fill="#A7E0E2"/><g stroke="#FFFFFF" stroke-width="5" fill="none" stroke-linecap="round" opacity=".8"><path d="M70 62q8-10 0-20t0-18"/><path d="M100 66q8-10 0-20t0-18"/><path d="M130 62q8-10 0-20t0-18"/></g></svg>',
+temple:'<svg viewBox="0 0 200 120" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="stp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFC9A0"/><stop offset="1" stop-color="#F58F70"/></linearGradient></defs><rect width="200" height="120" fill="url(#stp)"/><circle cx="152" cy="32" r="13" fill="#FFE3B8"/><path d="M0 104q40-14 80-10t120 4v22H0Z" fill="#6B4B42"/><g fill="#4A3830"><rect x="97" y="14" width="6" height="12"/><path d="M75 42h50l-9-11H84Z"/><rect x="86" y="42" width="28" height="12"/><path d="M67 65h66l-9-11H76Z"/><rect x="82" y="65" width="36" height="13"/><path d="M58 89h84l-10-11H68Z"/><rect x="80" y="89" width="40" height="17"/></g><circle cx="32" cy="92" r="12" fill="#4A3830"/><circle cx="176" cy="96" r="10" fill="#4A3830"/></svg>',
+castle:'<svg viewBox="0 0 200 120" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="sca" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#CDEBF8"/><stop offset="1" stop-color="#EAF7FD"/></linearGradient></defs><rect width="200" height="120" fill="url(#sca)"/><ellipse cx="52" cy="28" rx="18" ry="7" fill="#fff" opacity=".85"/><ellipse cx="158" cy="42" rx="14" ry="6" fill="#fff" opacity=".8"/><g fill="#3D4756"><path d="M84 34h32l6 8H78Z"/><rect x="86" y="42" width="28" height="10"/><path d="M76 60h48l7 8H69Z"/><rect x="80" y="60" width="40" height="12"/><path d="M66 80h68l8 8H58Z"/><rect x="72" y="80" width="56" height="14"/></g><rect x="52" y="94" width="96" height="12" fill="#C7CFD8"/><rect y="106" width="200" height="14" fill="#9CC9DE"/></svg>',
+lake:'<svg viewBox="0 0 200 120" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="slk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C8EAF3"/><stop offset="1" stop-color="#E8F7FB"/></linearGradient></defs><rect width="200" height="120" fill="url(#slk)"/><path d="M0 62q30-26 62-22t50 12 60-16 28 2v84H0Z" fill="#A5CDA1"/><path d="M0 76q46-18 100-10t100 4v50H0Z" fill="#7FB07E"/><rect y="84" width="200" height="36" fill="#8FC9DC"/><path d="M112 92h32l-6 10h-20Z" fill="#B5432F"/><rect x="126" y="72" width="2.6" height="20" fill="#7A2E22"/><path d="M128.6 72l11 4.5-11 4.5Z" fill="#E7C14A"/></svg>',
+gorge:'<svg viewBox="0 0 200 120" preserveAspectRatio="xMidYMid slice"><rect width="200" height="120" fill="#DFF2F7"/><path d="M84 0 58 120h94L122 0Z" fill="#6FC3DD"/><path d="M0 0h84L58 120H0Z" fill="#8FA05B"/><path d="M200 0h-78l30 120H200Z" fill="#7C9150"/><path d="M0 34h56M0 62h44M200 30h-52M200 60h-40" stroke="#6D7F45" stroke-width="3" opacity=".5"/><path d="M92 20q10 18-2 40t2 52" stroke="#A9E0EF" stroke-width="5" fill="none" opacity=".8"/><rect x="86" y="78" width="26" height="9" rx="4" fill="#8A6242"/></svg>',
+lighthouse:'<svg viewBox="0 0 200 120" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="slh" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#BFE7F6"/><stop offset="1" stop-color="#E6F6FC"/></linearGradient></defs><rect width="200" height="120" fill="url(#slh)"/><rect y="70" width="200" height="50" fill="#58B7D8"/><path d="M0 120V84q34-16 78-8v44Z" fill="#7FA45E"/><path d="M118 76l6-44h14l6 44Z" fill="#FFFFFF"/><rect x="116" y="74" width="30" height="6" rx="3" fill="#EDF2F5"/><rect x="124" y="24" width="14" height="9" fill="#D8434A"/><circle cx="131" cy="21" r="4" fill="#FFD98E"/><path d="M131 21 96 8M131 21l35-13" stroke="#FFE9B0" stroke-width="3" opacity=".7"/><path d="M0 96q40 8 80 2" stroke="#6B914F" stroke-width="3" fill="none" opacity=".6"/></svg>',
+yubatake:'<svg viewBox="0 0 200 120" preserveAspectRatio="xMidYMid slice"><rect width="200" height="120" fill="#CBD3CE"/><rect x="18" y="18" width="164" height="84" rx="16" fill="#4FC3BE"/><rect x="18" y="18" width="164" height="84" rx="16" fill="none" stroke="#8A6A48" stroke-width="5"/><g stroke="#8A6A48" stroke-width="4"><path d="M18 40h164M18 60h164M18 80h164"/></g><g stroke="#FFFFFF" stroke-width="5" fill="none" stroke-linecap="round" opacity=".75"><path d="M60 96q8-10 0-20"/><path d="M100 100q8-10 0-20"/><path d="M140 96q8-10 0-20"/></g></svg>',
+forest:'<svg viewBox="0 0 200 120" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="sfr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EAF6E6"/><stop offset="1" stop-color="#D3EBD0"/></linearGradient></defs><rect width="200" height="120" fill="url(#sfr)"/><g fill="#9CC98F"><circle cx="30" cy="26" r="20"/><circle cx="86" cy="18" r="24"/><circle cx="146" cy="24" r="22"/><circle cx="190" cy="34" r="18"/></g><g fill="#7FB27A"><circle cx="58" cy="34" r="18"/><circle cx="118" cy="32" r="20"/><circle cx="172" cy="42" r="14"/></g><g fill="#F7FBF5"><rect x="34" y="40" width="7" height="80" rx="3"/><rect x="78" y="36" width="8" height="84" rx="3"/><rect x="126" y="42" width="7" height="78" rx="3"/><rect x="164" y="48" width="6" height="72" rx="3"/></g><g fill="#5F7A5C"><rect x="35" y="58" width="5" height="3"/><rect x="79.5" y="52" width="5" height="3"/><rect x="127" y="66" width="5" height="3"/><rect x="165" y="70" width="4" height="3"/><rect x="36" y="84" width="5" height="3"/><rect x="80" y="90" width="5" height="3"/></g><rect y="108" width="200" height="12" fill="#B9DBAF"/></svg>',
+falls:'<svg viewBox="0 0 200 120" preserveAspectRatio="xMidYMid slice"><rect width="200" height="120" fill="#93A0AA"/><path d="M0 0h70v120H0ZM130 0h70v120h-70Z" fill="#7E8B96"/><path d="M0 30h64M0 66h58M200 26h-62M200 62h-58" stroke="#6B7883" stroke-width="3" opacity=".7"/><rect x="82" y="0" width="36" height="104" fill="#EAF3F7"/><path d="M88 0v100M100 0v104M112 0v98" stroke="#FFFFFF" stroke-width="4" opacity=".9"/><ellipse cx="100" cy="106" rx="46" ry="12" fill="#FFFFFF" opacity=".8"/><ellipse cx="100" cy="112" rx="70" ry="10" fill="#BFE2EC"/><circle cx="46" cy="104" r="12" fill="#6FA36F"/><circle cx="158" cy="106" r="13" fill="#6FA36F"/></svg>',
+street:'<svg viewBox="0 0 200 120" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="sst" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F6ECDC"/><stop offset="1" stop-color="#EFDFC8"/></linearGradient></defs><rect width="200" height="120" fill="url(#sst)"/><path d="M8 44h56l-4-12H14Z" fill="#5C4633"/><rect x="12" y="44" width="48" height="46" fill="#A57B54"/><g stroke="#7A5638" stroke-width="2"><path d="M20 50v40M30 50v40M40 50v40M50 50v40"/></g><path d="M136 44h56l-4-12h-48Z" fill="#5C4633"/><rect x="140" y="44" width="48" height="46" fill="#9A714C"/><g stroke="#715032" stroke-width="2"><path d="M148 50v40M158 50v40M168 50v40M178 50v40"/></g><path d="M64 52h72l-5-14H70Z" fill="#4E3B2B"/><rect x="70" y="52" width="60" height="38" fill="#B08659"/><rect x="82" y="62" width="14" height="28" fill="#6B4E33"/><rect x="104" y="62" width="16" height="16" fill="#E9DCC3"/><circle cx="66" cy="70" r="4" fill="#E9822B"/><circle cx="134" cy="70" r="4" fill="#E9822B"/><path d="M0 120l30-30h140l30 30Z" fill="#D9C7AC"/></svg>',
+sea:'<svg viewBox="0 0 200 120" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="sse" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8FDCEC"/><stop offset="1" stop-color="#3FB4D8"/></linearGradient></defs><rect width="200" height="120" fill="#CFF0F8"/><rect y="42" width="200" height="58" fill="url(#sse)"/><path d="M0 58h200M0 74h200" stroke="#BDEAF4" stroke-width="3" opacity=".7"/><path d="M0 100q60-12 200 0v20H0Z" fill="#F2DFAE"/><path d="M160 96V56" stroke="#6B4A2E" stroke-width="5" fill="none"/><g stroke="#2E7D4F" stroke-width="5" fill="none" stroke-linecap="round"><path d="M160 56q-16-10-26-4"/><path d="M160 56q16-10 26-4"/><path d="M160 56q-10-14-4-22"/><path d="M160 56q12-12 22-8"/></g></svg>',
+citynight:'<svg viewBox="0 0 200 120" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="scn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2C3860"/><stop offset="1" stop-color="#131A33"/></linearGradient></defs><rect width="200" height="120" fill="url(#scn)"/><g fill="#FFFFFF" opacity=".7"><circle cx="24" cy="16" r="1.2"/><circle cx="60" cy="10" r="1"/><circle cx="150" cy="14" r="1.2"/><circle cx="184" cy="24" r="1"/><circle cx="106" cy="8" r="1"/></g><g fill="#1B2440"><rect x="10" y="52" width="26" height="68"/><rect x="42" y="38" width="30" height="82"/><rect x="78" y="58" width="24" height="62"/><rect x="140" y="44" width="28" height="76"/><rect x="172" y="60" width="22" height="60"/></g><path d="M116 120V44l10-24 10 24v76Z" fill="#232E52"/><g fill="#F7C860"><rect x="16" y="60" width="4" height="4"/><rect x="26" y="72" width="4" height="4"/><rect x="48" y="46" width="4" height="4"/><rect x="60" y="58" width="4" height="4"/><rect x="52" y="84" width="4" height="4"/><rect x="84" y="66" width="4" height="4"/><rect x="92" y="90" width="4" height="4"/><rect x="146" y="54" width="4" height="4"/><rect x="158" y="76" width="4" height="4"/><rect x="178" y="70" width="4" height="4"/><rect x="124" y="58" width="4" height="4"/><rect x="124" y="80" width="4" height="4"/></g></svg>',
+park:'<svg viewBox="0 0 200 120" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="spk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#CFEDF9"/><stop offset="1" stop-color="#EAF8FE"/></linearGradient></defs><rect width="200" height="120" fill="url(#spk)"/><rect y="80" width="200" height="40" fill="#8FCB7F"/><path d="M96 80 116 16h6l20 64Z" fill="none" stroke="#A64A3C" stroke-width="4"/><path d="M104 58h30M100 70h38" stroke="#A64A3C" stroke-width="3"/><rect x="112" y="34" width="14" height="10" fill="#A64A3C"/><g fill="#E86A8A"><circle cx="30" cy="92" r="4"/><circle cx="44" cy="98" r="4"/><circle cx="58" cy="92" r="4"/></g><g fill="#F2C94C"><circle cx="150" cy="96" r="4"/><circle cx="164" cy="90" r="4"/><circle cx="178" cy="98" r="4"/></g><circle cx="20" cy="60" r="14" fill="#6FA36F"/><rect x="18" y="70" width="4" height="14" fill="#6B4A2E"/></svg>',
+hotel:'<svg viewBox="0 0 200 120" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="sht" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFD9A4"/><stop offset="1" stop-color="#F7A87C"/></linearGradient></defs><rect width="200" height="120" fill="url(#sht)"/><g fill="#6B5A4E"><rect x="120" y="20" width="60" height="66"/><rect x="104" y="40" width="20" height="46"/></g><g fill="#FFD98E"><rect x="128" y="28" width="6" height="6"/><rect x="142" y="28" width="6" height="6"/><rect x="156" y="40" width="6" height="6"/><rect x="128" y="52" width="6" height="6"/><rect x="146" y="64" width="6" height="6"/><rect x="108" y="48" width="5" height="5"/></g><path d="M34 84V46" stroke="#4E4038" stroke-width="4"/><g stroke="#2E5D3F" stroke-width="4" fill="none" stroke-linecap="round"><path d="M34 46q-14-8-22-3"/><path d="M34 46q14-8 22-3"/><path d="M34 46q-8-12-2-18"/></g><ellipse cx="100" cy="102" rx="86" ry="15" fill="#3E9EC9"/><ellipse cx="100" cy="100" rx="86" ry="13" fill="#5FB6DA"/><rect x="30" y="88" width="18" height="5" rx="2.5" fill="#FFFFFF"/><rect x="56" y="90" width="18" height="5" rx="2.5" fill="#FFFFFF"/></svg>',
+food:'<svg viewBox="0 0 200 120" preserveAspectRatio="xMidYMid slice"><rect width="200" height="120" fill="#F8ECDA"/><rect y="62" width="200" height="58" fill="#C89A6B"/><rect y="62" width="200" height="5" fill="#B78654"/><circle cx="100" cy="86" r="35" fill="#FFFFFF"/><circle cx="100" cy="86" r="27" fill="#F6F1E7"/><circle cx="92" cy="82" r="10" fill="#F08A3C"/><ellipse cx="110" cy="90" rx="10" ry="7" fill="#FFF6E0"/><path d="M96 96q8 5 16 0" stroke="#7FB27A" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M146 62l22 34M154 58l22 34" stroke="#8A5A34" stroke-width="4" stroke-linecap="round"/><circle cx="42" cy="80" r="9" fill="#C9E3F2"/><rect x="38" y="80" width="8" height="14" fill="#C9E3F2"/></svg>',
+daibutsu:'<svg viewBox="0 0 200 120" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="sdb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D5EDF8"/><stop offset="1" stop-color="#EDF8FD"/></linearGradient></defs><rect width="200" height="120" fill="url(#sdb)"/><g fill="#7FA36F"><circle cx="26" cy="72" r="22"/><circle cx="176" cy="70" r="24"/><circle cx="54" cy="84" r="16"/><circle cx="150" cy="86" r="15"/></g><g fill="#6E7D68"><circle cx="100" cy="46" r="17"/><path d="M100 26q6 0 6 6h-12q0-6 6-6Z"/><path d="M64 108q0-30 36-30t36 30Z"/><path d="M78 84q22-12 44 0l-6 10q-16-8-32 0Z" opacity=".9"/></g><circle cx="94" cy="45" r="2" fill="#DDE8DC"/><circle cx="106" cy="45" r="2" fill="#DDE8DC"/><rect y="106" width="200" height="14" fill="#C9CFC2"/></svg>',
+inari:'<svg viewBox="0 0 200 120" preserveAspectRatio="xMidYMid slice"><rect width="200" height="120" fill="#5C1F14"/><rect x="12" y="6" width="176" height="114" fill="#C6482F"/><rect x="34" y="22" width="132" height="98" fill="#A63A26"/><rect x="54" y="38" width="92" height="82" fill="#C6482F"/><rect x="72" y="52" width="56" height="68" fill="#8F2F1E"/><rect x="86" y="64" width="28" height="56" fill="#D9C7A8"/><g fill="#3E1109" opacity=".55"><rect x="12" y="6" width="176" height="8"/><rect x="34" y="22" width="132" height="8"/><rect x="54" y="38" width="92" height="8"/><rect x="72" y="52" width="56" height="8"/></g></svg>',
+bay:'<svg viewBox="0 0 200 120" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="sby" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C6EAF4"/><stop offset="1" stop-color="#E9F8FC"/></linearGradient></defs><rect width="200" height="120" fill="url(#sby)"/><rect y="66" width="200" height="54" fill="#7FC4DC"/><g fill="#8A9478"><path d="M28 78q4-16 16-16t16 16q-16 6-32 0Z"/><path d="M96 74q3-13 13-13t13 13q-13 5-26 0Z"/><path d="M156 80q4-15 15-15t15 15q-15 6-30 0Z"/></g><g fill="#3E5D3C"><circle cx="44" cy="58" r="7"/><circle cx="36" cy="62" r="5"/><circle cx="109" cy="58" r="6"/><circle cx="171" cy="62" r="6"/><circle cx="163" cy="66" r="5"/></g><path d="M60 96h22l-4 7H64Z" fill="#FFFFFF"/><path d="M0 82h200" stroke="#A9DCEB" stroke-width="3" opacity=".8"/></svg>'
+};
+const PARTY=[{label:'ひとり',n:1},{label:'友達・グループ（男性のみ）',n:3},{label:'友達・グループ（女性のみ）',n:3},{label:'友達・グループ（男女混合）',n:4},{label:'カップル・夫婦',n:2},{label:'家族',n:3}];
+const THEMES=[{k:'リフレッシュ',ic:'t_sun'},{k:'グルメ',ic:'t_fork'},{k:'文化遺産',ic:'t_mus'},{k:'フォトジェニック',ic:'t_cam'},{k:'温泉',ic:'t_ons'},{k:'絶景',ic:'t_mt'}];
+const STYLES=['王道をおさえたい','穴場を攻めたい','おまかせ（両方）'];
+const RANGES=[{label:'〜2時間',min:0,max:2},{label:'2〜4時間',min:2,max:4},{label:'4〜6時間',min:4,max:6},{label:'6時間以上',min:6,max:99}];
+const ORIGINS=['横浜','東京','千葉・埼玉'];
+const BUDGETS=[{label:'〜1万',lo:0,hi:1.3},{label:'1〜3万',lo:0.8,hi:3.4},{label:'3万〜',lo:2.6,hi:99}];
+const DEST=[
+{id:'kamakura',name:'鎌倉・江の島',pref:'神奈川',area:'鎌倉・江の島',emoji:'⛩️',hours:1,gasToll:0.5,stayPP:1.3,foodPP:0.45,themes:['グルメ','フォトジェニック','文化遺産'],clim:[22,29],price:'普通',badge:'王道スポット',scene:'daibutsu',mapq:'鶴岡八幡宮',
+desc:'源頼朝が幕府を開いた古都。寺社めぐりと小町通りの食べ歩き、湘南の海沿いドライブを1日で楽しめる王道コース。',
+spots:[{n:'鶴岡八幡宮',d:'鎌倉のシンボル。段葛の参道から本宮へ、古都の空気を一気に味わえる。',s:'inari'},{n:'江の島シーキャンドル',d:'展望灯台から湘南と富士山を一望。夕暮れの時間帯がおすすめ。',s:'lighthouse'},{n:'高徳院（鎌倉大仏）',d:'高さ約11mの国宝・阿弥陀如来坐像。青空に映える姿は圧巻。',s:'daibutsu'}],
+eats:[{n:'とびっちょ 本店',d:'生しらす丼の行列店',price:'¥1,500〜',star:4.2},{n:'小町通り 食べ歩き',d:'団子・コロッケ・ソフト',price:'¥300〜',star:4.4},{n:'bills 七里ヶ浜',d:'海を見ながらパンケーキ',price:'¥2,000〜',star:4.1}],
+hotels:[{n:'鎌倉プリンスホテル',star:4,price:28600},{n:'HOTEL AO KAMAKURA',star:3,price:14800}]},
+{id:'hakone',name:'箱根',pref:'神奈川',area:'箱根',emoji:'♨️',hours:1.5,gasToll:0.9,stayPP:1.8,foodPP:0.5,themes:['温泉','リフレッシュ','文化遺産'],clim:[20,28],price:'やや高い',badge:'王道スポット',scene:'torii',mapq:'箱根神社',
+desc:'首都圏から約90分の温泉リゾート。芦ノ湖と富士の眺め、美術館めぐりに日帰り湯まで、短時間でも満足度が高い。',
+spots:[{n:'箱根神社 平和の鳥居',d:'芦ノ湖に立つ朱の鳥居。湖越しの撮影スポットとして大人気。',s:'torii'},{n:'大涌谷',d:'立ちのぼる噴煙と硫黄の香り。名物の黒たまごで寿命を延ばそう。',s:'onsen'},{n:'芦ノ湖 海賊船',d:'富士を望む湖上クルーズ。元箱根と桃源台を結ぶ。',s:'lake'}],
+eats:[{n:'大涌谷 黒たまご',d:'1個で寿命が7年のびる？',price:'¥500〜',star:4.3},{n:'はつ花そば 本店',d:'自然薯を使った名物そば',price:'¥1,100〜',star:4.2},{n:'ベーカリー&テーブル箱根',d:'足湯テラスで焼きたてパン',price:'¥1,000〜',star:4.3}],
+hotels:[{n:'箱根湯本温泉 天成園',star:4,price:26400},{n:'界 箱根',star:5,price:52000}]},
+{id:'kawaguchiko',name:'河口湖・富士五湖',pref:'山梨',area:'河口湖・富士',emoji:'🗻',hours:2,gasToll:1.1,stayPP:1.4,foodPP:0.4,themes:['絶景','フォトジェニック','リフレッシュ'],clim:[18,28],price:'普通',badge:'王道スポット',scene:'fuji',mapq:'河口湖 大石公園',
+desc:'富士山ビューの定番エリア。湖畔の公園や忍野八海など写真映えスポットが点在し、ドライブの爽快感も抜群。',
+spots:[{n:'大石公園',d:'湖畔の花畑越しに富士山。季節の花と逆さ富士の名所。',s:'fuji'},{n:'新倉山浅間公園',d:'五重塔と富士をひと目で。海外からも人が集まる絶景。',s:'fuji'},{n:'忍野八海',d:'富士の湧水がつくる8つの池。透明度に驚くはず。',s:'lake'}],
+eats:[{n:'ほうとう不動',d:'山梨名物ほうとう鍋',price:'¥1,300〜',star:4.1},{n:'吉田のうどん',d:'日本一硬い？剛麺うどん',price:'¥600〜',star:4.0},{n:'湖畔のカフェ CISCO',d:'富士ビューの一杯',price:'¥800〜',star:4.3}],
+hotels:[{n:'風のテラスKUKUNA',star:4,price:32000},{n:'河口湖温泉 湖南荘',star:4,price:24200}]},
+{id:'chichibu',name:'秩父・長瀞',pref:'埼玉',area:'秩父・長瀞',emoji:'🏞️',hours:2,gasToll:0.8,stayPP:1.0,foodPP:0.35,themes:['絶景','リフレッシュ','グルメ'],clim:[22,32],price:'安い',badge:'穴場',scene:'gorge',mapq:'長瀞ライン下り',
+desc:'都心から2時間で秘境感。長瀞の川下りと天空のパワースポット三峯神社、名物グルメを低予算で満喫できる。',
+spots:[{n:'長瀞ラインくだり',d:'岩畳の渓谷を和舟で下る名物アクティビティ。',s:'gorge'},{n:'三峯神社',d:'標高1100mの「天空のパワースポット」。狼の狛犬が守る。',s:'inari'},{n:'羊山公園',d:'市街と武甲山を見渡す丘。春は芝桜の名所。',s:'park'}],
+eats:[{n:'阿左美冷蔵',d:'天然氷のふわふわかき氷',price:'¥1,200〜',star:4.4},{n:'安田屋',d:'味噌だれのわらじカツ丼',price:'¥1,000〜',star:4.2},{n:'野さか',d:'炭火の豚みそ丼',price:'¥1,100〜',star:4.3}],
+hotels:[{n:'秩父温泉 和どう',star:4,price:19800},{n:'ルートイン西武秩父駅前',star:3,price:9800}]},
+{id:'izu',name:'伊豆・熱海',pref:'静岡',area:'熱海・東伊豆',emoji:'🌊',hours:2,gasToll:1.1,stayPP:1.5,foodPP:0.55,themes:['温泉','グルメ','リフレッシュ'],clim:[23,30],price:'普通',badge:'王道スポット',scene:'sea',mapq:'熱海サンビーチ',
+desc:'海と温泉の王道リゾート。駅前商店街の海鮮ランチから絶景の海岸線ドライブまで、弾丸旅との相性が抜群。',
+spots:[{n:'熱海サンビーチ',d:'駅から歩ける弓なりの砂浜。夜はライトアップも。',s:'sea'},{n:'城ヶ崎海岸',d:'断崖の吊り橋がスリル満点。荒々しい溶岩の海岸線。',s:'lighthouse'},{n:'來宮神社',d:'樹齢2000年超の大楠。願いを込めて幹を一周。',s:'inari'}],
+eats:[{n:'熱海銀座 おさかな丼屋',d:'相模湾の海鮮丼',price:'¥1,500〜',star:4.2},{n:'囲炉茶屋',d:'干物と金目鯛の定食',price:'¥1,800〜',star:4.1},{n:'熱海プリン',d:'レトロかわいい名物',price:'¥400〜',star:4.3}],
+hotels:[{n:'熱海後楽園ホテル',star:4,price:23100},{n:'リゾナーレ熱海',star:5,price:45000}]},
+{id:'choshi',name:'銚子・九十九里',pref:'千葉',area:'銚子',emoji:'🐟',hours:2,gasToll:0.9,stayPP:0.9,foodPP:0.45,themes:['グルメ','絶景'],clim:[22,28],price:'安い',badge:'穴場',scene:'lighthouse',mapq:'犬吠埼灯台',
+desc:'関東最東端の港町。犬吠埼灯台と屏風ヶ浦の絶景、水揚げ直送の海鮮を驚きの低予算で楽しめる穴場。',
+spots:[{n:'犬吠埼灯台',d:'関東最東端。日本で一番早い日の出に会える白亜の灯台。',s:'lighthouse'},{n:'屏風ヶ浦',d:'高さ40〜50mの断崖が約10km続く「東洋のドーバー」。',s:'gorge'},{n:'銚子電鉄',d:'ぬれ煎餅が支えるローカル線。レトロ車両で港町を走る。',s:'street'}],
+eats:[{n:'ウオッセ21',d:'水揚げ直送の海鮮市場',price:'¥1,200〜',star:4.1},{n:'一山いけす',d:'生け簀を囲む海鮮処',price:'¥2,000〜',star:4.2},{n:'銚子電鉄 ぬれ煎餅',d:'醤油の町の名物土産',price:'¥500〜',star:4.0}],
+hotels:[{n:'犬吠埼ホテル',star:3,price:15400},{n:'別邸 海と森',star:4,price:29700}]},
+{id:'nikko',name:'日光・中禅寺湖',pref:'栃木',area:'日光・中禅寺湖',emoji:'⛩️',hours:2.5,gasToll:1.4,stayPP:1.3,foodPP:0.4,themes:['文化遺産','絶景'],clim:[17,27],price:'普通',badge:'王道スポット',scene:'temple',mapq:'日光東照宮',
+desc:'徳川家康を祀る東照宮と華厳の滝。世界遺産と大自然をいろは坂ドライブでつなぐ、歴史好きの鉄板ルート。',
+spots:[{n:'日光東照宮',d:'徳川家康を祀る世界遺産。陽明門と三猿・眠り猫は必見。',s:'temple'},{n:'華厳の滝',d:'落差97mの名瀑。エレベーターで滝つぼ近くの観瀑台へ。',s:'falls'},{n:'いろは坂・中禅寺湖',d:'48カーブの名物ドライブと標高1269mの湖。',s:'lake'}],
+eats:[{n:'恵比寿家',d:'日光名物ゆば料理',price:'¥1,500〜',star:4.1},{n:'明治の館',d:'洋館で味わうオムレツライス',price:'¥1,800〜',star:4.2},{n:'日光ぷりん亭',d:'レトロな瓶プリン',price:'¥450〜',star:4.3}],
+hotels:[{n:'中禅寺金谷ホテル',star:4,price:33000},{n:'ホテル季の遊',star:3,price:12100}]},
+{id:'karuizawa',name:'軽井沢',pref:'長野',area:'軽井沢',emoji:'🌲',hours:2.5,gasToll:1.6,stayPP:2.0,foodPP:0.6,themes:['リフレッシュ','グルメ','フォトジェニック'],clim:[16,26],price:'高い',badge:'王道スポット',scene:'forest',mapq:'旧軽井沢銀座',
+desc:'標高1000mの避暑地。夏でも涼しい高原をドライブし、ベーカリーやカフェ、アウトレットまで楽しめる。',
+spots:[{n:'白糸の滝',d:'幅70mのカーテンのような伏流水の滝。真夏でもひんやり。',s:'falls'},{n:'旧軽井沢銀座',d:'老舗と新店が並ぶメインストリート。食べ歩きの聖地。',s:'street'},{n:'ハルニレテラス',d:'木立の中のモダンな商業空間。朝のコーヒーが最高。',s:'forest'}],
+eats:[{n:'川上庵 本店',d:'くるみだれの信州そば',price:'¥1,400〜',star:4.2},{n:'ミカドコーヒー',d:'名物モカソフト',price:'¥600〜',star:4.3},{n:'ベーカリー沢村',d:'高原のハード系パン',price:'¥800〜',star:4.2}],
+hotels:[{n:'軽井沢プリンスホテル イースト',star:4,price:38500},{n:'ルグラン旧軽井沢',star:4,price:27500}]},
+{id:'kusatsu',name:'草津温泉',pref:'群馬',area:'草津',emoji:'♨️',hours:3,gasToll:1.7,stayPP:1.5,foodPP:0.4,themes:['温泉','リフレッシュ'],clim:[15,25],price:'普通',badge:'王道スポット',scene:'yubatake',mapq:'草津温泉 湯畑',
+desc:'日本三名泉のひとつ。湯畑を中心に温泉情緒が凝縮された街で、浴衣散歩と食べ歩きが楽しい。',
+spots:[{n:'湯畑',d:'毎分約4000Lが湧く温泉街の心臓部。夜のライトアップは幻想的。',s:'yubatake'},{n:'西の河原公園',d:'湯けむり漂う遊歩道の先に大露天風呂。',s:'onsen'},{n:'熱乃湯 湯もみショー',d:'名物の湯もみを間近で見学・体験できる。',s:'onsen'}],
+eats:[{n:'松むら饅頭',d:'湯畑近くの温泉まんじゅう',price:'¥150〜',star:4.3},{n:'湯畑草菴 足湯カフェ',d:'足湯につかりながら一服',price:'¥700〜',star:4.1},{n:'頼朝',d:'湯畑を眺める串と釜めし',price:'¥1,300〜',star:4.0}],
+hotels:[{n:'草津温泉 奈良屋',star:4,price:30800},{n:'草津ナウリゾートホテル',star:4,price:20900}]},
+{id:'matsumoto',name:'松本・上高地',pref:'長野',area:'松本・上高地',emoji:'🏯',hours:3.5,gasToll:2.1,stayPP:1.2,foodPP:0.45,themes:['文化遺産','グルメ','絶景'],clim:[19,30],price:'普通',badge:'王道スポット',scene:'castle',mapq:'松本城',
+desc:'国宝・松本城の城下町。レトロな商店街と名物そば、足を延ばせば上高地の絶景まで狙える欲張りコース。',
+spots:[{n:'松本城',d:'現存12天守のひとつ、漆黒の国宝天守。北アルプスを背に。',s:'castle'},{n:'縄手通り',d:'カエルの街のレトロ商店街。骨董と甘味の散歩道。',s:'street'},{n:'上高地 河童橋',d:'梓川と穂高連峰の絶景。マイカー規制のため沢渡からバス。',s:'lake'}],
+eats:[{n:'そば処 浅田',d:'行列必至の十割そば',price:'¥1,300〜',star:4.3},{n:'松本からあげセンター',d:'名物・山賊焼き',price:'¥1,000〜',star:4.1},{n:'翁堂 喫茶部',d:'昭和レトロなクリームソーダ',price:'¥600〜',star:4.2}],
+hotels:[{n:'松本ホテル花月',star:4,price:18700},{n:'ホテルブエナビスタ',star:4,price:16500}]},
+{id:'sendai',name:'仙台・松島',pref:'宮城',area:'仙台・松島',emoji:'⛵',hours:4.5,gasToll:2.8,stayPP:1.1,foodPP:0.6,themes:['グルメ','絶景','文化遺産'],clim:[19,27],price:'普通',badge:'王道スポット',scene:'bay',mapq:'松島海岸',
+desc:'日本三景・松島と杜の都。遊覧船で島々を巡り、名物の牛たんとずんだで締める東北弾丸の定番。',
+spots:[{n:'松島島巡り遊覧船',d:'260余りの島々を海から。日本三景を体感。',s:'bay'},{n:'瑞巌寺',d:'伊達政宗が再建した奥州随一の禅寺。杉並木の参道が荘厳。',s:'temple'},{n:'仙台城跡',d:'伊達政宗騎馬像と市街の大パノラマ。',s:'castle'}],
+eats:[{n:'牛たん炭焼 利久',d:'厚切り牛たん定食',price:'¥1,800〜',star:4.3},{n:'松島 寿司幸',d:'三陸の地魚寿司',price:'¥2,500〜',star:4.2},{n:'ずんだ茶寮',d:'ずんだシェイク発祥',price:'¥400〜',star:4.4}],
+hotels:[{n:'松島温泉 一の坊',star:4,price:29700},{n:'ホテルメトロポリタン仙台',star:4,price:16500}]},
+{id:'kanazawa',name:'金沢',pref:'石川',area:'金沢',emoji:'🏮',hours:5.5,gasToll:3.4,stayPP:1.3,foodPP:0.7,themes:['文化遺産','グルメ','フォトジェニック'],clim:[23,31],price:'普通',badge:'王道スポット',scene:'street',mapq:'兼六園',
+desc:'加賀百万石の城下町。兼六園と茶屋街の風情、近江町市場の海鮮まで、文化とグルメが凝縮された街。',
+spots:[{n:'兼六園',d:'日本三名園。徽軫灯籠と霞ヶ池は定番の一枚。',s:'park'},{n:'ひがし茶屋街',d:'金箔と紅殻格子の街並み。着物散歩が似合う。',s:'street'},{n:'金沢21世紀美術館',d:'プールの作品で知られる現代アートの森。',s:'park'}],
+eats:[{n:'近江町市場',d:'海鮮丼の朝食が名物',price:'¥1,800〜',star:4.2},{n:'もりもり寿し',d:'回転でも本気の北陸ネタ',price:'¥2,000〜',star:4.3},{n:'箔一',d:'金箔ソフトクリーム',price:'¥900〜',star:4.1}],
+hotels:[{n:'ハイアット セントリック 金沢',star:4,price:24200},{n:'雨庵 金沢',star:4,price:19800}]},
+{id:'kyoto',name:'京都',pref:'京都',area:'京都市内',emoji:'🎋',hours:6,gasToll:3.8,stayPP:1.5,foodPP:0.7,themes:['文化遺産','グルメ','フォトジェニック'],clim:[24,34],price:'やや高い',badge:'王道スポット',scene:'temple',mapq:'清水寺',
+desc:'言わずと知れた古都。清水寺や伏見稲荷など王道を早朝から攻める弾丸参拝スタイルなら渋滞も回避できる。',
+spots:[{n:'清水寺',d:'「清水の舞台」から京都市街を一望。早朝参拝が正解。',s:'temple'},{n:'伏見稲荷大社',d:'どこまでも続く千本鳥居。朝7時前なら人も少ない。',s:'inari'},{n:'嵐山 竹林の小径',d:'竹のトンネルを抜ける光と風。渡月橋とセットで。',s:'forest'}],
+eats:[{n:'錦市場 食べ歩き',d:'京の台所でだし巻きや豆乳ドーナツ',price:'¥500〜',star:4.2},{n:'% Arabica 嵐山',d:'川沿いの名物ラテ',price:'¥600〜',star:4.3},{n:'祇園辻利',d:'抹茶パフェの王道',price:'¥1,300〜',star:4.2}],
+hotels:[{n:'京王プレリアホテル京都',star:4,price:15400},{n:'ザ・ホテル青龍 京都清水',star:5,price:58000}]},
+{id:'hitachi',name:'大洗・ひたち海浜公園',pref:'茨城',area:'大洗・ひたちなか',emoji:'🌊',hours:2,gasToll:1.0,stayPP:0.9,foodPP:0.45,themes:['絶景','グルメ','リフレッシュ'],clim:[22,29],price:'安い',badge:'穴場',scene:'park',mapq:'国営ひたち海浜公園',
+desc:'春のネモフィラ、秋のコキアで知られる丘と、海に立つ神磯の鳥居。那珂湊の市場めしまで、2時間圏内で驚くほど濃い。',
+spots:[{n:'国営ひたち海浜公園',d:'みはらしの丘一面を季節の花が染める。園内はレンタサイクルが快適。',s:'park'},{n:'大洗磯前神社 神磯の鳥居',d:'荒波の岩礁に立つ鳥居。日の出の時間帯は息をのむ光景。',s:'torii'},{n:'那珂湊おさかな市場',d:'港直送の魚介がずらり。食べ歩きの岩牡蠣も名物。',s:'street'}],
+eats:[{n:'市場寿し 那珂湊',d:'回転でも港町クオリティ',price:'¥1,500〜',star:4.2},{n:'大洗 みつだんご',d:'きなこ香る昔ながらの串団子',price:'¥400〜',star:4.3},{n:'ほしいも専門店 大丸屋',d:'茨城名物・干し芋スイーツ',price:'¥500〜',star:4.1}],
+hotels:[{n:'大洗ホテル',star:4,price:17600},{n:'里海邸 金波楼本邸',star:5,price:41800}]},
+{id:'sumata',name:'寸又峡・奥大井',pref:'静岡',area:'奥大井',emoji:'🌉',hours:3,gasToll:1.7,stayPP:1.1,foodPP:0.45,themes:['絶景','リフレッシュ','温泉'],clim:[22,31],price:'安い',badge:'穴場',scene:'lake',mapq:'寸又峡 夢の吊り橋',
+desc:'ミルキーブルーの湖に架かる「夢の吊り橋」と、湖に浮かぶ秘境駅。SLが走る大井川流域は関東圏屈指の穴場。',
+spots:[{n:'夢の吊り橋',d:'エメラルドの湖面上をわたるスリルと絶景。午前中が空いていて狙い目。',s:'gorge'},{n:'奥大井湖上駅',d:'湖に突き出た半島に立つ秘境駅。展望所からの一枚が有名。',s:'lake'},{n:'大井川鐵道 SL',d:'現役の蒸気機関車が茶畑の間を走る。汽笛の音に旅情が高まる。',s:'street'}],
+eats:[{n:'晴耕雨読 Cafe',d:'寸又峡の古民家カフェ',price:'¥800〜',star:4.2},{n:'川根茶スイーツ',d:'香り高いお茶のジェラート',price:'¥500〜',star:4.1},{n:'静岡おでん',d:'黒はんぺんとだし粉が決め手',price:'¥600〜',star:4.0}],
+hotels:[{n:'翠紅苑',star:3,price:16500},{n:'川根温泉ホテル',star:3,price:13200}]},
+{id:'kiyotsu',name:'清津峡・十日町',pref:'新潟',area:'十日町・湯沢',emoji:'🎨',hours:3.5,gasToll:2.1,stayPP:1.1,foodPP:0.45,themes:['絶景','フォトジェニック'],clim:[21,30],price:'安い',badge:'穴場',scene:'gorge',mapq:'清津峡渓谷トンネル',
+desc:'水鏡に峡谷が映り込むトンネルアートで一躍有名に。棚田とブナ林、へぎそばまで、里山アートの旅が完成する。',
+spots:[{n:'清津峡渓谷トンネル',d:'日本三大峡谷×現代アート。水盤に映る柱状節理は必見。',s:'gorge'},{n:'星峠の棚田',d:'雲海と水鏡で知られる約200枚の棚田。朝焼けが特に美しい。',s:'park'},{n:'美人林',d:'樹齢100年のブナが立ち並ぶ森。木漏れ日の散策路が心地よい。',s:'forest'}],
+eats:[{n:'小嶋屋総本店',d:'布海苔つなぎのへぎそば',price:'¥1,200〜',star:4.3},{n:'笹だんご 田中屋',d:'よもぎ香る新潟銘菓',price:'¥300〜',star:4.2},{n:'雪室珈琲',d:'雪中熟成のまろやか珈琲',price:'¥600〜',star:4.0}],
+hotels:[{n:'里山十帖',star:5,price:46200},{n:'湯沢グランドホテル',star:3,price:14300}]},
+{id:'ouchi',name:'会津・大内宿',pref:'福島',area:'会津',emoji:'🏘️',hours:3.5,gasToll:2.2,stayPP:1.1,foodPP:0.45,themes:['文化遺産','フォトジェニック','グルメ'],clim:[19,29],price:'安い',badge:'穴場',scene:'street',mapq:'大内宿',
+desc:'茅葺き屋根の宿場町が江戸時代のまま残る大内宿。名物ねぎそばと会津の城下町をつなぐ、タイムスリップドライブ。',
+spots:[{n:'大内宿',d:'茅葺きの民家が街道に並ぶ重伝建地区。見晴台からの一望が定番。',s:'street'},{n:'塔のへつり',d:'百万年の浸食が生んだ奇岩の渓谷。吊り橋を渡って間近に。',s:'gorge'},{n:'鶴ヶ城',d:'赤瓦の天守が美しい会津のシンボル。幕末の歴史に浸れる。',s:'castle'}],
+eats:[{n:'三澤屋',d:'一本ねぎで食べる高遠そば',price:'¥1,300〜',star:4.3},{n:'大内宿 栃餅',d:'囲炉裏で焼く素朴な味',price:'¥400〜',star:4.1},{n:'会津ソースカツ丼',d:'甘辛ソースの会津名物',price:'¥1,100〜',star:4.2}],
+hotels:[{n:'東山温泉 御宿東鳳',star:4,price:20900},{n:'大江戸温泉物語 あいづ',star:3,price:12100}]},
+{id:'shirakawago',name:'白川郷・飛騨高山',pref:'岐阜',area:'白川郷・高山',emoji:'🏔️',hours:5.5,gasToll:3.6,stayPP:1.3,foodPP:0.55,themes:['文化遺産','フォトジェニック','グルメ'],clim:[20,30],price:'普通',badge:'王道スポット',scene:'street',mapq:'白川郷',
+desc:'世界遺産の合掌造り集落と、古い町並が残る飛騨高山をはしご。飛騨牛にぎりを片手に歩く城下町は外れなし。',
+spots:[{n:'白川郷 合掌造り集落',d:'110棟余りの合掌造りが今も暮らしの中に。世界遺産の原風景。',s:'street'},{n:'荻町城跡展望台',d:'集落を一望する定番ビュー。シャトルバスか徒歩20分。',s:'park'},{n:'飛騨高山 古い町並',d:'出格子の商家が連なるさんまち通り。酒蔵と食べ歩きの宝庫。',s:'street'}],
+eats:[{n:'飛騨牛にぎり 坂口屋',d:'とろける炙り寿司',price:'¥900〜',star:4.3},{n:'高山ラーメン まさご',d:'あっさり醤油の細ちぢれ麺',price:'¥900〜',star:4.1},{n:'五平餅',d:'えごまだれの香ばしさ',price:'¥300〜',star:4.2}],
+hotels:[{n:'高山グリーンホテル',star:4,price:19800},{n:'御宿 結の庄',star:5,price:39600}]},
+{id:'ginzan',name:'銀山温泉',pref:'山形',area:'銀山温泉',emoji:'🏮',hours:6,gasToll:3.7,stayPP:1.6,foodPP:0.5,themes:['温泉','フォトジェニック'],clim:[19,29],price:'やや高い',badge:'穴場',scene:'onsen',mapq:'銀山温泉',
+desc:'大正ロマンの木造旅館がガス灯に照らされる温泉街。夕暮れの川沿いは映画のワンシーンのよう。山寺参拝とセットで。',
+spots:[{n:'銀山温泉街',d:'川の両岸に木造多層旅館が並ぶ。灯りがともる夕刻が最高潮。',s:'onsen'},{n:'白銀の滝',d:'温泉街の奥、落差22mの滝。散策路の終点で涼を浴びる。',s:'falls'},{n:'山寺（立石寺）',d:'1015段の石段の先に絶景の五大堂。芭蕉ゆかりの古刹。',s:'temple'}],
+eats:[{n:'はいからさん通り',d:'名物カリーパンの行列店',price:'¥300〜',star:4.2},{n:'尾花沢そば',d:'コシの強い田舎そば',price:'¥1,000〜',star:4.1},{n:'尾花沢すいかスイーツ',d:'夏の名産をひんやりと',price:'¥500〜',star:4.0}],
+hotels:[{n:'能登屋旅館',star:4,price:35200},{n:'古勢起屋別館',star:4,price:28600}]},
+{id:'kumano',name:'白浜・熊野',pref:'和歌山',area:'南紀白浜・那智',emoji:'🐼',hours:7,gasToll:4.5,stayPP:1.4,foodPP:0.55,themes:['温泉','絶景','文化遺産'],clim:[24,31],price:'普通',badge:'王道スポット',scene:'sea',mapq:'白良浜',
+desc:'真っ白な砂浜と断崖の絶景、パンダの町・白浜から、世界遺産・熊野那智へ。南紀をぐるっと巡る王道ロングドライブ。',
+spots:[{n:'白良浜',d:'石英砂の白いビーチ。ハワイのワイキキと姉妹浜。',s:'sea'},{n:'三段壁・千畳敷',d:'高さ50mの大絶壁と波が削った岩畳。夕日の名所。',s:'lighthouse'},{n:'那智の滝',d:'落差133m日本一の直瀑。朱の三重塔との構図は熊野の象徴。',s:'falls'}],
+eats:[{n:'とれとれ市場',d:'西日本最大級の海鮮マーケット',price:'¥1,500〜',star:4.1},{n:'めはり寿司',d:'高菜で包む熊野の郷土めし',price:'¥600〜',star:4.0},{n:'生マグロ丼（勝浦）',d:'日本有数の生マグロ水揚げ港',price:'¥1,800〜',star:4.3}],
+hotels:[{n:'白浜古賀の井リゾート&スパ',star:4,price:25300},{n:'浜千鳥の湯 海舟',star:5,price:46200}]},
+{id:'oirase',name:'奥入瀬渓流・十和田湖',pref:'青森',area:'奥入瀬・十和田',emoji:'🍃',hours:8.5,gasToll:5.2,stayPP:1.3,foodPP:0.5,themes:['絶景','リフレッシュ'],clim:[16,25],price:'普通',badge:'穴場',scene:'gorge',mapq:'奥入瀬渓流',
+desc:'苔むす岩と無数の滝が14km続く渓流美。夏でもひんやりした遊歩道は、日本一気持ちいい散歩道かもしれない。',
+spots:[{n:'奥入瀬渓流',d:'阿修羅の流れ、銚子大滝など見どころが連続。車道と並走で歩きやすい。',s:'gorge'},{n:'十和田湖',d:'カルデラ湖の深い青。遊覧船や乙女の像の湖畔散策を。',s:'lake'},{n:'蔦沼',d:'ブナ原生林に囲まれた静かな沼。水鏡の朝景が有名。',s:'forest'}],
+eats:[{n:'司 バラ焼き大衆食堂',d:'十和田名物バラ焼き',price:'¥1,000〜',star:4.2},{n:'渓流館のアップルパイ',d:'青森りんごの焼きたてパイ',price:'¥500〜',star:4.3},{n:'十和田湖ひめます',d:'湖の宝石と呼ばれる塩焼き',price:'¥1,500〜',star:4.1}],
+hotels:[{n:'星野リゾート 奥入瀬渓流ホテル',star:5,price:45100},{n:'十和田湖レークビューホテル',star:3,price:15400}]},
+{id:'tottori',name:'鳥取砂丘・浦富海岸',pref:'鳥取',area:'鳥取砂丘',emoji:'🐪',hours:8.5,gasToll:5.3,stayPP:1.0,foodPP:0.45,themes:['絶景','リフレッシュ'],clim:[23,31],price:'安い',badge:'穴場',scene:'sea',mapq:'鳥取砂丘',
+desc:'日本海に広がる大砂丘でラクダ気分、砂の彫刻美術館、透明度抜群の浦富海岸まで。非日常の風景が連続する山陰旅。',
+spots:[{n:'鳥取砂丘',d:'高低差90mの起伏を歩いて「馬の背」へ。海と砂だけの世界。',s:'sea'},{n:'砂の美術館',d:'砂像彫刻を展示する世界唯一の美術館。毎年テーマが変わる。',s:'street'},{n:'浦富海岸',d:'山陰の松島と呼ばれるリアス海岸。遊覧船や透明カヤックも。',s:'lighthouse'}],
+eats:[{n:'かろいち 海鮮丼',d:'賀露港直送の日本海の幸',price:'¥1,500〜',star:4.2},{n:'すなば珈琲',d:'鳥取発の名物喫茶',price:'¥600〜',star:4.0},{n:'モサエビ',d:'地元でしか食べられない幻のエビ',price:'¥1,200〜',star:4.3}],
+hotels:[{n:'ホテルニューオータニ鳥取',star:3,price:12100},{n:'岩井温泉 岩井屋',star:4,price:24200}]},
+{id:'shodoshima',name:'小豆島',pref:'香川',area:'小豆島',emoji:'🫒',hours:9,gasToll:6.0,stayPP:1.2,foodPP:0.5,themes:['グルメ','フォトジェニック','リフレッシュ'],clim:[24,31],price:'普通',badge:'穴場',scene:'sea',mapq:'小豆島 エンジェルロード',
+desc:'干潮の時だけ現れる砂の道、渓谷美の寒霞渓、オリーブと醤油の島グルメ。姫路か高松からフェリーで車ごと渡る島旅。',
+spots:[{n:'エンジェルロード',d:'1日2回、引き潮で現れる天使の散歩道。大切な人と渡ると願いが叶うとか。',s:'sea'},{n:'寒霞渓',d:'日本三大渓谷美。ロープウェイで奇岩の間を空中散歩。',s:'gorge'},{n:'小豆島オリーブ公園',d:'白いギリシャ風車と地中海ムード。ほうきに乗って魔女の一枚を。',s:'park'}],
+eats:[{n:'なかぶ庵',d:'生そうめんの元祖',price:'¥700〜',star:4.3},{n:'ヤマロク醤油',d:'木桶仕込みの蔵見学と醤油プリン',price:'¥400〜',star:4.4},{n:'オリーブソフト',d:'ほんのり塩味の島スイーツ',price:'¥400〜',star:4.1}],
+hotels:[{n:'ベイリゾートホテル小豆島',star:4,price:19800},{n:'島宿 真里',star:5,price:42900}]},
+{id:'miyajima',name:'宮島・尾道',pref:'広島',area:'宮島',emoji:'⛩️',hours:10,gasToll:6.3,stayPP:1.3,foodPP:0.6,themes:['文化遺産','グルメ','フォトジェニック'],clim:[25,32],price:'普通',badge:'王道スポット',scene:'torii',mapq:'厳島神社',
+desc:'海に浮かぶ朱の大鳥居と、坂と猫の町・尾道。お好み焼きにあなご飯、瀬戸内グルメを積み込む超弾丸1泊コース。',
+spots:[{n:'厳島神社',d:'潮の満ち引きで表情を変える世界遺産。満潮時は社殿が海に浮かぶ。',s:'torii'},{n:'弥山展望台',d:'ロープウェー＋徒歩で山頂へ。瀬戸内の多島美を一望。',s:'forest'},{n:'尾道 千光寺',d:'坂道と路地の先に絶景の朱堂。ロープウェイで楽々アクセス。',s:'temple'}],
+eats:[{n:'お好み焼き 八昌',d:'麺パリの広島流',price:'¥1,000〜',star:4.3},{n:'あなごめし うえの',d:'明治から続く駅弁の名店',price:'¥2,200〜',star:4.4},{n:'揚げもみじ',d:'サクサク衣のもみじ饅頭',price:'¥300〜',star:4.2}],
+hotels:[{n:'宮島 錦水館',star:4,price:30800},{n:'ONOMICHI U2 HOTEL CYCLE',star:4,price:27500}]},
+{id:'akiyoshi',name:'長門・秋吉台',pref:'山口',area:'長門・秋吉台',emoji:'🌾',hours:11,gasToll:6.8,stayPP:1.1,foodPP:0.5,themes:['絶景','フォトジェニック','温泉'],clim:[24,31],price:'安い',badge:'穴場',scene:'torii',mapq:'元乃隅神社',
+desc:'コバルトブルーの海へ続く123基の赤鳥居、日本最大級のカルスト台地と大鍾乳洞。走った者だけが見られる本州最果ての絶景。',
+spots:[{n:'元乃隅神社',d:'断崖から海へ連なる赤鳥居の行列。日本の最も美しい場所に選ばれた景観。',s:'torii'},{n:'角島大橋',d:'エメラルドの海を一直線に渡る1780mの橋。CMロケの聖地。',s:'sea'},{n:'秋芳洞・秋吉台',d:'東洋屈指の大鍾乳洞と、草原にカルストが連なる大台地。',s:'gorge'}],
+eats:[{n:'瓦そば たかせ',d:'熱々の瓦で焼く茶そば',price:'¥1,300〜',star:4.2},{n:'仙崎の海鮮丼',d:'イカと雲丹の港町めし',price:'¥1,800〜',star:4.3},{n:'夏みかんソフト',d:'萩名産の爽やかスイーツ',price:'¥400〜',star:4.0}],
+hotels:[{n:'界 長門',star:5,price:41800},{n:'ホテル西京',star:3,price:9900}]},
+{id:'nokogiri',name:'鋸山・金谷',pref:'千葉',area:'鋸南・金谷',emoji:'🪨',hours:1.5,gasToll:0.9,stayPP:1.0,foodPP:0.45,themes:['絶景','リフレッシュ','グルメ'],clim:[23,30],price:'安い',badge:'穴場',scene:'daibutsu',mapq:'鋸山 日本寺',
+desc:'断崖から突き出た「地獄のぞき」と日本最大級の磨崖大仏。アクアラインで海を渡れば、90分で非日常の岩山ハイクへ。',
+spots:[{n:'地獄のぞき',d:'垂直の崖から空中へせり出す展望台。足がすくむ絶景スリル。',s:'gorge'},{n:'日本寺大仏',d:'高さ31m、岩壁に彫られた日本最大級の大仏。境内は山全体。',s:'daibutsu'},{n:'鋸山 石切場跡',d:'採石が生んだ垂直90mの巨大岩壁。遺跡のような迫力。',s:'gorge'}],
+eats:[{n:'ばんや',d:'保田漁協直営の朝獲れ海鮮',price:'¥1,200〜',star:4.2},{n:'さすけ食堂',d:'行列必至の黄金アジフライ',price:'¥1,300〜',star:4.3},{n:'のこぎり山バウムクーヘン',d:'山型の年輪スイーツ',price:'¥600〜',star:4.1}],
+hotels:[{n:'龍宮城スパホテル三日月',star:4,price:19800},{n:'かぢや旅館',star:3,price:12100}]},
+{id:'shosenkyo',name:'昇仙峡・甲府',pref:'山梨',area:'昇仙峡・甲府',emoji:'🏞️',hours:2,gasToll:1.0,stayPP:1.1,foodPP:0.45,themes:['絶景','リフレッシュ'],clim:[22,32],price:'安い',badge:'穴場',scene:'gorge',mapq:'昇仙峡',
+desc:'「日本一の渓谷美」と称される奇岩の峡谷。滝と渓流を歩いたら、甲府でほうとうとワインを。2時間圏の実力派。',
+spots:[{n:'覚円峰',d:'高さ180mの花崗岩の岩峰。渓谷のシンボルを遊歩道から見上げる。',s:'gorge'},{n:'仙娥滝',d:'落差30mの名瀑。岩を割って落ちる水しぶきが涼やか。',s:'falls'},{n:'昇仙峡ロープウェイ',d:'山頂パノラマ台から富士山と南アルプスを一望。',s:'park'}],
+eats:[{n:'ほうとう 小作',d:'かぼちゃほうとうの名店',price:'¥1,300〜',star:4.2},{n:'金精軒',d:'信玄餅と夏季限定の水信玄餅',price:'¥400〜',star:4.3},{n:'サドヤワイナリー',d:'甲府駅近くの老舗ワイナリー',price:'¥1,000〜',star:4.1}],
+hotels:[{n:'常磐ホテル',star:4,price:25300},{n:'湯村温泉 楽水園',star:3,price:14300}]},
+{id:'venus',name:'ビーナスライン・諏訪',pref:'長野',area:'霧ヶ峰・諏訪',emoji:'🌼',hours:3,gasToll:1.9,stayPP:1.3,foodPP:0.5,themes:['絶景','リフレッシュ','フォトジェニック'],clim:[14,26],price:'普通',badge:'穴場',scene:'park',mapq:'立石公園 諏訪',
+desc:'標高2000mの雲上を走る日本屈指の絶景ロード。諏訪湖を見晴らす立石公園から霧ヶ峰、美ヶ原へ。夏でも涼しい高原の旅。',
+spots:[{n:'立石公園',d:'諏訪湖と市街を一望する高台。映画のワンシーンのようだと話題の展望地。',s:'lake'},{n:'霧ヶ峰 車山肩',d:'夏はニッコウキスゲが咲く大草原。360度さえぎるもののない展望。',s:'park'},{n:'美ヶ原高原',d:'牛が草をはむ標高2000mの台地。美しの塔とアルプスの大パノラマ。',s:'park'}],
+eats:[{n:'ころぼっくるひゅって',d:'霧ヶ峰の山小屋カフェ。名物ボルシチ',price:'¥1,100〜',star:4.3},{n:'そば処 山猫亭',d:'上諏訪の手打ちそば',price:'¥1,200〜',star:4.1},{n:'くらすわ',d:'信州フルーツのスイーツと地ビール',price:'¥800〜',star:4.2}],
+hotels:[{n:'王ヶ頭ホテル',star:4,price:35200},{n:'上諏訪温泉 しんゆ',star:4,price:24200}]},
+{id:'ise',name:'伊勢神宮・おかげ横丁',pref:'三重',area:'伊勢志摩',emoji:'🙏',hours:5.5,gasToll:3.5,stayPP:1.3,foodPP:0.55,themes:['文化遺産','グルメ'],clim:[24,32],price:'普通',badge:'王道スポット',scene:'torii',mapq:'伊勢神宮内宮',
+desc:'一生に一度はお伊勢参り。五十鈴川で心を清めて正宮へ、参拝後はおかげ横丁で赤福と食べ歩き。日本人の原点を巡る旅。',
+spots:[{n:'伊勢神宮 内宮',d:'天照大御神を祀る日本の総氏神。宇治橋を渡ると空気が変わる。',s:'torii'},{n:'おかげ横丁',d:'江戸〜明治の街並みを再現した参道グルメの聖地。',s:'street'},{n:'夫婦岩',d:'二見興玉神社の沖に並ぶ大小の岩。縁結びと日の出の名所。',s:'sea'}],
+eats:[{n:'赤福 本店',d:'できたての赤福餅と番茶',price:'¥300〜',star:4.4},{n:'ゑびや大食堂',d:'伊勢海老と手こね寿司',price:'¥2,000〜',star:4.1},{n:'豚捨',d:'明治創業の牛丼とコロッケ',price:'¥1,000〜',star:4.2}],
+hotels:[{n:'伊勢外宮参道 伊勢神泉',star:4,price:29700},{n:'鳥羽国際ホテル',star:4,price:27500}]},
+{id:'tojinbo',name:'東尋坊・永平寺',pref:'福井',area:'東尋坊・あわら',emoji:'🌊',hours:6.5,gasToll:4.0,stayPP:1.2,foodPP:0.5,themes:['絶景','文化遺産','グルメ'],clim:[23,30],price:'安い',badge:'穴場',scene:'lighthouse',mapq:'東尋坊',
+desc:'日本海に切り立つ柱状節理の大断崖と、雲水が修行する禅の大本山。越前おろしそばと海の幸で締める北陸ドライブ。',
+spots:[{n:'東尋坊',d:'高さ25mの岩柱が1km続く大断崖。遊覧船から見上げる迫力も格別。',s:'lighthouse'},{n:'永平寺',d:'樹齢700年の杉木立に立つ曹洞宗大本山。七堂伽藍の回廊を巡る。',s:'temple'},{n:'丸岡城',d:'現存十二天守のひとつ。素朴な石瓦の天守が美しい。',s:'castle'}],
+eats:[{n:'越前おろしそば',d:'大根おろしでいただく福井の名物',price:'¥900〜',star:4.2},{n:'三国港の海鮮丼',d:'甘えびがあふれる港町めし',price:'¥1,800〜',star:4.3},{n:'羽二重餅',d:'絹のようになめらかな銘菓',price:'¥400〜',star:4.0}],
+hotels:[{n:'あわら温泉 まつや千千',star:4,price:26400},{n:'三国温泉 荒磯亭',star:4,price:23100}]},
+{id:'nara',name:'奈良・東大寺',pref:'奈良',area:'奈良市内',emoji:'🦌',hours:6,gasToll:3.9,stayPP:1.3,foodPP:0.55,themes:['文化遺産','フォトジェニック','グルメ'],clim:[25,34],price:'普通',badge:'王道スポット',scene:'daibutsu',mapq:'東大寺',
+desc:'大仏と鹿の古都。世界最大級の木造建築に圧倒され、鹿せんべい片手に公園を歩き、朱の春日大社へ。歴史の教科書を歩く旅。',
+spots:[{n:'東大寺 大仏殿',d:'高さ15mの盧舎那仏。柱の穴くぐりも名物。',s:'daibutsu'},{n:'奈良公園',d:'約1200頭の鹿が暮らす公園。おじぎする鹿に癒される。',s:'park'},{n:'春日大社',d:'朱塗りの社殿と3000基の灯籠。原始林の参道が神秘的。',s:'inari'}],
+eats:[{n:'中谷堂',d:'高速餅つきのよもぎ餅',price:'¥200〜',star:4.3},{n:'柿の葉すし 平宗',d:'奈良を代表する郷土寿司',price:'¥1,000〜',star:4.1},{n:'大仏プリン',d:'瓶入りのなめらかプリン',price:'¥400〜',star:4.2}],
+hotels:[{n:'奈良ホテル',star:5,price:41800},{n:'ホテル日航奈良',star:4,price:17600}]},
+{id:'naruto',name:'鳴門・渦潮',pref:'徳島',area:'鳴門',emoji:'🌀',hours:7.5,gasToll:4.6,stayPP:1.2,foodPP:0.55,themes:['絶景','グルメ','フォトジェニック'],clim:[24,31],price:'普通',badge:'王道スポット',scene:'sea',mapq:'鳴門公園 渦の道',
+desc:'轟音とともに渦巻く世界最大級の渦潮。橋の上から、船の上から、大迫力の自然現象を体感したら名画の美術館へ。',
+spots:[{n:'渦の道',d:'鳴門大橋の車道下に伸びる遊歩道。ガラス床から45m下の渦を見下ろす。',s:'sea'},{n:'うずしお観潮船',d:'渦のすぐそばまで接近。大潮の時刻を狙うと直径20mの大渦も。',s:'lake'},{n:'大塚国際美術館',d:'世界の名画1000点余りを陶板で原寸再現。1日いられる規模。',s:'street'}],
+eats:[{n:'びんび家',d:'鳴門海峡の魚が並ぶ海鮮食堂',price:'¥1,500〜',star:4.2},{n:'いのたに',d:'徳島ラーメンの代名詞',price:'¥900〜',star:4.1},{n:'鳴門金時スイーツ',d:'ほくほく甘いさつまいも菓子',price:'¥400〜',star:4.2}],
+hotels:[{n:'アオアヲ ナルト リゾート',star:4,price:27500},{n:'ホテルリッジ',star:5,price:46200}]},
+{id:'chichibugahama',name:'父母ヶ浜・三豊',pref:'香川',area:'三豊・観音寺',emoji:'🪞',hours:8,gasToll:5.0,stayPP:1.0,foodPP:0.5,themes:['フォトジェニック','絶景','グルメ'],clim:[24,31],price:'安い',badge:'穴場',scene:'sea',mapq:'父母ヶ浜',
+desc:'干潮と夕暮れが重なる時だけ現れる天空の水鏡。日本のウユニ塩湖と話題の浜と、天空の鳥居、本場の讃岐うどんを一度に。',
+spots:[{n:'父母ヶ浜',d:'風のない干潮の夕方、浜が巨大な鏡に。反転写真の聖地。',s:'sea'},{n:'高屋神社 天空の鳥居',d:'標高404mの鳥居越しに瀬戸内と街を見下ろす絶景。',s:'torii'},{n:'紫雲出山',d:'瀬戸内の多島美を一望する展望地。春は桜の海になる。',s:'park'}],
+eats:[{n:'須崎食料品店',d:'行列のできる伝説のうどん店',price:'¥300〜',star:4.4},{n:'一鶴',d:'スパイス香る骨付鳥の元祖',price:'¥1,100〜',star:4.3},{n:'浜辺のカフェ',d:'夕日を待ちながら一服',price:'¥600〜',star:4.0}],
+hotels:[{n:'ことひら温泉 御宿 敷島館',star:4,price:28600},{n:'JRホテルクレメント高松',star:4,price:16500}]},
+{id:'katsurahama',name:'桂浜・高知',pref:'高知',area:'高知市・仁淀',emoji:'🌅',hours:9,gasToll:5.6,stayPP:1.1,foodPP:0.55,themes:['絶景','グルメ','リフレッシュ'],clim:[25,31],price:'安い',badge:'穴場',scene:'sea',mapq:'桂浜',
+desc:'龍馬像が太平洋を見つめる弓なりの浜。藁焼きカツオを頬張り、仁淀ブルーの清流へ。土佐の豪快とやさしさを味わう旅。',
+spots:[{n:'桂浜',d:'龍頭岬と龍王岬にはさまれた月の名所。坂本龍馬像が立つ。',s:'sea'},{n:'ひろめ市場',d:'高知の台所。藁焼きの炎が上がる屋台街で昼から乾杯。',s:'street'},{n:'にこ淵',d:'仁淀ブルーの原点といわれる神秘の淵。光が差す正午前後が狙い目。',s:'gorge'}],
+eats:[{n:'明神丸',d:'藁焼き鰹たたきの塩食べ',price:'¥1,300〜',star:4.4},{n:'芋屋金次郎',d:'揚げたて芋けんぴ',price:'¥400〜',star:4.3},{n:'アイスクリン',d:'浜辺で食べる素朴な高知アイス',price:'¥300〜',star:4.0}],
+hotels:[{n:'城西館',star:4,price:24200},{n:'ザ クラウンパレス新阪急高知',star:3,price:13200}]},
+{id:'dogo',name:'道後温泉・松山',pref:'愛媛',area:'道後・松山',emoji:'♨️',hours:10,gasToll:6.2,stayPP:1.4,foodPP:0.5,themes:['温泉','文化遺産','グルメ'],clim:[25,32],price:'普通',badge:'王道スポット',scene:'onsen',mapq:'道後温泉本館',
+desc:'日本最古級の湯に浸かり、浴衣でカランコロンと商店街へ。現存天守の松山城と鯛めしまで、湯の街情緒をまるごと味わう。',
+spots:[{n:'道後温泉本館',d:'明治27年築の木造公衆浴場。重要文化財の湯に今も入れる。',s:'onsen'},{n:'松山城',d:'現存十二天守のひとつ。リフトで登る本丸から市街と瀬戸内を一望。',s:'castle'},{n:'道後ハイカラ通り',d:'浴衣姿がよく似合うアーケード。湯上がりの食べ歩きに。',s:'street'}],
+eats:[{n:'かどや',d:'卵だしでいただく宇和島鯛めし',price:'¥1,600〜',star:4.2},{n:'一六本舗',d:'坊っちゃん団子と一六タルト',price:'¥300〜',star:4.1},{n:'道後麦酒館',d:'湯上がりの地ビールと じゃこ天',price:'¥800〜',star:4.2}],
+hotels:[{n:'道後温泉 ふなや',star:5,price:39600},{n:'ホテル古湧園 遥',star:4,price:25300}]},
+{id:'shima',name:'四万温泉・奥四万湖',pref:'群馬',area:'四万',emoji:'🛶',hours:3,gasToll:1.8,stayPP:1.2,foodPP:0.45,themes:['温泉','絶景','リフレッシュ'],clim:[19,28],price:'安い',badge:'穴場',scene:'gorge',mapq:'四万の甌穴',
+desc:'四万ブルーと呼ばれる青い川と湖、川底に開いた不思議な甌穴群。レトロな湯宿が残る山あいの温泉郷でととのう。',
+spots:[{n:'四万の甌穴群',d:'数万年の水流が川底の岩に開けた8つの穴。コバルトの流れと奇景。',s:'gorge'},{n:'奥四万湖',d:'吸い込まれそうな青のダム湖。カヌーで湖面散歩もできる。',s:'lake'},{n:'積善館 本館',d:'日本最古級の木造湯宿建築。赤い橋と湯屋のレトロな佇まい。',s:'onsen'}],
+eats:[{n:'柏屋カフェ',d:'温泉マークカプチーノの人気店',price:'¥700〜',star:4.2},{n:'おきなや',d:'名物の温泉まんじゅう',price:'¥150〜',star:4.1},{n:'水沢うどん',d:'帰路に寄れる日本三大うどん',price:'¥1,000〜',star:4.2}],
+hotels:[{n:'積善館',star:4,price:27500},{n:'四万たむら',star:4,price:24200}]},
+{id:'tateyama',name:'立山黒部アルペンルート',pref:'富山',area:'立山黒部',emoji:'🚡',hours:4.5,gasToll:2.9,stayPP:1.5,foodPP:0.5,themes:['絶景','リフレッシュ'],clim:[10,18],price:'やや高い',badge:'王道スポット',scene:'lake',mapq:'扇沢駅',
+desc:'車は扇沢まで、そこから電気バスとロープウェイを乗り継いで標高2450mの雲上へ。真夏でもひんやりの別世界。',
+spots:[{n:'黒部ダム',d:'高さ186m日本一のダム。夏の観光放水は虹がかかる大迫力。',s:'falls'},{n:'室堂・みくりが池',d:'立山三山を映す火山湖。雷鳥に会えたらラッキー。',s:'lake'},{n:'大観峰',d:'ロープウェイで渡る空中散歩。黒部湖と後立山連峰を一望。',s:'park'}],
+eats:[{n:'黒部ダムカレー',d:'ダム型ライスの名物カレー',price:'¥1,300〜',star:4.0},{n:'立山そば',d:'白えび天の駅そば',price:'¥800〜',star:4.1},{n:'雲上ソフト',d:'標高2450mで食べるご褒美',price:'¥500〜',star:4.2}],
+hotels:[{n:'ホテル立山',star:4,price:33000},{n:'大町温泉郷 緑翠亭 景水',star:4,price:20900}]},
+{id:'biwako',name:'琵琶湖・白鬚神社',pref:'滋賀',area:'湖西・彦根',emoji:'⛵',hours:5,gasToll:3.2,stayPP:1.1,foodPP:0.5,themes:['絶景','フォトジェニック','文化遺産'],clim:[23,32],price:'安い',badge:'穴場',scene:'lake',mapq:'白鬚神社',
+desc:'湖に浮かぶ大鳥居、どこまでも続くメタセコイア並木、国宝の天守。日本一の湖をぐるりと巡る映えドライブ。',
+spots:[{n:'白鬚神社',d:'琵琶湖の中に立つ大鳥居。朝日や月夜のシルエットが神秘的。',s:'torii'},{n:'メタセコイア並木',d:'2.4kmまっすぐ続く並木のトンネル。四季で表情が変わる。',s:'forest'},{n:'彦根城',d:'国宝五天守のひとつ。ひこにゃんにも会えるかも。',s:'castle'}],
+eats:[{n:'せんなり亭伽羅',d:'彦根で味わう近江牛',price:'¥2,500〜',star:4.2},{n:'クラブハリエ',d:'焼きたてバームクーヘン',price:'¥600〜',star:4.4},{n:'鮒ずし',d:'琵琶湖千年の発酵食に挑戦',price:'¥1,000〜',star:3.9}],
+hotels:[{n:'彦根キャッスル リゾート&スパ',star:4,price:24200},{n:'今津サンブリッジホテル',star:3,price:9900}]},
+{id:'kobe',name:'神戸・有馬温泉',pref:'兵庫',area:'神戸・有馬',emoji:'🚢',hours:6,gasToll:3.9,stayPP:1.4,foodPP:0.6,themes:['グルメ','温泉','フォトジェニック'],clim:[25,32],price:'やや高い',badge:'王道スポット',scene:'citynight',mapq:'メリケンパーク',
+desc:'港町の夜景と異人館、山を越えれば日本最古の名湯・有馬。神戸牛と中華街の食べ歩きも欠かせない欲張りコース。',
+spots:[{n:'メリケンパーク・神戸港',d:'ポートタワーとBE KOBEのモニュメント。夜はハーバーの夜景散歩。',s:'citynight'},{n:'北野異人館街',d:'坂の上に洋館が並ぶエキゾチックな街並み。',s:'street'},{n:'有馬温泉',d:'赤茶色の金泉で knownな日本三古湯。温泉街の路地歩きも楽しい。',s:'onsen'}],
+eats:[{n:'モーリヤ',d:'鉄板で味わう神戸牛ステーキ',price:'¥8,000〜',star:4.3},{n:'老祥記',d:'南京町の行列豚まん',price:'¥600〜',star:4.2},{n:'炭酸せんべい',d:'有馬名物の素朴な味',price:'¥400〜',star:4.0}],
+hotels:[{n:'有馬温泉 陶泉 御所坊',star:5,price:46200},{n:'ホテルオークラ神戸',star:4,price:23100}]},
+{id:'hiraizumi',name:'平泉・中尊寺',pref:'岩手',area:'平泉',emoji:'💫',hours:5.5,gasToll:3.4,stayPP:1.0,foodPP:0.45,themes:['文化遺産','リフレッシュ'],clim:[19,28],price:'安い',badge:'王道スポット',scene:'temple',mapq:'中尊寺',
+desc:'黄金に輝く金色堂と浄土庭園。奥州藤原氏の栄華を伝える世界遺産の里を、舟下りの渓谷とセットで巡る。',
+spots:[{n:'中尊寺金色堂',d:'皆金色の阿弥陀堂。900年の時を超える黄金の輝き。',s:'temple'},{n:'毛越寺',d:'浄土の世界を表す大泉が池の庭園。心が静まる。',s:'park'},{n:'猊鼻渓 舟下り',d:'高さ100mの断崖の間を棹一本で下る舟旅。',s:'gorge'}],
+eats:[{n:'駅前芭蕉館',d:'平泉わんこそば',price:'¥1,800〜',star:4.1},{n:'一関のもち膳',d:'餅文化の里のもち料理',price:'¥1,300〜',star:4.2},{n:'前沢牛にぎり',d:'とろける岩手のブランド牛',price:'¥1,000〜',star:4.3}],
+hotels:[{n:'しづか亭',star:3,price:15400},{n:'一関 蔵ホテル',star:3,price:9900}]},
+{id:'kakunodate',name:'角館・田沢湖',pref:'秋田',area:'角館・田沢湖',emoji:'🌸',hours:7,gasToll:4.3,stayPP:1.3,foodPP:0.5,themes:['文化遺産','温泉','フォトジェニック'],clim:[19,28],price:'普通',badge:'穴場',scene:'street',mapq:'角館 武家屋敷通り',
+desc:'みちのくの小京都で武家屋敷通りを歩き、瑠璃色の田沢湖へ。仕上げは乳白色の秘湯・鶴の湯。東北の名場面を凝縮。',
+spots:[{n:'角館 武家屋敷通り',d:'黒板塀としだれ桜の城下町。人力車でゆっくり巡るのも粋。',s:'street'},{n:'田沢湖',d:'水深日本一の瑠璃色の湖。金色のたつこ像が湖畔に立つ。',s:'lake'},{n:'乳頭温泉郷 鶴の湯',d:'秘湯ブームの原点。乳白色の露天と茅葺きの本陣。',s:'onsen'}],
+eats:[{n:'佐藤養助',d:'つるりとした稲庭うどん',price:'¥1,200〜',star:4.3},{n:'比内地鶏 親子丼',d:'濃厚な黄身と歯ごたえの地鶏',price:'¥1,400〜',star:4.2},{n:'味噌たんぽ',d:'炭火で香ばしいきりたんぽ',price:'¥400〜',star:4.1}],
+hotels:[{n:'田沢湖 森の風',star:4,price:20900},{n:'角館 町家ホテル',star:3,price:16500}]},
+{id:'izumo',name:'出雲大社',pref:'島根',area:'出雲',emoji:'🐇',hours:10,gasToll:6.4,stayPP:1.2,foodPP:0.5,themes:['文化遺産','グルメ','絶景'],clim:[24,31],price:'普通',badge:'王道スポット',scene:'torii',mapq:'出雲大社',
+desc:'縁結びの神様に会いに、神話の国へ。日本最大級の大注連縄、神迎の浜、断崖の白亜灯台。ご利益ドライブの最高峰。',
+spots:[{n:'出雲大社',d:'大国主大神を祀る縁結びの総本山。神楽殿の大注連縄は長さ13m。',s:'torii'},{n:'稲佐の浜',d:'神在月に八百万の神々を迎える浜。弁天島の夕日が美しい。',s:'sea'},{n:'日御碕灯台',d:'石造灯台として日本一の高さ。断崖と青い海のコントラスト。',s:'lighthouse'}],
+eats:[{n:'荒木屋',d:'江戸創業の出雲そば',price:'¥900〜',star:4.2},{n:'日本ぜんざい学会 壱号店',d:'ぜんざい発祥の地の一杯',price:'¥600〜',star:4.1},{n:'のどぐろ丼',d:'日本海の赤い宝石を豪快に',price:'¥2,000〜',star:4.3}],
+hotels:[{n:'お宿 月夜のうさぎ',star:4,price:24200},{n:'ツインリーブスホテル出雲',star:3,price:11000}]},
+{id:'kurashiki',name:'倉敷美観地区',pref:'岡山',area:'倉敷',emoji:'👖',hours:8,gasToll:5.0,stayPP:1.2,foodPP:0.55,themes:['文化遺産','フォトジェニック','グルメ'],clim:[24,32],price:'普通',badge:'王道スポット',scene:'street',mapq:'倉敷美観地区',
+desc:'白壁の蔵と柳の掘割を川舟がゆく江戸の町並み。名画の美術館とデニムの聖地、フルーツパフェまで盛りだくさん。',
+spots:[{n:'倉敷美観地区',d:'なまこ壁の蔵屋敷が並ぶ掘割沿い。川舟流しで水上散歩。',s:'street'},{n:'大原美術館',d:'日本初の西洋美術館。モネやエル・グレコに会える。',s:'temple'},{n:'児島ジーンズストリート',d:'国産ジーンズ発祥の地。デニムの空吊りが名物。',s:'street'}],
+eats:[{n:'ぶっかけうどん ふるいち',d:'倉敷のソウルフード',price:'¥600〜',star:4.1},{n:'くらしき桃子',d:'岡山フルーツの贅沢パフェ',price:'¥1,500〜',star:4.3},{n:'倉敷デニムまん',d:'青い皮の映え肉まん',price:'¥400〜',star:3.9}],
+hotels:[{n:'倉敷アイビースクエア',star:3,price:14300},{n:'料理旅館 鶴形',star:4,price:22000}]},
+{id:'itoshima',name:'糸島・太宰府',pref:'福岡',area:'糸島・太宰府',emoji:'🏖️',hours:11.5,gasToll:7.4,stayPP:1.2,foodPP:0.55,themes:['フォトジェニック','グルメ','リフレッシュ'],clim:[25,31],price:'普通',badge:'穴場',scene:'sea',mapq:'桜井二見ヶ浦',
+desc:'海に立つ白い鳥居とヤシの木ブランコ、映えの聖地・糸島をぐるり。学問の神様と梅ヶ枝餅の太宰府もセットで。',
+spots:[{n:'桜井二見ヶ浦',d:'白い鳥居越しに夫婦岩と夕日。糸島随一のサンセットスポット。',s:'torii'},{n:'太宰府天満宮',d:'学問の神様・菅原道真公を祀る総本宮。参道の食べ歩きも。',s:'inari'},{n:'ヤシの木ブランコ',d:'海辺のロンドンバスカフェ横。青い海を背に一枚。',s:'sea'}],
+eats:[{n:'またいちの塩 工房とったん',d:'海辺の製塩所の花塩プリン',price:'¥500〜',star:4.3},{n:'かさの家',d:'太宰府名物の焼きたて梅ヶ枝餅',price:'¥150〜',star:4.2},{n:'ロンドンバスカフェ',d:'2階建てバスのジェラート',price:'¥500〜',star:4.0}],
+hotels:[{n:'ホテルカルティア太宰府',star:4,price:30800},{n:'都ホテル博多',star:4,price:18700}]},
+{id:'yoshinogari',name:'吉野ヶ里・呼子',pref:'佐賀',area:'吉野ヶ里・嬉野',emoji:'🏺',hours:12,gasToll:7.6,stayPP:1.1,foodPP:0.55,themes:['文化遺産','グルメ'],clim:[25,33],price:'安い',badge:'穴場',scene:'park',mapq:'吉野ヶ里歴史公園',
+desc:'弥生時代の 環濠集落にタイムスリップし、豪華絢爛の祐徳稲荷へ。呼子で透きとおるイカの活造りを。',
+spots:[{n:'吉野ヶ里歴史公園',d:'物見やぐらと竪穴住居を復元した弥生の巨大集落。',s:'park'},{n:'祐徳稲荷神社',d:'総漆塗りの舞台造。日本三大稲荷のきらびやかな社殿。',s:'inari'},{n:'呼子朝市',d:'日本三大朝市。港町の路地に海の幸が並ぶ。',s:'street'}],
+eats:[{n:'河太郎 呼子店',d:'透明なイカの活造り発祥店',price:'¥3,000〜',star:4.3},{n:'季楽',d:'とろける佐賀牛',price:'¥3,500〜',star:4.2},{n:'嬉野温泉湯どうふ',d:'とろとろに溶ける名物豆腐',price:'¥900〜',star:4.1}],
+hotels:[{n:'嬉野温泉 大正屋',star:4,price:25300},{n:'ホテルグランデはがくれ',star:3,price:11000}]},
+{id:'beppu',name:'別府・湯布院',pref:'大分',area:'別府・湯布院',emoji:'🌋',hours:12,gasToll:7.8,stayPP:1.4,foodPP:0.55,themes:['温泉','絶景','グルメ'],clim:[24,31],price:'普通',badge:'王道スポット',scene:'onsen',mapq:'海地獄',
+desc:'湯けむり立ちのぼる温泉王国。コバルトブルーの地獄めぐりから、朝霧の金鱗湖へ。源泉数日本一の湯を浴び尽くす。',
+spots:[{n:'海地獄',d:'98度のコバルトブルーの池。地獄めぐりのハイライト。',s:'onsen'},{n:'湯布院 金鱗湖',d:'由布岳を映す小さな湖。朝霧が立つ幻想的な時間が有名。',s:'lake'},{n:'竹瓦温泉',d:'明治レトロな唐破風の共同湯。名物の砂湯で蒸される。',s:'onsen'}],
+eats:[{n:'地獄蒸し工房 鉄輪',d:'温泉の蒸気で蒸す海鮮と野菜',price:'¥1,200〜',star:4.2},{n:'東洋軒',d:'とり天発祥の店',price:'¥1,100〜',star:4.3},{n:'湯布院 金賞コロッケ',d:'湯の坪街道の食べ歩き定番',price:'¥250〜',star:4.0}],
+hotels:[{n:'杉乃井ホテル',star:4,price:26400},{n:'由布院 玉の湯',star:5,price:60500}]},
+{id:'kurokawa',name:'黒川温泉・阿蘇',pref:'熊本',area:'黒川・阿蘇',emoji:'♨️',hours:13,gasToll:8.0,stayPP:1.6,foodPP:0.55,themes:['温泉','絶景'],clim:[20,29],price:'やや高い',badge:'王道スポット',scene:'onsen',mapq:'黒川温泉',
+desc:'入湯手形で露天を巡る山里の名湯と、世界最大級のカルデラ・阿蘇。裏側から眺める滝も神秘的な、九州温泉旅の完成形。',
+spots:[{n:'黒川温泉 湯めぐり',d:'入湯手形1枚で3つの露天へ。統一感ある街並みが美しい。',s:'onsen'},{n:'鍋ヶ滝',d:'滝の裏側に回り込める「裏見の滝」。カーテンのような水のすだれ。',s:'falls'},{n:'大観峰',d:'阿蘇五岳とカルデラを一望する大パノラマ。雲海の名所。',s:'park'}],
+eats:[{n:'いまきん食堂',d:'行列必至のあか牛丼',price:'¥2,000〜',star:4.4},{n:'パティスリー麓',d:'湯あがりのシュークリーム',price:'¥300〜',star:4.3},{n:'とうふ吉祥',d:'山の湧水でつくる田楽と豆腐料理',price:'¥1,500〜',star:4.1}],
+hotels:[{n:'黒川温泉 御客屋',star:4,price:30800},{n:'山みず木',star:4,price:35200}]},
+{id:'takachiho',name:'高千穂峡',pref:'宮崎',area:'高千穂',emoji:'🚣',hours:13.5,gasToll:8.2,stayPP:1.2,foodPP:0.5,themes:['絶景','文化遺産','リフレッシュ'],clim:[22,31],price:'安い',badge:'王道スポット',scene:'gorge',mapq:'高千穂峡',
+desc:'柱状節理の断崖に真名井の滝が落ちる神話の峡谷。ボートで滝の間近へ、夜は神楽の里の静けさに包まれる。',
+spots:[{n:'高千穂峡',d:'貸しボートで真名井の滝の目の前へ。阿蘇溶岩が生んだ峡谷美。',s:'gorge'},{n:'天安河原',d:'八百万の神が集ったと伝わる洞窟。無数の積み石が神秘的。',s:'gorge'},{n:'高千穂神社',d:'夜神楽が奉納される神話の社。夫婦杉のご利益も。',s:'temple'}],
+eats:[{n:'千穂の家',d:'峡谷の湧水で流しそうめん',price:'¥700〜',star:4.1},{n:'高千穂牛レストラン 和',d:'日本一に輝いた和牛の焼肉',price:'¥3,000〜',star:4.3},{n:'チキン南蛮',d:'宮崎が誇るタルタルの元祖味',price:'¥1,000〜',star:4.2}],
+hotels:[{n:'旅館 神仙',star:5,price:41800},{n:'ソレスト高千穂ホテル',star:4,price:18700}]},
+{id:'ogawa',name:'雄川の滝・南大隅',pref:'鹿児島',area:'南大隅・指宿',emoji:'💧',hours:15.5,gasToll:9.5,stayPP:1.2,foodPP:0.5,themes:['絶景','リフレッシュ'],clim:[25,32],price:'安い',badge:'穴場',scene:'falls',mapq:'雄川の滝',
+desc:'エメラルドグリーンの滝壺に幅60mの水のカーテン。本土最南端の岬と桜島まで、九州の果てを目指す最長ロマン旅。',
+spots:[{n:'雄川の滝',d:'遊歩道の先に現れる神秘の滝壺。大河ドラマの映像でも話題に。',s:'falls'},{n:'佐多岬',d:'本土最南端の岬。展望台から屋久島・種子島が見える日も。',s:'lighthouse'},{n:'桜島',d:'フェリーで車ごと15分。噴煙を上げる活火山を間近に。',s:'sea'}],
+eats:[{n:'唐船峡そうめん流し',d:'回転式そうめん流し発祥の地',price:'¥1,000〜',star:4.2},{n:'鹿児島ラーメン',d:'豚骨×鶏ガラのまろやか白湯',price:'¥900〜',star:4.1},{n:'天文館むじゃき',d:'ふわふわ白熊かき氷の本家',price:'¥800〜',star:4.3}],
+hotels:[{n:'指宿 白水館',star:4,price:30800},{n:'ネッピー館',star:3,price:9900}]},
+{id:'sarushima',name:'猿島・横須賀',pref:'神奈川',area:'横須賀',emoji:'🏝️',hours:1,gasToll:0.4,stayPP:1.3,foodPP:0.5,themes:['リフレッシュ','フォトジェニック','グルメ'],clim:[23,29],price:'安い',badge:'穴場',scene:'forest',mapq:'三笠桟橋',
+desc:'東京湾唯一の自然島は、レンガ造りの要塞跡が眠る冒険の島。船でわずか10分、港町グルメとセットで半日冒険。',
+spots:[{n:'猿島',d:'旧軍の要塞跡とレンガのトンネル。緑に飲まれた遺構がラピュタ的世界観。',s:'forest'},{n:'ヴェルニー公園',d:'軍港を望むバラの公園。停泊する艦船を間近に。',s:'park'},{n:'どぶ板通り',d:'和洋が混ざるベースの街。スカジャン発祥の商店街。',s:'street'}],
+eats:[{n:'TSUNAMI',d:'ボリューム満点ネイビーバーガー',price:'¥1,500〜',star:4.2},{n:'よこすか海軍カレー',d:'明治のレシピを再現した元祖カレー',price:'¥1,000〜',star:4.1},{n:'横須賀チェリーチーズケーキ',d:'米海軍直伝の味',price:'¥500〜',star:4.0}],
+hotels:[{n:'メルキュールホテル横須賀',star:3,price:14300},{n:'葉山ホテル音羽ノ森',star:4,price:30800}]},
+{id:'miura',name:'三浦・城ヶ島',pref:'神奈川',area:'三浦',emoji:'🐟',hours:1,gasToll:0.5,stayPP:1.1,foodPP:0.5,themes:['グルメ','絶景','リフレッシュ'],clim:[23,29],price:'安い',badge:'穴場',scene:'lighthouse',mapq:'城ヶ島',
+desc:'三崎のマグロと断崖の島を巡る、拠点から1時間の海辺リセット旅。夕日の馬の背洞門は隠れた絶景。',
+spots:[{n:'城ヶ島 馬の背洞門',d:'波が削った天然の海蝕洞。磯歩きの先に現れるアーチ。',s:'lighthouse'},{n:'三崎漁港・うらり',d:'マグロの直売とグルメが集まる港の市場。',s:'street'},{n:'剱埼灯台',d:'畑の間を抜けた先の白い灯台。房総まで見渡す穴場。',s:'lighthouse'}],
+eats:[{n:'くろば亭',d:'マグロ料理の名物店',price:'¥2,000〜',star:4.3},{n:'三崎まぐろラーメン',d:'港町ならではの一杯',price:'¥900〜',star:4.0},{n:'三浦野菜の直売所',d:'大根とキャベツの名産地みやげ',price:'¥300〜',star:4.2}],
+hotels:[{n:'マホロバ・マインズ三浦',star:3,price:13200},{n:'観音崎京急ホテル',star:4,price:19800}]},
+{id:'takao',name:'高尾山',pref:'東京',area:'高尾',emoji:'👺',hours:1,gasToll:0.5,stayPP:1.1,foodPP:0.45,themes:['リフレッシュ','グルメ','文化遺産'],clim:[22,30],price:'安い',badge:'王道スポット',scene:'forest',mapq:'高尾山口駅',
+desc:'世界一登山者が多いといわれる都心の霊山。ケーブルカーでサクッと登って、とろろそばと天狗様に会いに行く。',
+spots:[{n:'高尾山 山頂',d:'標高599m。晴れた日は富士山まで望む都民のオアシス。',s:'forest'},{n:'高尾山薬王院',d:'天狗信仰の霊場。杉並木の参道と朱の本堂。',s:'temple'},{n:'ケーブルカーと展望台',d:'日本一の急勾配を6分で。ビアマウントの夜景も名物。',s:'park'}],
+eats:[{n:'高橋家',d:'名物とろろそばの老舗',price:'¥1,100〜',star:4.2},{n:'天狗焼',d:'黒豆あんの参道スイーツ',price:'¥200〜',star:4.3},{n:'TAKAO 599 CAFE',d:'ふもとのミュージアムカフェ',price:'¥600〜',star:4.0}],
+hotels:[{n:'タカオネ',star:3,price:13200},{n:'京王プラザホテル八王子',star:3,price:9900}]},
+{id:'okutama',name:'奥多摩',pref:'東京',area:'奥多摩',emoji:'⛰️',hours:1.5,gasToll:0.6,stayPP:1.1,foodPP:0.45,themes:['絶景','リフレッシュ'],clim:[20,29],price:'安い',badge:'穴場',scene:'lake',mapq:'奥多摩湖',
+desc:'東京とは思えない山と渓谷の別世界。ドラム缶橋を渡り、鍾乳洞で涼み、エメラルドの淵を歩く都内随一の避暑ドライブ。',
+spots:[{n:'奥多摩湖 麦山浮橋',d:'湖面を歩けるドラム缶橋。揺れる感覚がクセになる。',s:'lake'},{n:'日原鍾乳洞',d:'年間11°Cの地底世界。ライトアップされた大空間は圧巻。',s:'gorge'},{n:'鳩ノ巣渓谷',d:'吊り橋と巨岩の渓谷散策路。川辺のカフェも点在。',s:'gorge'}],
+eats:[{n:'釜めし なかい',d:'囲炉裏のある古民家釜めし',price:'¥1,600〜',star:4.2},{n:'VERTERE',d:'奥多摩発のクラフトビール',price:'¥900〜',star:4.3},{n:'澤乃井 きき酒処',d:'青梅の酒蔵で利き酒',price:'¥500〜',star:4.2}],
+hotels:[{n:'奥多摩の風 はとのす荘',star:4,price:20900},{n:'玉翠荘',star:3,price:11000}]},
+{id:'kimitsu',name:'濃溝の滝・マザー牧場',pref:'千葉',area:'君津・鹿野山',emoji:'🐮',hours:1.5,gasToll:0.9,stayPP:1.0,foodPP:0.5,themes:['フォトジェニック','リフレッシュ','グルメ'],clim:[23,30],price:'安い',badge:'穴場',scene:'gorge',mapq:'濃溝の滝',
+desc:'洞窟に差す光がハートを描くSNSの聖地と、丘の上の牧場。アクアラインを渡れば90分、房総のいいとこ取りコース。',
+spots:[{n:'濃溝の滝・亀岩の洞窟',d:'早朝、洞窟の水面に光のハートが浮かぶ。3〜9月の晴れた朝が狙い目。',s:'gorge'},{n:'マザー牧場',d:'花畑と動物ふれあいの観光牧場。こぶたのレースが人気。',s:'park'},{n:'九十九谷展望公園',d:'幾重にも連なる山並み。秋冬の雲海と朝焼けの名所。',s:'park'}],
+eats:[{n:'梅乃家',d:'竹岡式ラーメンの総本山',price:'¥800〜',star:4.1},{n:'マザー牧場ソフト',d:'搾りたてミルクの濃厚ソフト',price:'¥450〜',star:4.3},{n:'はかりめ丼',d:'富津名物の穴子丼',price:'¥1,500〜',star:4.2}],
+hotels:[{n:'亀山温泉ホテル',star:3,price:14300},{n:'オークラアカデミアパークホテル',star:4,price:17600}]},
+{id:'nagoya',name:'ジブリパーク・名古屋',pref:'愛知',area:'名古屋・長久手',emoji:'🎡',hours:4.5,gasToll:2.9,stayPP:1.3,foodPP:0.6,themes:['フォトジェニック','グルメ','文化遺産'],clim:[24,33],price:'普通',badge:'王道スポット',scene:'park',mapq:'ジブリパーク',
+desc:'森の中の世界観に浸れる話題のパークと、金鯱輝く名古屋城。ひつまぶしに味噌カツ、なごやめしも全部乗せの欲張り旅。',
+spots:[{n:'ジブリパーク',d:'愛・地球博記念公園内の5エリア。※日時指定の事前予約制なので計画的に。',s:'forest'},{n:'レゴランド・ジャパン',d:'ブロックの世界に飛び込むテーマパーク。金城ふ頭で1日遊べる。',s:'park'},{n:'名古屋城',d:'金の鯱を頂く天下の名城。本丸御殿の障壁画も豪華絢爛。',s:'castle'}],
+eats:[{n:'あつた蓬莱軒',d:'ひつまぶし発祥の老舗',price:'¥4,000〜',star:4.4},{n:'矢場とん',d:'味噌カツの代名詞',price:'¥1,400〜',star:4.2},{n:'コメダ珈琲店',d:'小倉トーストでなごやモーニング',price:'¥600〜',star:4.1}],
+hotels:[{n:'レゴランド・ジャパン・ホテル',star:4,price:35200},{n:'名古屋JRゲートタワーホテル',star:4,price:18700}]},
+{id:'osaka',name:'USJ・大阪ベイ',pref:'大阪',area:'大阪ベイ・ミナミ',emoji:'🎢',hours:6,gasToll:3.9,stayPP:1.5,foodPP:0.65,themes:['フォトジェニック','グルメ','リフレッシュ'],clim:[25,33],price:'やや高い',badge:'王道スポット',scene:'citynight',mapq:'ユニバーサル・スタジオ・ジャパン',
+desc:'世界レベルの絶叫とショーで遊び倒し、ジンベエザメに癒され、夜は道頓堀で食い倒れ。エンタメ全部盛りの大阪湾岸。',
+spots:[{n:'ユニバーサル・スタジオ・ジャパン',d:'アトラクションもショーも全力。※チケットは日付指定の事前購入が安心。',s:'park'},{n:'海遊館',d:'太平洋の大水槽をジンベエザメが泳ぐ世界最大級の水族館。',s:'sea'},{n:'道頓堀',d:'グリコ看板とネオンの食い倒れストリート。夜が本番。',s:'citynight'}],
+eats:[{n:'たこ焼 わなか',d:'外カリ中とろの本場だこ',price:'¥600〜',star:4.2},{n:'だるま',d:'二度づけ禁止の元祖串カツ',price:'¥1,500〜',star:4.1},{n:'551蓬莱',d:'アツアツの豚まん',price:'¥400〜',star:4.3}],
+hotels:[{n:'ホテル ユニバーサル ポート',star:4,price:27500},{n:'クロスホテル大阪',star:4,price:19800}]},
+{id:'nagasaki',name:'ハウステンボス・九十九島',pref:'長崎',area:'佐世保・HTB',emoji:'🌷',hours:13,gasToll:8.0,stayPP:1.4,foodPP:0.6,themes:['フォトジェニック','絶景','グルメ'],clim:[25,32],price:'普通',badge:'王道スポット',scene:'street',mapq:'ハウステンボス',
+desc:'運河と花の街を歩き、日本一のイルミネーションに包まれる夜。翌日は208の島が浮かぶ九十九島をクルーズで。',
+spots:[{n:'ハウステンボス',d:'ヨーロッパの街並みが広がる日本最大級のテーマパーク。夜の光の王国は必見。',s:'street'},{n:'九十九島遊覧船',d:'リアス海岸に浮かぶ島々を縫って進むパールクイーン号。',s:'bay'},{n:'展海峰',d:'九十九島を一望する展望台。夕暮れのシルエットが絶景。',s:'lighthouse'}],
+eats:[{n:'ヒカリ',d:'佐世保バーガーの人気店',price:'¥800〜',star:4.2},{n:'ちゃんぽん・皿うどん',d:'長崎が誇る麺の二枚看板',price:'¥1,000〜',star:4.2},{n:'レモンステーキ',d:'佐世保生まれの鉄板名物',price:'¥1,800〜',star:4.1}],
+hotels:[{n:'ホテルヨーロッパ',star:5,price:41800},{n:'ホテルオークラJRハウステンボス',star:4,price:25300}]},
+{id:'kisarazu',name:'江川海岸・ドイツ村',pref:'千葉',area:'木更津・袖ケ浦',emoji:'🌇',hours:1,gasToll:0.8,stayPP:1.0,foodPP:0.5,themes:['フォトジェニック','リフレッシュ'],clim:[23,30],price:'安い',badge:'穴場',scene:'sea',mapq:'江川海岸',
+desc:'干潟に夕日が沈む江川海岸と、花とイルミの東京ドイツ村。アクアラインを渡って1時間、黄昏ドライブの定番コース。',
+spots:[{n:'江川海岸',d:'夕日が海面を染める干潟。名物だった海中電柱は撤去されたが、今も夕景の名所。',s:'sea'},{n:'東京ドイツ村',d:'広大な花畑と関東三大イルミネーション。園内は車で移動できる。',s:'park'},{n:'中の島大橋',d:'高さ27m、日本一高い歩道橋。富士山と夕日のビュースポット。',s:'lighthouse'}],
+eats:[{n:'やまよ',d:'木更津港のあなご天丼',price:'¥1,500〜',star:4.2},{n:'のうえんカフェ',d:'袖ケ浦の農園ごはん',price:'¥1,200〜',star:4.1},{n:'バウムクーヘン工房 見波亭',d:'焼きたてのしっとり生地',price:'¥600〜',star:4.2}],
+hotels:[{n:'龍宮城スパホテル三日月',star:4,price:19800},{n:'ホテルトリフィート木更津',star:3,price:11000}]},
+{id:'minamiizu',name:'下田・南伊豆',pref:'静岡',area:'下田・南伊豆',emoji:'💙',hours:3,gasToll:1.6,stayPP:1.3,foodPP:0.55,themes:['絶景','フォトジェニック','リフレッシュ'],clim:[24,30],price:'普通',badge:'穴場',scene:'sea',mapq:'龍宮窟',
+desc:'上から見るとハート形の洞窟、白砂のビーチ、7つの滝めぐり。伊豆の先っぽには映えと涼が詰まっている。',
+spots:[{n:'龍宮窟',d:'天窓から光が差す海食洞。上の遊歩道から見下ろすとハート形に。',s:'gorge'},{n:'白浜神社と白浜大浜',d:'伊豆最古の宮と白砂のビーチ。海に立つ赤鳥居が印象的。',s:'sea'},{n:'河津七滝',d:'7つの滝を遊歩道でめぐる。踊り子気分のループ橋も名物。',s:'falls'}],
+eats:[{n:'青木さざえ店',d:'伊勢海老ラーメンの名物店',price:'¥2,000〜',star:4.1},{n:'下田バーガー',d:'金目鯛フライの豪快バーガー',price:'¥1,100〜',star:4.2},{n:'河津の わさび丼',d:'すりたて本わさびの一杯',price:'¥800〜',star:4.3}],
+hotels:[{n:'下田大和館',star:4,price:26400},{n:'ホテル伊豆急',star:3,price:17600}]},
+{id:'nishiizu',name:'堂ヶ島・西伊豆',pref:'静岡',area:'堂ヶ島・西伊豆',emoji:'🕳️',hours:3.5,gasToll:1.8,stayPP:1.3,foodPP:0.55,themes:['絶景','リフレッシュ'],clim:[24,30],price:'普通',badge:'穴場',scene:'lighthouse',mapq:'堂ヶ島 天窓洞',
+desc:'天井から光が落ちる青の洞くつを遊覧船で。夕日の名所・西伊豆は、干潮に道が現れる島歩きも楽しい。',
+spots:[{n:'堂ヶ島 天窓洞',d:'天然記念物の海食洞。遊覧船で洞内へ、差し込む光が青く輝く。',s:'gorge'},{n:'三四郎島のトンボロ',d:'干潮時だけ島まで歩ける道が現れる。潮見表をチェック。',s:'sea'},{n:'黄金崎',d:'夕日に黄金色へ染まる崖。馬の頭に見える岩が人気。',s:'lighthouse'}],
+eats:[{n:'沖あがり食堂',d:'イカス丼で知られる漁協食堂',price:'¥1,000〜',star:4.2},{n:'松崎の桜葉餅',d:'桜葉生産日本一の町の銘菓',price:'¥300〜',star:4.1},{n:'堂ヶ島 塩ソフト',d:'遊覧船待ちの一本',price:'¥450〜',star:4.0}],
+hotels:[{n:'堂ヶ島ニュー銀水',star:4,price:30800},{n:'土肥温泉 玉樟園新井',star:3,price:16500}]},
+{id:'kirifuri',name:'霧降高原・キスゲ平',pref:'栃木',area:'霧降高原',emoji:'🌿',hours:2.5,gasToll:1.4,stayPP:1.1,foodPP:0.45,themes:['絶景','リフレッシュ'],clim:[16,26],price:'安い',badge:'穴場',scene:'park',mapq:'キスゲ平園地',
+desc:'1445段の天空回廊を登れば、ニッコウキスゲの群落と雲海のパノラマ。日光の喧騒を離れた高原の別天地。',
+spots:[{n:'キスゲ平園地',d:'天空回廊の階段を登る絶景スポット。初夏は黄色い花の斜面に。',s:'park'},{n:'霧降ノ滝',d:'霧のように水が舞う二段の滝。観瀑台から紅葉も見事。',s:'falls'},{n:'大笹牧場',d:'標高1300mの牧場。ブラウンスイス牛のソフトが絶品。',s:'park'}],
+eats:[{n:'大笹牧場ソフトクリーム',d:'濃厚ミルクの牧場ソフト',price:'¥450〜',star:4.3},{n:'霧降庵',d:'高原の手打ちそば',price:'¥1,000〜',star:4.0},{n:'日光ゆばコロッケ',d:'サクとろ食べ歩き',price:'¥300〜',star:4.1}],
+hotels:[{n:'日光アストリアホテル',star:3,price:15400},{n:'鬼怒川金谷ホテル',star:5,price:49500}]},
+{id:'daigo',name:'袋田の滝・奥久慈',pref:'茨城',area:'奥久慈',emoji:'🧊',hours:2.5,gasToll:1.3,stayPP:1.0,foodPP:0.45,themes:['絶景','リフレッシュ','グルメ'],clim:[21,30],price:'安い',badge:'王道スポット',scene:'falls',mapq:'袋田の滝',
+desc:'四段120mを流れ落ちる日本三名瀑と、歩くと揺れる大吊橋。奥久慈しゃもと鮎で締める、北関東の実力派コース。',
+spots:[{n:'袋田の滝',d:'幅73mの大岩壁を四段に落ちる名瀑。観瀑トンネルから間近に。',s:'falls'},{n:'竜神大吊橋',d:'高さ100mのダム湖に架かる歩行者専用橋。バンジーの聖地。',s:'gorge'},{n:'月待の滝',d:'滝の裏側に入れる「裏見の滝」。夏はそばと川床が涼しい。',s:'falls'}],
+eats:[{n:'奥久慈しゃも親子丼',d:'日本一に輝いた地鶏の濃厚丼',price:'¥1,500〜',star:4.3},{n:'久慈川の鮎塩焼き',d:'清流育ちを炭火で',price:'¥800〜',star:4.2},{n:'奥久慈りんごパイ',d:'山あいの果樹園スイーツ',price:'¥400〜',star:4.0}],
+hotels:[{n:'袋田温泉 思い出浪漫館',star:4,price:20900},{n:'ホテル奥久慈館',star:3,price:11000}]},
+{id:'ashikaga',name:'あしかが・足利',pref:'栃木',area:'足利・佐野',emoji:'💜',hours:1.5,gasToll:0.8,stayPP:0.9,foodPP:0.45,themes:['フォトジェニック','文化遺産','グルメ'],clim:[23,32],price:'安い',badge:'王道スポット',scene:'park',mapq:'あしかがフラワーパーク',
+desc:'奇跡の大藤とイルミネーションで世界的に知られる花の楽園。日本最古の学校と縁結びの神社をはしごする歴史散歩も。',
+spots:[{n:'あしかがフラワーパーク',d:'樹齢160年の大藤棚と、冬の大イルミネーション。季節ごとに主役が変わる。',s:'park'},{n:'足利学校',d:'日本最古の学校と伝わる史跡。孔子廟と枯山水の庭。',s:'temple'},{n:'足利織姫神社',d:'229段の石段の上、朱塗りの縁結び社。夜景も美しい。',s:'inari'}],
+eats:[{n:'佐野ラーメン',d:'青竹打ちのちぢれ麺',price:'¥800〜',star:4.2},{n:'いもフライ',d:'ソース香る佐野のソウルフード',price:'¥200〜',star:4.1},{n:'ココ・ファーム・ワイナリー',d:'山の斜面の葡萄畑カフェ',price:'¥1,000〜',star:4.3}],
+hotels:[{n:'ニューミヤコホテル足利',star:3,price:9900},{n:'佐野プレミアムホテル',star:3,price:11000}]},
+{id:'tomioka',name:'富岡製糸場・妙義',pref:'群馬',area:'富岡・妙義',emoji:'🧵',hours:2,gasToll:1.1,stayPP:1.0,foodPP:0.45,themes:['文化遺産','絶景','グルメ'],clim:[22,32],price:'安い',badge:'王道スポット',scene:'street',mapq:'富岡製糸場',
+desc:'近代日本の夜明けを支えた世界遺産の製糸場と、奇岩そびえる妙義山。こんにゃくの無料バイキングまで、渋くて楽しい。',
+spots:[{n:'富岡製糸場',d:'明治5年創業の官営工場。レンガの繰糸所は圧巻のスケール。',s:'street'},{n:'妙義山 石門めぐり',d:'奇岩と石のアーチをくぐるスリル満点の登山道。中之嶽神社の大黒様も。',s:'gorge'},{n:'こんにゃくパーク',d:'工場見学と無料バイキング。こんにゃく詰め放題が名物。',s:'park'}],
+eats:[{n:'おっきりこみ',d:'幅広麺の群馬の郷土鍋',price:'¥1,000〜',star:4.1},{n:'峠の釜めし おぎのや',d:'益子焼の釜で炊く名物駅弁',price:'¥1,300〜',star:4.3},{n:'下仁田ねぎコロッケ',d:'甘いねぎがとろける',price:'¥250〜',star:4.0}],
+hotels:[{n:'妙義グリーンホテル',star:3,price:14300},{n:'磯部温泉 舌切雀のお宿 ほてる木暮',star:4,price:24200}]},
+{id:'fukiware',name:'吹割の滝・沼田',pref:'群馬',area:'沼田・老神',emoji:'🌊',hours:2.5,gasToll:1.4,stayPP:1.1,foodPP:0.45,themes:['絶景','リフレッシュ'],clim:[19,29],price:'安い',badge:'穴場',scene:'falls',mapq:'吹割の滝',
+desc:'川底が割れて水が吸い込まれる「東洋のナイアガラ」。夏はラベンダーの丘、里の温泉と、沼田の涼を巡る。',
+spots:[{n:'吹割の滝',d:'幅30mのV字谷へ轟音とともに落ちる滝。遊歩道から間近に。',s:'falls'},{n:'たんばらラベンダーパーク',d:'標高1300mに5万株。夏でも涼しい紫の丘。',s:'park'},{n:'老神温泉',d:'片品渓谷沿いの静かな湯の里。朝市も名物。',s:'onsen'}],
+eats:[{n:'とんかつ街道',d:'沼田名物のやわらかロースかつ',price:'¥1,400〜',star:4.2},{n:'川場田園プラザ',d:'日本一の道の駅で飲むヨーグルト',price:'¥300〜',star:4.4},{n:'たんばらソフト',d:'ラベンダー香る高原ソフト',price:'¥450〜',star:4.0}],
+hotels:[{n:'老神温泉 東秀館',star:3,price:15400},{n:'川場温泉 かやぶきの源泉湯宿 悠湯里庵',star:5,price:41800}]},
+{id:'hokuto',name:'北杜・尾白川',pref:'山梨',area:'北杜・清里',emoji:'🌻',hours:2,gasToll:1.1,stayPP:1.2,foodPP:0.5,themes:['絶景','リフレッシュ','フォトジェニック'],clim:[18,29],price:'普通',badge:'穴場',scene:'forest',mapq:'尾白川渓谷',
+desc:'甲斐駒ヶ岳の雪解け水が流れるエメラルドの渓谷と、夏空に咲く60万本のひまわり。八ヶ岳の麓は涼と映えの宝庫。',
+spots:[{n:'尾白川渓谷',d:'透明度抜群の千ヶ淵で川遊び。名水百選の聖地。',s:'gorge'},{n:'明野ひまわり畑',d:'日照時間日本一の丘に咲く大輪の海。夏限定の絶景。',s:'park'},{n:'清里テラス',d:'リフトで標高1900mへ。ソファから八ヶ岳ブルーを一望。',s:'park'}],
+eats:[{n:'台ヶ原 金精軒',d:'名水でつくる信玄餅と水信玄餅',price:'¥400〜',star:4.3},{n:'清泉寮ソフトクリーム',d:'清里名物のジャージーソフト',price:'¥500〜',star:4.4},{n:'七賢 酒蔵カフェ',d:'名水仕込みの日本酒と甘酒スイーツ',price:'¥800〜',star:4.2}],
+hotels:[{n:'リゾナーレ八ヶ岳',star:5,price:41800},{n:'清里高原ホテル',star:4,price:23100}]},
+{id:'togakushi',name:'戸隠',pref:'長野',area:'戸隠',emoji:'🥷',hours:3.5,gasToll:2.2,stayPP:1.2,foodPP:0.5,themes:['文化遺産','リフレッシュ','絶景'],clim:[16,27],price:'普通',badge:'穴場',scene:'forest',mapq:'戸隠神社奥社',
+desc:'樹齢400年の杉並木を抜けて奥社へ。神話と忍者の里で、鏡池に映る戸隠連峰と本場の戸隠そばを味わう。',
+spots:[{n:'戸隠神社 奥社',d:'500mの杉並木参道の先、岩壁に張り付く社。空気が変わる聖域。',s:'forest'},{n:'鏡池',d:'風のない朝、戸隠連峰を鏡のように映す絶景の池。',s:'lake'},{n:'中社門前そば街',d:'そば屋と宿坊が並ぶ門前町。忍者からくり屋敷も。',s:'street'}],
+eats:[{n:'うずら家',d:'行列の絶えない戸隠そばの名店',price:'¥1,200〜',star:4.4},{n:'そばソフトクリーム',d:'香ばしいそば粉のご当地ソフト',price:'¥400〜',star:4.0},{n:'竹細工の店の おやき',d:'囲炉裏で焼く信州の味',price:'¥250〜',star:4.1}],
+hotels:[{n:'戸隠神告げ温泉 宿坊 極意',star:3,price:16500},{n:'ホテル国際21',star:3,price:14300}]},
+{id:'hakuba',name:'白馬・岩岳',pref:'長野',area:'白馬',emoji:'🏔️',hours:4,gasToll:2.5,stayPP:1.5,foodPP:0.55,themes:['絶景','リフレッシュ','フォトジェニック'],clim:[15,27],price:'やや高い',badge:'王道スポット',scene:'lake',mapq:'白馬岩岳マウンテンリゾート',
+desc:'ゴンドラで上がれば北アルプス三山が目の前。山頂テラスの絶景ブランコと、鏡のような八方池へ。夏の白馬は天国です。',
+spots:[{n:'白馬岩岳マウンテンリゾート',d:'山頂のマウンテンハーバーで絶景テラス。ヤッホースウィングも人気。',s:'park'},{n:'八方池',d:'リフトとトレッキングで約90分。白馬三山を映す天空の鏡。',s:'lake'},{n:'白馬大橋',d:'松川越しに三山を望む定番ビュー。朝の澄んだ空気が最高。',s:'lake'}],
+eats:[{n:'THE CITY BAKERY 白馬',d:'山頂テラスの絶景ベーカリー',price:'¥800〜',star:4.2},{n:'白馬ジャンボ おやき',d:'囲炉裏端の信州おやき',price:'¥300〜',star:4.1},{n:'雷鳥の里',d:'信州定番の銘菓をおみやげに',price:'¥700〜',star:4.2}],
+hotels:[{n:'白馬東急ホテル',star:4,price:33000},{n:'白馬ハイランドホテル',star:4,price:24200}]},
+{id:'kisoji',name:'木曽路・奈良井宿と馬籠',pref:'長野',area:'木曽路',emoji:'🏮',hours:3.5,gasToll:2.2,stayPP:1.1,foodPP:0.5,themes:['文化遺産','フォトジェニック','グルメ'],clim:[19,29],price:'安い',badge:'穴場',scene:'street',mapq:'奈良井宿',
+desc:'江戸の旅人気分で中山道を歩く。日本最長の宿場・奈良井から、石畳の坂の馬籠へ。木曽路はすべて山の中、風情の中。',
+spots:[{n:'奈良井宿',d:'約1km続く日本最長の宿場町。千本格子の町家が今も現役。',s:'street'},{n:'馬籠宿',d:'石畳の坂に水車が回る宿場。展望台から恵那山を一望。※岐阜県側。',s:'street'},{n:'妻籠宿',d:'保存運動発祥の宿場。馬籠から峠越えハイクも人気。',s:'street'}],
+eats:[{n:'五平餅',d:'くるみ味噌の香ばしい串餅',price:'¥300〜',star:4.2},{n:'手打ちそば こころ音',d:'奈良井の古民家そば',price:'¥1,200〜',star:4.3},{n:'栗こわめし',d:'木曽路の秋の名物めし',price:'¥1,000〜',star:4.1}],
+hotels:[{n:'奈良井宿 御宿 伊勢屋',star:3,price:18700},{n:'ホテル木曽路',star:4,price:22000}]},
+{id:'zao',name:'蔵王・お釜',pref:'宮城',area:'蔵王',emoji:'🌋',hours:4.5,gasToll:2.8,stayPP:1.2,foodPP:0.5,themes:['絶景','温泉','リフレッシュ'],clim:[13,23],price:'普通',badge:'王道スポット',scene:'lake',mapq:'蔵王 御釜',
+desc:'エメラルドグリーンの火口湖・お釜を目指して、雲の上の山岳道路をドライブ。麓の温泉と遠刈田こけしも味わい深い。',
+spots:[{n:'御釜',d:'五色に色を変える神秘の火口湖。駐車場から徒歩すぐの大絶景。',s:'lake'},{n:'蔵王エコーライン',d:'雲海の上を走る山岳観光道路。滝見台からの三段滝も。',s:'park'},{n:'遠刈田温泉',d:'こけしの里の共同湯。神の湯で山旅の疲れを流す。',s:'onsen'}],
+eats:[{n:'蔵王チーズ',d:'工場直売のクリームチーズ',price:'¥500〜',star:4.2},{n:'遠刈田 味来',d:'とろける蔵王牛の焼肉',price:'¥2,500〜',star:4.3},{n:'蔵王ソフトクリーム',d:'濃厚ミルクの山麓ソフト',price:'¥400〜',star:4.1}],
+hotels:[{n:'ゆと森倶楽部',star:4,price:29700},{n:'アクティブリゾーツ宮城蔵王',star:3,price:15400}]},
+{id:'sanriku',name:'浄土ヶ浜・龍泉洞',pref:'岩手',area:'三陸・盛岡',emoji:'🚤',hours:7.5,gasToll:4.6,stayPP:1.1,foodPP:0.5,themes:['絶景','リフレッシュ','文化遺産'],clim:[18,26],price:'安い',badge:'穴場',scene:'sea',mapq:'浄土ヶ浜',
+desc:'極楽浄土のような白い岩浜から、さっぱ船で青の洞窟「八戸穴」へ。ドラゴンブルーの地底湖と盛岡の赤レンガも巡る三陸旅。',
+spots:[{n:'浄土ヶ浜と青の洞窟',d:'白い流紋岩と群青の海。さっぱ船で八戸穴と呼ばれる青の洞窟へ。',s:'sea'},{n:'龍泉洞',d:'日本三大鍾乳洞。透明度世界屈指のドラゴンブルーの地底湖。',s:'gorge'},{n:'岩手銀行赤レンガ館',d:'東京駅の設計者による明治の銀行建築。盛岡のシンボル。',s:'street'}],
+eats:[{n:'浄土ヶ浜 磯ラーメン',d:'海藻と魚介たっぷりの潮味',price:'¥1,000〜',star:4.1},{n:'盛岡冷麺 ぴょんぴょん舎',d:'コシの強い名物冷麺',price:'¥1,100〜',star:4.3},{n:'福田パン',d:'盛岡ソウルフードのコッペパン',price:'¥300〜',star:4.4}],
+hotels:[{n:'浄土ヶ浜パークホテル',star:4,price:22000},{n:'ホテルメトロポリタン盛岡',star:4,price:14300}]},
+{id:'urabandai',name:'裏磐梯・五色沼',pref:'福島',area:'裏磐梯',emoji:'🎨',hours:3.5,gasToll:2.2,stayPP:1.2,foodPP:0.5,themes:['絶景','リフレッシュ'],clim:[17,27],price:'普通',badge:'穴場',scene:'lake',mapq:'五色沼湖沼群',
+desc:'コバルト、ターコイズ、エメラルド。歩くたびに色を変える神秘の沼めぐり。磐梯山を映す湖でカヌーも楽しめる高原リゾート。',
+spots:[{n:'五色沼湖沼群',d:'毘沙門沼から柳沼まで約4kmの探勝路。沼ごとに青の色が違う。',s:'lake'},{n:'桧原湖',d:'裏磐梯最大の湖。カヌーや遊覧船で磐梯山の荒々しい北壁を望む。',s:'lake'},{n:'諸橋近代美術館',d:'湖畔に立つダリの殿堂。中世の厩舎のような建築も見どころ。',s:'castle'}],
+eats:[{n:'会津山塩ラーメン',d:'温泉から生まれた山塩の澄んだ一杯',price:'¥1,000〜',star:4.2},{n:'桧原湖畔のソースカツ丼',d:'会津名物を湖を見ながら',price:'¥1,300〜',star:4.1},{n:'森のヨーグルト',d:'磐梯高原の濃厚スイーツ',price:'¥400〜',star:4.2}],
+hotels:[{n:'裏磐梯レイクリゾート',star:4,price:23100},{n:'ペンション ぼなぺてぃ',star:3,price:13200}]},
+{id:'omihachiman',name:'近江八幡・八幡堀',pref:'滋賀',area:'近江八幡',emoji:'🚣',hours:5,gasToll:3.2,stayPP:1.1,foodPP:0.5,themes:['文化遺産','フォトジェニック','グルメ'],clim:[24,32],price:'安い',badge:'穴場',scene:'street',mapq:'八幡堀',
+desc:'白壁の土蔵が水面に映る商人の町を、和船でゆらり堀めぐり。草屋根のお菓子の楽園まで、近江のいいもの詰め合わせ。',
+spots:[{n:'八幡堀',d:'時代劇のロケ地として名高い水郷。屋形舟の堀めぐりが風情満点。',s:'street'},{n:'ラ コリーナ近江八幡',d:'草屋根の建築に包まれた菓子のテーマパーク。焼きたてバームが名物。',s:'park'},{n:'日牟禮八幡宮',d:'商人の町の氏神様。ロープウェーで八幡山城跡へも。',s:'inari'}],
+eats:[{n:'クラブハリエ 日牟禮館',d:'焼きたてバームクーヘン',price:'¥700〜',star:4.4},{n:'近江牛 毛利志満',d:'老舗の近江牛すき焼き',price:'¥4,000〜',star:4.3},{n:'つぶら餅',d:'堀端で頬張る焼き餅',price:'¥150〜',star:4.1}],
+hotels:[{n:'ビジネスホテルニューオウミ',star:3,price:9900},{n:'休暇村近江八幡',star:4,price:19800}]},
+{id:'tsukechi',name:'付知峡・恵那',pref:'岐阜',area:'中津川・恵那',emoji:'🩵',hours:4.5,gasToll:2.8,stayPP:1.1,foodPP:0.5,themes:['絶景','リフレッシュ'],clim:[20,30],price:'安い',badge:'穴場',scene:'gorge',mapq:'付知峡',
+desc:'青川と呼ばれる透きとおったエメラルドの渓谷で森林浴。奇岩の恵那峡クルーズと、天空の山城・苗木城まで足を延ばして。',
+spots:[{n:'付知峡',d:'不動滝と観音滝をめぐる遊歩道。息をのむ青の淵が連続する。',s:'gorge'},{n:'苗木城跡',d:'巨岩の上に石垣が絡みつく天空の山城。展望台から恵那山と木曽川を一望。',s:'castle'},{n:'恵那峡',d:'ダム湖に奇岩がそびえる景勝地。遊覧船で湖上散歩。',s:'lake'}],
+eats:[{n:'栗きんとん すや',d:'秋の中津川名物、栗100%の上品な甘さ',price:'¥300〜',star:4.4},{n:'五平餅 あまから',d:'中津川流のだんご型五平餅',price:'¥250〜',star:4.2},{n:'鶏ちゃん焼き',d:'味噌だれ鶏の郷土焼き',price:'¥900〜',star:4.1}],
+hotels:[{n:'恵那峡グランドホテル',star:3,price:16500},{n:'ホテル花更紗',star:4,price:20900}]},
+{id:'gero',name:'下呂温泉',pref:'岐阜',area:'下呂',emoji:'🦆',hours:5,gasToll:3.2,stayPP:1.5,foodPP:0.5,themes:['温泉','リフレッシュ','グルメ'],clim:[22,31],price:'普通',badge:'王道スポット',scene:'onsen',mapq:'下呂温泉',
+desc:'日本三名泉のひとつ、美人の湯でつるつるに。川辺の噴泉池、合掌村、温泉街の食べ歩きと、湯の町時間を満喫。',
+spots:[{n:'下呂温泉街と噴泉池',d:'飛騨川の河原に湧く開放的な温泉のシンボル。夜は温泉街の灯りが揺れる。',s:'onsen'},{n:'下呂温泉合掌村',d:'白川郷から移築した合掌造りの集落。影絵昔話館も人気。',s:'street'},{n:'温泉寺',d:'173段の石段の上から温泉街を一望。薬師如来が湯を守る。',s:'temple'}],
+eats:[{n:'ゆあみ屋',d:'温泉卵をのせたほんわかプリン',price:'¥400〜',star:4.2},{n:'飛騨牛にぎりの 幸月',d:'温泉街で味わう炙り寿司',price:'¥900〜',star:4.2},{n:'ケイちゃん',d:'下呂の鶏ちゃん定食',price:'¥1,000〜',star:4.1}],
+hotels:[{n:'水明館',star:4,price:29700},{n:'湯之島館',star:5,price:46200}]},
+{id:'seki',name:'モネの池・郡上',pref:'岐阜',area:'郡上・関',emoji:'🖼️',hours:5,gasToll:3.2,stayPP:1.1,foodPP:0.5,themes:['フォトジェニック','文化遺産','リフレッシュ'],clim:[23,32],price:'安い',badge:'穴場',scene:'lake',mapq:'モネの池',
+desc:'名画のように錦鯉が泳ぐ「名もなき池」と、水の城下町・郡上八幡。天空の城から見下ろす町並みも忘れがたい。',
+spots:[{n:'名もなき池（モネの池）',d:'湧水の透明な池に睡蓮と錦鯉。光の加減で絵画のように見える。',s:'lake'},{n:'郡上八幡城',d:'雲海に浮かぶこともある天空の木造再建城。城下の眺めが見事。',s:'castle'},{n:'郡上八幡の町並み',d:'水路が張り巡らされた城下町。宗祇水の湧き水と郡上おどりの里。',s:'street'}],
+eats:[{n:'郡上味噌の朴葉味噌定食',d:'香ばしい味噌を朴の葉で',price:'¥1,200〜',star:4.1},{n:'食品サンプル体験',d:'名産の食品サンプルづくり体験も名物',price:'¥1,200〜',star:4.3},{n:'鶏ちゃん 美濃錦',d:'郡上流の鶏ちゃん焼き',price:'¥1,000〜',star:4.2}],
+hotels:[{n:'郡上八幡ホテル積翠園',star:3,price:15400},{n:'ホテル郡上八幡',star:3,price:13200}]},
+{id:'muro',name:'室生・龍鎮渓谷',pref:'奈良',area:'宇陀・室生',emoji:'🐉',hours:6,gasToll:3.8,stayPP:1.1,foodPP:0.5,themes:['絶景','文化遺産','リフレッシュ'],clim:[23,32],price:'安い',badge:'穴場',scene:'gorge',mapq:'龍鎮の滝',
+desc:'エメラルドの淵に静かに落ちる龍鎮の滝は、知る人ぞ知る奈良の秘境。女人高野の五重塔とススキの高原を結ぶ癒し旅。',
+spots:[{n:'龍鎮渓谷',d:'透きとおった淵と小さな滝の聖域。龍神を祀る社が静かに佇む。',s:'gorge'},{n:'室生寺',d:'女人高野と呼ばれる山寺。屋外では日本最小の優美な五重塔。',s:'temple'},{n:'曽爾高原',d:'一面のススキが夕日に輝く高原。秋は黄金の海に。',s:'park'}],
+eats:[{n:'よもぎ餅 もりもと',d:'つきたてのよもぎ香る餅',price:'¥200〜',star:4.2},{n:'宇陀の薬草料理',d:'薬の町ならではの薬膳ごはん',price:'¥1,500〜',star:4.0},{n:'大和茶カフェ',d:'香り高い大和茶スイーツ',price:'¥700〜',star:4.1}],
+hotels:[{n:'曽爾高原ファームガーデン',star:3,price:14300},{n:'美榛苑',star:3,price:16500}]},
+{id:'wakayama_marina',name:'和歌山マリーナ・白崎',pref:'和歌山',area:'和歌山・有田',emoji:'🏰',hours:6.5,gasToll:4.2,stayPP:1.2,foodPP:0.55,themes:['フォトジェニック','グルメ','リフレッシュ'],clim:[25,32],price:'普通',badge:'穴場',scene:'castle',mapq:'ポルトヨーロッパ',
+desc:'地中海の港町を再現したテーマパークと、白亜の石灰岩が青い海に映えるエーゲ海のような岬。関西の隠れフォト天国。',
+spots:[{n:'ポルトヨーロッパ',d:'マリーナシティの欧風テーマパーク。夜のイルミと花火も人気。',s:'castle'},{n:'白崎海洋公園',d:'白い石灰岩と紺碧の海。日本のエーゲ海と呼ばれる展望台。',s:'lighthouse'},{n:'雑賀崎',d:'斜面に家々が重なる漁村。日本のアマルフィと話題の夕景。',s:'sea'}],
+eats:[{n:'黒潮市場',d:'マグロ解体ショーと海鮮BBQ',price:'¥1,500〜',star:4.1},{n:'井出商店',d:'和歌山ラーメンの聖地',price:'¥900〜',star:4.2},{n:'有田みかんジュース',d:'搾りたて100%の飲み比べ',price:'¥500〜',star:4.3}],
+hotels:[{n:'和歌山マリーナシティホテル',star:4,price:22000},{n:'ダイワロイネットホテル和歌山',star:3,price:12100}]},
+{id:'kushimoto',name:'串本・太地',pref:'和歌山',area:'串本・太地',emoji:'🐋',hours:8,gasToll:5.0,stayPP:1.2,foodPP:0.55,themes:['絶景','リフレッシュ','文化遺産'],clim:[25,31],price:'普通',badge:'穴場',scene:'lighthouse',mapq:'橋杭岩',
+desc:'海に一直線に並ぶ奇岩・橋杭岩の日の出から、本州最南端の岬へ。クジラの町・太地では博物館でイルカに会える。',
+spots:[{n:'橋杭岩',d:'約40の岩柱が850m並ぶ奇景。朝焼けのシルエットは息をのむ。',s:'lighthouse'},{n:'太地町立くじらの博物館',d:'クジラの生態と捕鯨の歴史を伝える博物館。イルカショーも。',s:'sea'},{n:'潮岬',d:'本州最南端の碑と灯台。芝生の望楼から太平洋がまるく見える。',s:'lighthouse'}],
+eats:[{n:'萬口',d:'串本名物カツオ茶漬け',price:'¥1,200〜',star:4.3},{n:'くじらの竜田揚げ',d:'太地の郷土の味',price:'¥1,000〜',star:4.0},{n:'ポンカンソフト',d:'串本の柑橘スイーツ',price:'¥400〜',star:4.0}],
+hotels:[{n:'ホテル&リゾーツ 和歌山 串本',star:4,price:20900},{n:'花いろどりの宿 花游',star:4,price:26400}]},
+{id:'kinosaki',name:'城崎温泉',pref:'兵庫',area:'城崎・豊岡',emoji:'🧖',hours:8,gasToll:5.1,stayPP:1.6,foodPP:0.55,themes:['温泉','文化遺産','グルメ'],clim:[24,32],price:'やや高い',badge:'王道スポット',scene:'onsen',mapq:'城崎温泉',
+desc:'柳並木の川沿いを浴衣と下駄でカランコロン。7つの外湯をめぐる湯の町は、文豪たちも愛した情緒の極み。',
+spots:[{n:'城崎温泉 外湯めぐり',d:'一の湯、御所の湯など個性豊かな7つの外湯を浴衣ではしご。',s:'onsen'},{n:'城崎温泉ロープウェイ',d:'大師山の上から温泉街と円山川、日本海を一望。',s:'park'},{n:'玄武洞',d:'160万年前の溶岩が生んだ柱状節理の洞。玄武岩の名の由来。',s:'gorge'}],
+eats:[{n:'おけしょう鮮魚 海中苑',d:'日本海の海鮮丼てんこ盛り',price:'¥1,800〜',star:4.2},{n:'いろりダイニング三國',d:'但馬牛の炙りとステーキ',price:'¥3,000〜',star:4.3},{n:'城崎ジェラートカフェChaya',d:'温泉たまごと湯上がりジェラート',price:'¥500〜',star:4.2}],
+hotels:[{n:'西村屋本館',star:5,price:52800},{n:'三木屋',star:4,price:30800}]},
+{id:'ine',name:'伊根の舟屋・天橋立',pref:'京都',area:'天橋立・伊根',emoji:'⛵',hours:7,gasToll:4.4,stayPP:1.3,foodPP:0.55,themes:['フォトジェニック','絶景','グルメ'],clim:[24,31],price:'普通',badge:'穴場',scene:'bay',mapq:'伊根の舟屋',
+desc:'1階が船のガレージ、2階が住まい。海の上に浮かぶような舟屋の町と、股のぞきで天に架かる橋。海の京都の二大絶景。',
+spots:[{n:'伊根の舟屋群',d:'湾を囲んで230軒の舟屋が連なる。海上タクシーからの眺めが最高。',s:'bay'},{n:'天橋立',d:'日本三景。傘松公園から股のぞきで天に昇る龍を見る。',s:'bay'},{n:'伊根湾めぐり遊覧船',d:'カモメと並走しながら舟屋を海から一望。',s:'sea'}],
+eats:[{n:'舟屋食堂',d:'伊根ブリと地魚の海鮮定食',price:'¥1,800〜',star:4.2},{n:'智恵の餅',d:'天橋立参道の名物あん餅',price:'¥400〜',star:4.2},{n:'向井酒造',d:'日本一海に近い酒蔵の赤い酒',price:'¥700〜',star:4.3}],
+hotels:[{n:'伊根の舟屋 雅',star:4,price:35200},{n:'天橋立ホテル',star:4,price:25300}]},
+{id:'onomichi',name:'尾道・きらきら坂',pref:'広島',area:'尾道',emoji:'🐈',hours:9.5,gasToll:6.0,stayPP:1.2,foodPP:0.55,themes:['フォトジェニック','グルメ','文化遺産'],clim:[25,32],price:'普通',badge:'穴場',scene:'temple',mapq:'千光寺公園',
+desc:'坂と猫と文学の港町。海を見下ろすきらきら坂のカフェで一休みして、ロープウェイで千光寺へ。路地迷子が楽しい町。',
+spots:[{n:'千光寺と千光寺公園',d:'断崖の朱堂から尾道水道を一望。恋人の聖地の展望台も。',s:'temple'},{n:'きらきら坂',d:'海へ下る坂道に雑貨店やカフェが点在。タイル絵が輝く映えスポット。',s:'street'},{n:'猫の細道',d:'福石猫が隠れる路地裏散歩。アートと猫に出会う小道。',s:'street'}],
+eats:[{n:'尾道ラーメン 壱番館',d:'背脂浮かぶ醤油の一杯',price:'¥900〜',star:4.2},{n:'からさわ',d:'昭和から愛されるアイスモナカ',price:'¥250〜',star:4.3},{n:'尾道プリン',d:'レモンソースをかけて',price:'¥450〜',star:4.1}],
+hotels:[{n:'LOG',star:4,price:30800},{n:'尾道ロイヤルホテル',star:3,price:11000}]},
+{id:'shimanami',name:'しまなみ海道・亀老山',pref:'愛媛',area:'しまなみ海道',emoji:'🚴',hours:10.5,gasToll:6.5,stayPP:1.2,foodPP:0.55,themes:['絶景','リフレッシュ','グルメ'],clim:[25,31],price:'普通',badge:'王道スポット',scene:'bay',mapq:'亀老山展望公園',
+desc:'橋で島から島へ渡る天空の海道。亀老山から見下ろす来島海峡は、夕暮れに黄金色へ。サイクリストの聖地を車で贅沢に。',
+spots:[{n:'亀老山展望公園',d:'来島海峡大橋と多島美を一望する隈研吾設計の展望台。夕景は日本屈指。',s:'bay'},{n:'来島海峡大橋',d:'世界初の三連吊橋。橋上から渦潮の海を見下ろすドライブ。',s:'sea'},{n:'耕三寺・未来心の丘',d:'生口島の白い大理石の丘。地中海のような純白の世界。',s:'park'}],
+eats:[{n:'伯方の塩ソフト',d:'ほんのり塩味の島スイーツ',price:'¥400〜',star:4.1},{n:'大三島 レモンポーク丼',d:'柑橘香る島豚めし',price:'¥1,200〜',star:4.2},{n:'焼豚玉子飯',d:'今治のB級グルメ王',price:'¥900〜',star:4.2}],
+hotels:[{n:'WAKKA',star:4,price:29700},{n:'今治国際ホテル',star:4,price:16500}]},
+{id:'shimokita',name:'仏ヶ浦・恐山',pref:'青森',area:'下北半島',emoji:'🗿',hours:10.5,gasToll:6.3,stayPP:1.1,foodPP:0.5,themes:['絶景','文化遺産'],clim:[17,25],price:'安い',badge:'穴場',scene:'lighthouse',mapq:'仏ヶ浦',
+desc:'白緑の奇岩が2kmも連なる海岸は、まさにこの世の果ての美しさ。霊場恐山と本州最北端の岬へ、魂が震える最果て旅。',
+spots:[{n:'仏ヶ浦',d:'風雪が削った白い奇岩群。遊覧船か638段の階段で浜へ。',s:'lighthouse'},{n:'恐山',d:'日本三大霊場。硫黄の荒野の先に、極楽浜の白砂と青い湖。',s:'onsen'},{n:'大間崎',d:'本州最北端の碑とマグロ一本釣りのモニュメント。',s:'lighthouse'}],
+eats:[{n:'大間のマグロ丼',d:'一本釣り本マグロの本場',price:'¥3,000〜',star:4.4},{n:'味噌貝焼き',d:'ホタテ貝殻で煮る郷土料理',price:'¥1,000〜',star:4.1},{n:'べこもち',d:'下北のかわいい郷土菓子',price:'¥200〜',star:4.0}],
+hotels:[{n:'むつグランドホテル',star:3,price:14300},{n:'下風呂温泉 まるほん旅館',star:3,price:16500}]},
+{id:'kashiwajima',name:'柏島・足摺',pref:'高知',area:'幡多・足摺',emoji:'🐠',hours:12.5,gasToll:7.8,stayPP:1.1,foodPP:0.5,themes:['絶景','リフレッシュ'],clim:[25,31],price:'安い',badge:'穴場',scene:'sea',mapq:'柏島',
+desc:'船が宙に浮いて見える奇跡の透明度。日本の果ての小さな島と、沈下橋の四万十川、黒潮の岬をめぐる究極の秘境旅。',
+spots:[{n:'柏島',d:'透明度抜群の海に船が浮かんで見える。1000種の魚が棲むダイバーの聖地。',s:'sea'},{n:'四万十川 佐田沈下橋',d:'最後の清流に架かる欄干のない橋。屋形舟でのんびりと。',s:'lake'},{n:'足摺岬',d:'四国最南端。270度の水平線と白い灯台、椿のトンネル。',s:'lighthouse'}],
+eats:[{n:'清水サバの刺身',d:'足摺の港でしか味わえない鮮度',price:'¥1,500〜',star:4.3},{n:'四万十川の川エビ唐揚げ',d:'清流の恵みをカリッと',price:'¥900〜',star:4.2},{n:'ぼうしパン',d:'高知のご当地パンをおやつに',price:'¥200〜',star:4.0}],
+hotels:[{n:'足摺国際ホテル',star:4,price:23100},{n:'四万十の宿',star:4,price:19800}]},
+{id:'ufoline',name:'UFOライン・石鎚',pref:'高知',area:'いの・石鎚',emoji:'🛸',hours:10.5,gasToll:6.4,stayPP:1.1,foodPP:0.5,themes:['絶景','リフレッシュ'],clim:[15,25],price:'安い',badge:'穴場',scene:'park',mapq:'UFOライン',
+desc:'標高1700m、雲の上の稜線を走る天空の道。CMで話題になった絶景ロードと、ハート形の窓を持つ滝へ。ドライバーの夢の道。',
+spots:[{n:'UFOライン（瓶ヶ森線）',d:'笹原の稜線上を27km。石鎚山系と土佐湾まで見渡す雲上ドライブ。',s:'park'},{n:'石鎚山 土小屋',d:'西日本最高峰の登山口。テラスから四国山地の大パノラマ。',s:'forest'},{n:'長沢の滝',d:'岩のハート形の穴から水が落ちる恋の滝。紅葉期は特に映える。',s:'falls'}],
+eats:[{n:'土小屋テラスの山カレー',d:'標高1500mで食べる一皿',price:'¥1,100〜',star:4.0},{n:'仁淀川の鮎',d:'奇跡の清流の塩焼き',price:'¥900〜',star:4.2},{n:'ミレービスケット',d:'高知県民のソウルおやつ',price:'¥200〜',star:4.1}],
+hotels:[{n:'木の香温泉',star:3,price:13200},{n:'オーベルジュ土佐山',star:4,price:33000}]},
+{id:'hakkeijima',name:'八景島シーパラダイス',pref:'神奈川',area:'八景島・金沢',emoji:'🐧',hours:0.5,gasToll:0.3,stayPP:1.3,foodPP:0.55,themes:['リフレッシュ','フォトジェニック','グルメ'],clim:[24,30],price:'普通',badge:'王道スポット',scene:'sea',mapq:'横浜・八景島シーパラダイス',
+desc:'水族館も絶叫も花火も、島まるごと遊び場。拠点から30分で行ける海のテーマパークは、思い立ったが吉日の代表格。',
+spots:[{n:'アクアミュージアム',d:'5万点の生きものと出会う日本最大級の水族館。イルカの大群泳は圧巻。',s:'sea'},{n:'プレジャーランド',d:'海に向かって落ちるブルーフォール。絶叫と海風のセット。',s:'park'},{n:'海の公園',d:'隣接する人工ビーチ。春は潮干狩りの聖地に。',s:'sea'}],
+eats:[{n:'シーパラ内 海鮮丼',d:'海を見ながらの漁師めし',price:'¥1,500〜',star:4.0},{n:'幸浦の八景島スイーツ',d:'あじさいソフトなど島限定',price:'¥500〜',star:4.0},{n:'金沢八景 きよ川',d:'穴子の老舗割烹',price:'¥2,500〜',star:4.2}],
+hotels:[{n:'ホテル シーパラダイス イン',star:3,price:16500},{n:'横浜テクノタワーホテル',star:3,price:12100}]},
+{id:'akigawa',name:'秋川渓谷',pref:'東京',area:'あきる野・檜原',emoji:'💦',hours:1.2,gasToll:0.5,stayPP:1.2,foodPP:0.5,themes:['リフレッシュ','絶景','温泉'],clim:[21,30],price:'安い',badge:'穴場',scene:'gorge',mapq:'秋川渓谷 石舟橋',
+desc:'東京都とは思えぬ清流と緑。赤い石舟橋から渓谷を見下ろし、名瀑・払沢の滝で涼んで、瀬音の湯でととのう都会の裏庭。',
+spots:[{n:'石舟橋',d:'エメラルドの秋川に架かる朱の吊り橋。新緑と紅葉の名所。',s:'gorge'},{n:'払沢の滝',d:'日本の滝百選で都内唯一。4段60mの優美な流れ。',s:'falls'},{n:'瀬音の湯',d:'渓谷沿いの日帰り温泉。とろみのある美肌の湯。',s:'onsen'}],
+eats:[{n:'黒茶屋',d:'渓谷を望む囲炉裏料理の名店',price:'¥5,000〜',star:4.3},{n:'ちとせ屋',d:'檜原村のうの花ドーナツ',price:'¥150〜',star:4.3},{n:'秋川牛バーガー',d:'ご当地ブランド牛を豪快に',price:'¥1,200〜',star:4.1}],
+hotels:[{n:'秋川渓谷 リバーティオ',star:3,price:18700},{n:'おんせん宿 荷田子',star:3,price:14300}]},
+{id:'hanno',name:'ムーミンバレーパーク・飯能',pref:'埼玉',area:'飯能・名栗',emoji:'🛖',hours:1,gasToll:0.5,stayPP:1.2,foodPP:0.5,themes:['フォトジェニック','リフレッシュ'],clim:[23,31],price:'普通',badge:'穴場',scene:'lake',mapq:'ムーミンバレーパーク',
+desc:'湖畔に広がる北欧の物語世界と、静かな名栗の山里。都心からいちばん近い「異国」で、のんびり森歩きの休日を。',
+spots:[{n:'ムーミンバレーパーク',d:'宮沢湖のほとりに物語の世界を再現。夜の湖上ライトアップも幻想的。',s:'forest'},{n:'名栗湖・有間ダム',d:'山あいの静かな人造湖。湖畔ドライブとカヌーの名所。',s:'lake'},{n:'鳥居観音',d:'山全体が境内の白い観音様。関東の隠れ絶景。',s:'temple'}],
+eats:[{n:'メッツァビレッジの北欧ごはん',d:'湖を見ながらのんびりランチ',price:'¥1,500〜',star:4.0},{n:'四里餅',d:'飯能名物の大判どら焼き餅',price:'¥200〜',star:4.2},{n:'ターニップ',d:'名栗の森のパン屋さん',price:'¥400〜',star:4.1}],
+hotels:[{n:'ノーラ名栗グランピング',star:4,price:29700},{n:'休暇村 奥武蔵',star:3,price:15400}]},
+{id:'fujiq',name:'富士急ハイランド',pref:'山梨',area:'富士吉田',emoji:'🎠',hours:1.8,gasToll:1.0,stayPP:1.3,foodPP:0.55,themes:['リフレッシュ','フォトジェニック'],clim:[18,28],price:'普通',badge:'王道スポット',scene:'park',mapq:'富士急ハイランド',
+desc:'富士山を目の前に絶叫マシンで叫びまくる、日本屈指の遊園地。参拝と吉田うどんで富士吉田の町も味わい尽くす。',
+spots:[{n:'富士急ハイランド',d:'FUJIYAMAをはじめ絶叫の殿堂。入園無料でフリーパス制。',s:'park'},{n:'北口本宮冨士浅間神社',d:'富士登山道の起点。杉並木の参道と大鳥居が荘厳。',s:'torii'},{n:'富士山レーダードーム館',d:'富士山頂で活躍したレーダーの博物館。体感マイナス気温も。',s:'park'}],
+eats:[{n:'吉田のうどん 麺許皆伝',d:'剛麺うどんの人気店',price:'¥600〜',star:4.2},{n:'FUJIYAMA COOKIE',d:'富士山型の焼きたてクッキー',price:'¥200〜',star:4.1},{n:'富士山プリン',d:'青い二層の映えプリン',price:'¥450〜',star:4.0}],
+hotels:[{n:'ハイランドリゾート ホテル&スパ',star:4,price:30800},{n:'富士山ステーションホテル',star:3,price:11000}]},
+{id:'safari',name:'富士サファリパーク・御殿場',pref:'静岡',area:'御殿場・裾野',emoji:'🦁',hours:1.5,gasToll:0.9,stayPP:1.3,foodPP:0.55,themes:['リフレッシュ','フォトジェニック','グルメ'],clim:[20,29],price:'普通',badge:'王道スポット',scene:'forest',mapq:'富士サファリパーク',
+desc:'マイカーのままライオンの群れの中へ。富士山麓の大自然サファリと、日本最大級アウトレットのハシゴが鉄板コース。',
+spots:[{n:'富士サファリパーク',d:'自家用車で猛獣ゾーンを周遊。ジャングルバスの餌やり体験も。',s:'forest'},{n:'御殿場プレミアム・アウトレット',d:'富士山を望む日本最大級のアウトレット。観覧車と温泉まで。',s:'park'},{n:'時之栖',d:'御殿場高原の光のトンネル。ビールと温泉のリゾート。',s:'park'}],
+eats:[{n:'御殿場高原ビール',d:'地ビールと窯焼きピザ',price:'¥1,500〜',star:4.1},{n:'さわやか 御殿場',d:'静岡限定のげんこつハンバーグ',price:'¥1,400〜',star:4.4},{n:'サファリのカレーパン',d:'ライオン顔の名物パン',price:'¥400〜',star:3.9}],
+hotels:[{n:'HOTEL CLAD',star:4,price:24200},{n:'御殿場高原ホテル',star:3,price:16500}]},
+{id:'kamogawa',name:'鴨川シーワールド',pref:'千葉',area:'鴨川・勝浦',emoji:'🦭',hours:2,gasToll:1.2,stayPP:1.3,foodPP:0.55,themes:['リフレッシュ','絶景','グルメ'],clim:[24,30],price:'普通',badge:'王道スポット',scene:'sea',mapq:'鴨川シーワールド',
+desc:'迫力のシャチパフォーマンスは日本でここだけ。外房の海景色と勝浦タンタンメンまで、海づくしの房総南下ルート。',
+spots:[{n:'鴨川シーワールド',d:'水しぶき豪快なシャチのショーが名物。ベルーガやイルカも。',s:'sea'},{n:'鵜原理想郷',d:'リアス海岸の岬をめぐるハイキングコース。明神岬の絶景。',s:'lighthouse'},{n:'仁右衛門島',d:'手漕ぎ舟で渡る源頼朝ゆかりの小島。磯遊びも楽しい。',s:'sea'}],
+eats:[{n:'勝浦タンタンメン 松野屋',d:'ラー油香るご当地麺',price:'¥900〜',star:4.2},{n:'おらが丼',d:'鴨川の地魚を豪快に',price:'¥1,800〜',star:4.1},{n:'鯛せんべい',d:'外房みやげの定番',price:'¥500〜',star:4.0}],
+hotels:[{n:'鴨川館',star:5,price:41800},{n:'鴨川シーワールドホテル',star:3,price:23100}]},
+{id:'oze',name:'尾瀬ヶ原',pref:'群馬',area:'尾瀬',emoji:'🥾',hours:3,gasToll:1.8,stayPP:1.2,foodPP:0.5,themes:['絶景','リフレッシュ'],clim:[13,24],price:'普通',badge:'穴場',scene:'park',mapq:'尾瀬戸倉',
+desc:'木道の先に広がる本州最大の湿原。夏空を映す池塘とニッコウキスゲの群落へ。車は戸倉まで、乗合バスで鳩待峠から歩く。',
+spots:[{n:'尾瀬ヶ原の木道',d:'湿原をどこまでも延びる木道。至仏山と燧ヶ岳を望みながら。',s:'park'},{n:'池塘とヒツジグサ',d:'湿原に点在する小さな池。空と山を映す水鏡。',s:'lake'},{n:'山ノ鼻ビジターセンター',d:'鳩待峠から1時間の湿原入口。花情報はここで。',s:'forest'}],
+eats:[{n:'花豆ソフトクリーム',d:'片品名産のほっこり甘さ',price:'¥450〜',star:4.2},{n:'鳩待峠の舞茸そば',d:'歩く前後の定番めし',price:'¥1,000〜',star:4.0},{n:'永井酒造 水芭蕉',d:'尾瀬の名を冠する地酒',price:'¥1,000〜',star:4.3}],
+hotels:[{n:'尾瀬かまた宿温泉 梅田屋旅館',star:3,price:16500},{n:'尾瀬ぷらり館の宿',star:3,price:14300}]},
+{id:'mishaka',name:'御射鹿池・奥蓼科',pref:'長野',area:'奥蓼科',emoji:'🌌',hours:3,gasToll:1.9,stayPP:1.3,foodPP:0.5,themes:['絶景','フォトジェニック','リフレッシュ'],clim:[14,25],price:'普通',badge:'穴場',scene:'lake',mapq:'御射鹿池',
+desc:'名画のモデルになった鏡の池、標高2100mの神秘の湖、日本一の苔の森。奥蓼科は静けさそのものが絶景になる場所。',
+spots:[{n:'御射鹿池',d:'カラマツ林を映す完璧な水鏡。早朝の無風が狙い目。',s:'lake'},{n:'白駒の池と苔の森',d:'485種の苔がむす原生林の先に、標高2115mの静かな湖。',s:'forest'},{n:'横谷峡 乙女滝',d:'マイナスイオン全開の渓谷遊歩道。氷瀑の冬も有名。',s:'falls'}],
+eats:[{n:'蓼科 バラクライングリッシュガーデンのスコーン',d:'英国式庭園の本格ティー',price:'¥1,200〜',star:4.1},{n:'信州蕎麦 みつ蔵',d:'石臼挽きの香り高い一枚',price:'¥1,300〜',star:4.3},{n:'たてしなップルのシードル',d:'蓼科りんごの微発泡',price:'¥800〜',star:4.2}],
+hotels:[{n:'蓼科グランドホテル滝の湯',star:4,price:24200},{n:'横谷温泉旅館',star:3,price:19800}]},
+{id:'tadami',name:'只見線・奥会津',pref:'福島',area:'奥会津',emoji:'🚂',hours:4.5,gasToll:2.7,stayPP:1.1,foodPP:0.45,themes:['絶景','フォトジェニック'],clim:[18,29],price:'安い',badge:'穴場',scene:'lake',mapq:'第一只見川橋梁ビューポイント',
+desc:'霧の川面を渡るローカル線を、山の展望台から見送る。世界が恋した只見線の風景と、渡し舟の霧幻峡。日本の原風景がここに。',
+spots:[{n:'第一只見川橋梁ビューポイント',d:'湖面のような只見川を列車が渡る絶景。通過時刻を調べて待つ。',s:'lake'},{n:'霧幻峡の渡し',d:'朝夕に川霧が立ちこめる峡谷を手漕ぎ舟で。幻想の極み。',s:'gorge'},{n:'圓藏寺',d:'只見川の断崖に立つ赤べこ発祥の古刹。',s:'temple'}],
+eats:[{n:'奥会津の蕎麦',d:'山里の十割そば',price:'¥1,100〜',star:4.2},{n:'ソースカツ丼 十文字屋',d:'柳津の名物デカ盛り',price:'¥1,300〜',star:4.1},{n:'あわまんじゅう',d:'柳津門前の黄色いまんじゅう',price:'¥150〜',star:4.2}],
+hotels:[{n:'つるの湯',star:3,price:14300},{n:'季の郷 湯ら里',star:4,price:19800}]},
+{id:'senjojiki',name:'千畳敷カール・駒ヶ根',pref:'長野',area:'駒ヶ根',emoji:'🚠',hours:4,gasToll:2.5,stayPP:1.3,foodPP:0.5,themes:['絶景','リフレッシュ'],clim:[8,17],price:'やや高い',badge:'王道スポット',scene:'park',mapq:'駒ヶ岳ロープウェイ しらび平',
+desc:'ロープウェイで一気に標高2612m、氷河が削った半円の別天地へ。夏は高山植物のお花畑、雲海の宝庫。車は菅の台からバスで。',
+spots:[{n:'千畳敷カール',d:'宝剣岳がそびえる圏谷に遊歩道。真夏でも涼しい雲上の楽園。',s:'park'},{n:'剣ヶ池',d:'カールと宝剣岳を映す小さな池。定番の一枚はここから。',s:'lake'},{n:'光前寺',d:'霊犬早太郎の伝説が残る古刹。光苔と枝垂れ桜でも有名。',s:'temple'}],
+eats:[{n:'明治亭',d:'駒ヶ根名物ソースかつ丼',price:'¥1,500〜',star:4.3},{n:'雲上のカフェ2612',d:'日本最高所級の駅カフェ',price:'¥800〜',star:4.0},{n:'すずらんハウスの牛乳パン',d:'地元愛されソウルパン',price:'¥300〜',star:4.2}],
+hotels:[{n:'ホテル千畳敷',star:4,price:35200},{n:'駒ヶ根高原リゾートリンクス',star:3,price:17600}]},
+{id:'sasagawa',name:'笹川流れ・村上',pref:'新潟',area:'村上・笹川流れ',emoji:'🐚',hours:6,gasToll:3.7,stayPP:1.2,foodPP:0.5,themes:['絶景','グルメ','温泉'],clim:[23,30],price:'安い',badge:'穴場',scene:'lighthouse',mapq:'笹川流れ',
+desc:'透明度抜群の日本海に奇岩が連なる11kmの海岸美。遊覧船でカモメと戯れ、鮭の町・村上と夕日の温泉で締める北上ルート。',
+spots:[{n:'笹川流れ',d:'眼鏡岩や恐竜岩が並ぶ海岸線。遊覧船からの眺めが爽快。',s:'lighthouse'},{n:'村上の町屋と鮭',d:'千匹の塩引き鮭が吊るされる城下町。人情味あふれる町歩き。',s:'street'},{n:'瀬波温泉',d:'日本海に沈む夕日を湯船から。夕映えの絶景温泉。',s:'onsen'}],
+eats:[{n:'鮭の酒びたし',d:'村上伝統の熟成鮭',price:'¥1,000〜',star:4.2},{n:'笹川流れの岩牡蠣',d:'夏が旬のぷりぷり大粒',price:'¥800〜',star:4.4},{n:'村上茶スイーツ',d:'北限の茶どころの一服',price:'¥500〜',star:4.0}],
+hotels:[{n:'瀬波温泉 大観荘 せなみの湯',star:4,price:25300},{n:'汐美荘',star:4,price:22000}]},
+{id:'nabana',name:'なばなの里・長島',pref:'三重',area:'桑名・長島',emoji:'💡',hours:5.5,gasToll:3.5,stayPP:1.4,foodPP:0.55,themes:['フォトジェニック','リフレッシュ','グルメ'],clim:[25,33],price:'普通',badge:'王道スポット',scene:'park',mapq:'なばなの里',
+desc:'国内最大級のイルミネーションと花のテーマパーク、絶叫の遊園地、天然温泉。長島は一日中遊べる欲張りリゾート。',
+spots:[{n:'なばなの里',d:'季節の花畑と光のトンネル。ベゴニアガーデンは一年中満開。',s:'park'},{n:'ナガシマスパーランド',d:'白鯨など絶叫コースターの聖地。夏はジャンボ海水プールも。',s:'park'},{n:'湯あみの島',d:'渓谷を再現した大露天風呂。遊び疲れを一気に回復。',s:'onsen'}],
+eats:[{n:'安永餅',d:'桑名名物の細長い焼き餅',price:'¥200〜',star:4.1},{n:'はまぐりプラザの焼き蛤',d:'その手は桑名の本場もの',price:'¥1,500〜',star:4.3},{n:'里の湯あがりベゴニアソフト',d:'花園のご当地ソフト',price:'¥450〜',star:3.9}],
+hotels:[{n:'ホテル花水木',star:5,price:41800},{n:'ホテルナガシマ',star:3,price:19800}]},
+{id:'awaji',name:'淡路島',pref:'兵庫',area:'淡路島',emoji:'🌺',hours:6.5,gasToll:4.2,stayPP:1.3,foodPP:0.55,themes:['絶景','グルメ','リフレッシュ'],clim:[25,32],price:'普通',badge:'王道スポット',scene:'sea',mapq:'あわじ花さじき',
+desc:'海に浮かぶ花の島を一周ドライブ。丘一面の花畑から国生み神話の島、南端では渦潮クルーズ。玉ねぎと海の幸も主役級。',
+spots:[{n:'あわじ花さじき',d:'海へ落ちる斜面一面の花畑。入園無料の天上の花園。',s:'park'},{n:'絵島',d:'国生み神話ゆかりの小島。夕暮れのライトアップが神秘的。',s:'sea'},{n:'うずしおクルーズ',d:'福良港から鳴門海峡へ。船上から見る大渦は大迫力。',s:'sea'}],
+eats:[{n:'淡路島バーガー',d:'玉ねぎ丸ごとのご当地バーガー',price:'¥1,000〜',star:4.2},{n:'生しらす丼',d:'島の港町の初夏の味',price:'¥1,200〜',star:4.3},{n:'淡路島牛丼',d:'淡路牛×玉ねぎ×米の三位一体',price:'¥1,300〜',star:4.1}],
+hotels:[{n:'グランドニッコー淡路',star:4,price:29700},{n:'ホテルニューアワジ',star:4,price:35200}]},
+{id:'chokai',name:'鳥海山・元滝伏流水',pref:'秋田',area:'鳥海・にかほ',emoji:'💠',hours:7,gasToll:4.3,stayPP:1.1,foodPP:0.5,themes:['絶景','リフレッシュ'],clim:[19,27],price:'安い',badge:'穴場',scene:'falls',mapq:'元滝伏流水',
+desc:'苔むす岩の壁一面から、鳥海山の雪解け水が白い簾のように湧き出す。神秘の湧水めぐりと山岳ドライブの東北縦断旅。',
+spots:[{n:'元滝伏流水',d:'幅30mの岩肌から湧水が流れ落ちる涼の聖地。緑と白のコントラスト。',s:'falls'},{n:'丸池様',d:'エメラルドに透きとおる直径20mの湧水池。神様と呼ばれる神秘。',s:'lake'},{n:'鳥海ブルーライン',d:'海抜0mから1100mへ駆け上がる絶景道路。日本海を見下ろす。',s:'park'}],
+eats:[{n:'にかほの岩牡蠣',d:'夏が旬の日本海の大粒',price:'¥800〜',star:4.4},{n:'象潟うどん',d:'象潟の郷土めし',price:'¥1,000〜',star:4.0},{n:'鳥海高原ヨーグルト',d:'高原ミルクの濃厚な一杯',price:'¥400〜',star:4.2}],
+hotels:[{n:'象潟 ねむの丘 温泉',star:3,price:14300},{n:'フォレスタ鳥海',star:3,price:16500}]},
+{id:'oga',name:'男鹿半島・なまはげ',pref:'秋田',area:'男鹿',emoji:'👹',hours:8,gasToll:4.9,stayPP:1.1,foodPP:0.5,themes:['絶景','文化遺産','グルメ'],clim:[20,28],price:'安い',badge:'穴場',scene:'lighthouse',mapq:'入道崎',
+desc:'泣ぐ子はいねがー！なまはげの里で伝統に触れ、緑の芝生と白黒灯台の岬へ。ゴジラ岩の夕日と石焼料理は男鹿だけの体験。',
+spots:[{n:'入道崎',d:'芝生の台地に白黒しま模様の灯台。日本海に沈む夕日の名所。',s:'lighthouse'},{n:'なまはげ館・伝承館',d:'110体のなまはげが勢ぞろい。実演は迫力に泣く大人続出。',s:'street'},{n:'ゴジラ岩',d:'夕日を背にすると火を噴くゴジラに見える奇岩。',s:'lighthouse'}],
+eats:[{n:'男鹿の石焼料理',d:'熱した石で豪快に煮る漁師鍋',price:'¥2,500〜',star:4.3},{n:'ババヘラアイス',d:'秋田の道端の花びらアイス',price:'¥300〜',star:4.1},{n:'しょっつる焼きそば',d:'魚醤香るご当地麺',price:'¥800〜',star:4.0}],
+hotels:[{n:'男鹿観光ホテル',star:3,price:16500},{n:'セイコーグランドホテル',star:3,price:14300}]},
+{id:'juniko',name:'白神山地・青池',pref:'青森',area:'白神・深浦',emoji:'🔵',hours:9.5,gasToll:5.8,stayPP:1.1,foodPP:0.5,themes:['絶景','リフレッシュ'],clim:[18,26],price:'安い',badge:'穴場',scene:'lake',mapq:'十二湖 青池',
+desc:'インクを溶かしたような青に吸い込まれる神秘の池。世界遺産ブナ林の散策と、五能線が走る夕日の海岸線を行く最果て旅。',
+spots:[{n:'青池',d:'なぜ青いのか解明されていない神秘の池。ブナ林の木漏れ日と共に。',s:'lake'},{n:'十二湖散策路',d:'沸壺の池など33の湖沼をめぐるブナの森歩き。',s:'forest'},{n:'千畳敷海岸',d:'岩畳が広がる夕日の海岸。五能線の車窓でも名高い。',s:'lighthouse'}],
+eats:[{n:'深浦マグロステーキ丼',d:'青森一の水揚げ港の三色丼',price:'¥1,800〜',star:4.2},{n:'ハタハタの唐揚げ',d:'日本海の冬魚を夏はカラッと',price:'¥800〜',star:4.0},{n:'ブナの森の湧水コーヒー',d:'白神の水で淹れる一杯',price:'¥500〜',star:4.1}],
+hotels:[{n:'アオーネ白神十二湖',star:3,price:17600},{n:'不老ふ死温泉',star:4,price:24200}]},
+{id:'mikata',name:'三方五湖・若狭',pref:'福井',area:'若狭・三方',emoji:'🌈',hours:7,gasToll:4.4,stayPP:1.2,foodPP:0.5,themes:['絶景','リフレッシュ','グルメ'],clim:[24,31],price:'安い',badge:'穴場',scene:'lake',mapq:'レインボーライン山頂公園',
+desc:'5色に見えるという5つの湖を、天空のテラスから一望。名水の滝と鯖街道の宿場町をめぐる、若狭のしっとり絶景旅。',
+spots:[{n:'レインボーライン山頂公園',d:'五湖と若狭湾を見渡す絶景テラス。足湯ソファでのんびり。',s:'lake'},{n:'瓜割の滝',d:'瓜も割れる冷たさの名水。苔むす岩間を流れる涼の聖地。',s:'falls'},{n:'熊川宿',d:'鯖街道の宿場町。前川のせせらぎと白壁の街並み。',s:'street'}],
+eats:[{n:'焼き鯖寿司',d:'鯖街道の若狭名物',price:'¥1,200〜',star:4.3},{n:'うなぎ淡水',d:'三方湖の口細青うなぎ',price:'¥3,500〜',star:4.3},{n:'へしこ茶漬け',d:'鯖の糠漬けを香ばしく',price:'¥900〜',star:4.0}],
+hotels:[{n:'虹岳島荘',star:3,price:19800},{n:'ホテルうみんぴあ',star:3,price:14300}]},
+{id:'daisen',name:'大山・伯耆富士',pref:'鳥取',area:'大山',emoji:'🌄',hours:9,gasToll:5.6,stayPP:1.2,foodPP:0.5,themes:['絶景','リフレッシュ','グルメ'],clim:[20,28],price:'安い',badge:'穴場',scene:'forest',mapq:'鍵掛峠',
+desc:'中国地方最高峰、伯耆富士とよばれる美しき独立峰。ブナ林の参道、絶景の峠、白バラ牛乳のソフトまで、山の恵みを一周。',
+spots:[{n:'鍵掛峠',d:'大山南壁の荒々しい絶景を正面に。ブナ林と紅葉の名所。',s:'forest'},{n:'大山寺と大神山神社',d:'日本一長い自然石の参道。杉木立の霊気に包まれる。',s:'temple'},{n:'植田正治写真美術館',d:'大山を借景にした砂丘写真の巨匠の館。逆さ大山も。',s:'park'}],
+eats:[{n:'大山まきばみるくの里',d:'白バラ牛乳の濃厚ソフト',price:'¥400〜',star:4.4},{n:'大山そば',d:'山の湧水で打つ田舎そば',price:'¥1,000〜',star:4.1},{n:'大山ハム工房',d:'高原の燻製ソーセージ',price:'¥800〜',star:4.2}],
+hotels:[{n:'大山ホワイトパレス',star:3,price:15400},{n:'皆生温泉 華水亭',star:4,price:30800}]},
+{id:'shikoku_karst',name:'四国カルスト',pref:'愛媛',area:'四国カルスト',emoji:'🐂',hours:11,gasToll:6.7,stayPP:1.1,foodPP:0.5,themes:['絶景','リフレッシュ'],clim:[15,24],price:'安い',badge:'穴場',scene:'park',mapq:'四国カルスト 姫鶴平',
+desc:'標高1400mの尾根に白い石灰岩と放牧の牛。日本三大カルストの天空路は、雲の上を走っているような浮遊感の絶景ドライブ。',
+spots:[{n:'姫鶴平',d:'カルスト台地のど真ん中。風車と牛と星空のキャンプ聖地。',s:'park'},{n:'天狗高原',d:'カルスト最高地点。遊歩道から石灰岩の海を見渡す。',s:'park'},{n:'五段高原',d:'白い岩が点在する緑の斜面。愛媛と高知の県境を走る。',s:'park'}],
+eats:[{n:'姫鶴荘のカルストソフト',d:'高原ミルクの一本',price:'¥400〜',star:4.1},{n:'久万高原そば',d:'山の冷涼が育てる香り',price:'¥1,000〜',star:4.0},{n:'ミレービスケット',d:'ドライブ供の高知おやつ',price:'¥200〜',star:4.1}],
+hotels:[{n:'星ふるヴィレッジTENGU',star:3,price:19800},{n:'姫鶴荘',star:3,price:9900}]},
+{id:'kokonoe',name:'九重夢大吊橋・くじゅう',pref:'大分',area:'くじゅう',emoji:'🌁',hours:12,gasToll:7.7,stayPP:1.3,foodPP:0.5,themes:['絶景','温泉','リフレッシュ'],clim:[18,27],price:'普通',badge:'穴場',scene:'gorge',mapq:'九重夢大吊橋',
+desc:'高さ173m、日本一の人道大吊橋から滝と紅葉谷を見下ろす。九州の屋根くじゅう連山と湿原、山の温泉をめぐる高原旅。',
+spots:[{n:'九重夢大吊橋',d:'長さ390mの空中散歩。震動の滝と九酔渓を眼下に。',s:'gorge'},{n:'タデ原湿原',d:'ラムサール条約の湿原を木道で。くじゅう連山の裾野。',s:'park'},{n:'長者原・牧ノ戸峠',d:'やまなみハイウェイの絶景区間。草原と山なみのうねり。',s:'park'}],
+eats:[{n:'豊後牛の炙り重',d:'とろける大分ブランド牛',price:'¥2,200〜',star:4.3},{n:'筋湯温泉の地鶏炭火焼',d:'山の湯宿の香ばし名物',price:'¥1,300〜',star:4.1},{n:'ここのえ夢バーガー',d:'吊橋たもとのご当地バーガー',price:'¥800〜',star:3.9}],
+hotels:[{n:'九重星生ホテル',star:4,price:26400},{n:'筋湯温泉 山あいの宿 喜安屋',star:4,price:29700}]},
+{id:'amakusa',name:'天草・イルカの海',pref:'熊本',area:'天草',emoji:'🐬',hours:14,gasToll:8.6,stayPP:1.2,foodPP:0.55,themes:['絶景','リフレッシュ','文化遺産'],clim:[25,32],price:'普通',badge:'穴場',scene:'bay',mapq:'天草 通詞島',
+desc:'野生のミナミハンドウイルカに一年中会える奇跡の海。遭遇率98%のクルーズと世界遺産の教会集落、夕日の橋をめぐる島旅。',
+spots:[{n:'イルカウォッチング',d:'通詞島沖に約200頭が定住。船のすぐそばを親子イルカが泳ぐ。',s:'sea'},{n:'崎津集落',d:'漁村に立つゴシックの教会。世界遺産の祈りの里。',s:'street'},{n:'天草五橋と松島',d:'島々を結ぶ5つの橋。夕日に染まる多島美をドライブ。',s:'bay'}],
+eats:[{n:'天草ちゃんぽん',d:'海の幸たっぷりの島ちゃんぽん',price:'¥1,000〜',star:4.2},{n:'うに丼',d:'天草の夏の贅沢',price:'¥3,000〜',star:4.4},{n:'車えびの活き造り',d:'養殖発祥の地のぷりぷり',price:'¥2,500〜',star:4.3}],
+hotels:[{n:'ホテル竜宮',star:4,price:33000},{n:'天草プリンスホテル',star:3,price:13200}]}
+];
+const state={
+ screen:'home',
+ photos:true,
+ uiColor:0,
+ skipped:[],
+ search:{date:null,nights:null,party:null,theme:null,style:null,range:null,origin:null,budget:1,inc:{trans:true,stay:true,food:true}},
+ tmpDate:null,tmpDateIdx:null,tmpNights:null,
+ editing:null,
+ candidates:[],idx:0,
+ favs:[],
+ visited:['神奈川'],
+ detailId:null,detailFrom:'results',
+ anim:false
+};
+const byId=id=>DEST.find(d=>d.id===id);
+function dTitle(d){var a=d.area||d.pref;return d.emoji+' '+d.name+(d.name.indexOf(a)>=0?'':'（'+a+'）');}
+function partyN(){return state.search.party==null?2:PARTY[state.search.party].n;}
+function nightsN(){return state.search.nights==null?1:state.search.nights;}
+function calcBudget(d){
+ const n=partyN(),nt=nightsN(),days=nt+1,inc=state.search.inc;
+ const trans=inc.trans?d.gasToll/n:0;
+ const stay=inc.stay?nt*d.stayPP:0;
+ const food=inc.food?days*d.foodPP:0;
+ return {trans:trans,stay:stay,food:food,total:trans+stay+food,n:n,nt:nt,inc:inc};
+}
+function markIco(m){
+ if(m==='g')return '<span class="mk mk-g"></span>';
+ if(m==='m')return '<svg class="mk" viewBox="0 0 20 20"><path d="M10 3.2 17.8 17H2.2Z" fill="none" stroke="#F5A623" stroke-width="2.6" stroke-linejoin="round"/></svg>';
+ return '<svg class="mk" viewBox="0 0 20 20"><path d="M4.5 4.5l11 11M15.5 4.5l-11 11" stroke="#E5443C" stroke-width="3" stroke-linecap="round"/></svg>';
+}
+function mTrans(v){return v<=0.5?'g':(v<=1.1?'m':'b');}
+function mDrive(h){return h<=2?'g':(h<=3.5?'m':'b');}
+function mClim(hi){return hi<=29?'g':(hi<=32?'m':'b');}
+function mPrice(p){return (p==='安い'||p==='普通')?'g':(p==='やや高い'?'m':'b');}
+function driveSub(h){return h<=2?{t:'ノンストップ可',c:'ok'}:(h<=4?{t:'休憩1回〜',c:'warn'}:{t:'休憩2回〜',c:'warn'});}
+function findCandidates(){
+ const s=state.search,R=RANGES[s.range],B=BUDGETS[s.budget],th=THEMES[s.theme].k;
+ let pool=DEST.filter(d=>d.hours>R.min&&d.hours<=R.max);
+ if(!pool.length)pool=DEST.slice();
+ const scored=pool.map(d=>{const b=calcBudget(d);const st=(s.style==null||s.style===2)?0:((s.style===0?d.badge==='王道スポット':d.badge==='穴場')?0:1);return{d:d,b:b,tm:d.themes.indexOf(th)>=0?0:1,st:st,bf:(b.total>=B.lo&&b.total<=B.hi)?0:1,r:Math.random()};});
+ scored.sort((a,c)=>a.tm-c.tm||a.st-c.st||a.bf-c.bf||a.r-c.r);
+ const seen={},first=[],rest=[];
+ for(var i=0;i<scored.length;i++){var a=scored[i].d.area||scored[i].d.pref;if(!seen[a]){seen[a]=1;first.push(scored[i]);}else{rest.push(scored[i]);}}
+ return first.concat(rest).slice(0,10).map(x=>x.d.id);
+}
+function nav(id){
+ state.screen=id;
+ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+ $('#scr-'+id).classList.add('active');
+ window.scrollTo(0,0);
+}
+function goHome(){renderHome();nav('home');}
+function goSetup(){state.editing=null;renderSetup();nav('setup');}
+function goResults(){renderResults();nav('results');}
+function goDetail(id,from){state.detailId=id;state.detailFrom=from||'results';renderDetail();nav('detail');}
+function backDetail(){if(state.detailFrom==='home'){goHome();}else{goResults();}}
+function statLeft(){if(state.favs.length){goResults();}else{toast('気になる旅先を ♥ すると増えます');}}
+/* ---------- photos (Wikipedia thumbnails) ---------- */
+const WIKI={
+kamakura:{h:'高徳院',s:['鶴岡八幡宮','江の島シーキャンドル','高徳院']},
+hakone:{h:'芦ノ湖',s:['箱根神社','大涌谷','芦ノ湖']},
+kawaguchiko:{h:'河口湖',s:['河口湖','新倉富士浅間神社','忍野八海']},
+chichibu:{h:'長瀞',s:['長瀞','三峯神社','羊山公園']},
+izu:{h:'熱海サンビーチ',s:['熱海サンビーチ','城ヶ崎海岸','来宮神社']},
+choshi:{h:'犬吠埼灯台',s:['犬吠埼灯台','屏風ヶ浦','銚子電気鉄道']},
+nikko:{h:'日光東照宮',s:['日光東照宮','華厳滝','中禅寺湖']},
+karuizawa:{h:'白糸の滝 (長野県)',s:['白糸の滝 (長野県)','旧軽井沢','ハルニレテラス']},
+kusatsu:{h:'草津温泉',s:['草津温泉','西の河原公園','熱乃湯']},
+matsumoto:{h:'松本城',s:['松本城','縄手通り','河童橋']},
+sendai:{h:'松島',s:['松島','瑞巌寺','仙台城']},
+kanazawa:{h:'兼六園',s:['兼六園','ひがし茶屋街','金沢21世紀美術館']},
+kyoto:{h:'清水寺',s:['清水寺','伏見稲荷大社','嵐山']},
+hitachi:{h:'国営ひたち海浜公園',s:['国営ひたち海浜公園','大洗磯前神社','那珂湊漁港']},
+sumata:{h:'寸又峡',s:['寸又峡','奥大井湖上駅','大井川鐵道']},
+kiyotsu:{h:'清津峡',s:['清津峡','星峠の棚田','美人林']},
+ouchi:{h:'大内宿',s:['大内宿','塔のへつり','若松城']},
+shirakawago:{h:'白川郷',s:['白川郷','白川郷','高山陣屋']},
+ginzan:{h:'銀山温泉',s:['銀山温泉','銀山温泉','立石寺']},
+kumano:{h:'白良浜',s:['白良浜','三段壁','那智滝']},
+oirase:{h:'奥入瀬渓流',s:['奥入瀬渓流','十和田湖','蔦沼']},
+tottori:{h:'鳥取砂丘',s:['鳥取砂丘','砂の美術館','浦富海岸']},
+shodoshima:{h:'寒霞渓',s:['エンジェルロード','寒霞渓','小豆島']},
+miyajima:{h:'厳島神社',s:['厳島神社','弥山 (広島県)','千光寺 (尾道市)']},
+akiyoshi:{h:'元乃隅神社',s:['元乃隅神社','角島大橋','秋芳洞']},
+nokogiri:{h:'鋸山 (千葉県)',s:['鋸山 (千葉県)','日本寺 (千葉県鋸南町)','鋸山 (千葉県)']},
+shosenkyo:{h:'昇仙峡',s:['昇仙峡','仙娥滝','昇仙峡']},
+venus:{h:'霧ヶ峰',s:['立石公園 (諏訪市)','霧ヶ峰','美ヶ原']},
+ise:{h:'伊勢神宮',s:['伊勢神宮','おかげ横丁','夫婦岩']},
+tojinbo:{h:'東尋坊',s:['東尋坊','永平寺','丸岡城']},
+nara:{h:'東大寺',s:['東大寺','奈良公園','春日大社']},
+naruto:{h:'鳴門の渦潮',s:['渦の道','鳴門の渦潮','大塚国際美術館']},
+chichibugahama:{h:'父母ヶ浜',s:['父母ヶ浜','高屋神社 (観音寺市)','紫雲出山']},
+katsurahama:{h:'桂浜',s:['桂浜','ひろめ市場','にこ淵']},
+dogo:{h:'道後温泉本館',s:['道後温泉本館','松山城 (伊予国)','道後温泉']},
+shima:{h:'四万温泉',s:['四万温泉','四万川ダム','積善館']},
+tateyama:{h:'黒部ダム',s:['黒部ダム','室堂','立山黒部アルペンルート']},
+biwako:{h:'白鬚神社',s:['白鬚神社','メタセコイア並木','彦根城']},
+kobe:{h:'メリケンパーク',s:['メリケンパーク','北野異人館街','有馬温泉']},
+hiraizumi:{h:'中尊寺',s:['中尊寺','毛越寺','猊鼻渓']},
+kakunodate:{h:'角館',s:['角館','田沢湖','乳頭温泉郷']},
+izumo:{h:'出雲大社',s:['出雲大社','稲佐の浜','日御碕灯台']},
+kurashiki:{h:'倉敷美観地区',s:['倉敷美観地区','大原美術館','児島ジーンズストリート']},
+itoshima:{h:'桜井二見ヶ浦',s:['桜井二見ヶ浦','太宰府天満宮','糸島市']},
+yoshinogari:{h:'吉野ヶ里遺跡',s:['吉野ヶ里遺跡','祐徳稲荷神社','呼子']},
+beppu:{h:'海地獄',s:['海地獄','金鱗湖','竹瓦温泉']},
+kurokawa:{h:'黒川温泉',s:['黒川温泉','鍋ヶ滝','大観峰']},
+takachiho:{h:'高千穂峡',s:['高千穂峡','天安河原','高千穂神社']},
+ogawa:{h:'雄川の滝',s:['雄川の滝','佐多岬','桜島']},
+sarushima:{h:'猿島',s:['猿島','ヴェルニー公園','どぶ板通り']},
+miura:{h:'城ヶ島',s:['城ヶ島','三崎漁港','剱埼灯台']},
+takao:{h:'高尾山',s:['高尾山','高尾山薬王院','高尾山']},
+okutama:{h:'奥多摩湖',s:['奥多摩湖','日原鍾乳洞','鳩ノ巣渓谷']},
+kimitsu:{h:'濃溝の滝',s:['濃溝の滝','マザー牧場','鹿野山']},
+nagoya:{h:'名古屋城',s:['ジブリパーク','レゴランド・ジャパン','名古屋城']},
+osaka:{h:'海遊館',s:['ユニバーサル・スタジオ・ジャパン','海遊館','道頓堀']},
+nagasaki:{h:'ハウステンボス',s:['ハウステンボス','九十九島','展海峰']},
+kisarazu:{h:'東京ドイツ村',s:['江川海岸','東京ドイツ村','中の島大橋']},
+minamiizu:{h:'龍宮窟',s:['龍宮窟','伊古奈比咩命神社','河津七滝']},
+nishiizu:{h:'堂ヶ島',s:['堂ヶ島','三四郎島','黄金崎']},
+kirifuri:{h:'霧降高原',s:['霧降高原','霧降の滝','大笹牧場']},
+daigo:{h:'袋田の滝',s:['袋田の滝','竜神大吊橋','月待の滝']},
+ashikaga:{h:'あしかがフラワーパーク',s:['あしかがフラワーパーク','足利学校','足利織姫神社']},
+tomioka:{h:'富岡製糸場',s:['富岡製糸場','妙義山','こんにゃくパーク']},
+fukiware:{h:'吹割の滝',s:['吹割の滝','玉原高原','老神温泉']},
+hokuto:{h:'尾白川渓谷',s:['尾白川渓谷','北杜市','清里高原']},
+togakushi:{h:'戸隠神社',s:['戸隠神社','鏡池','戸隠']},
+hakuba:{h:'八方尾根',s:['白馬村','八方尾根','白馬岳']},
+kisoji:{h:'奈良井宿',s:['奈良井宿','馬籠宿','妻籠宿']},
+zao:{h:'御釜 (蔵王連峰)',s:['御釜 (蔵王連峰)','蔵王エコーライン','遠刈田温泉']},
+sanriku:{h:'浄土ヶ浜',s:['浄土ヶ浜','龍泉洞','岩手銀行旧本店本館']},
+urabandai:{h:'磐梯山',s:['五色沼 (福島県北塩原村)','桧原湖','諸橋近代美術館']},
+omihachiman:{h:'八幡堀',s:['八幡堀','近江八幡市','日牟禮八幡宮']},
+tsukechi:{h:'付知峡',s:['付知峡','苗木城','恵那峡']},
+gero:{h:'下呂温泉',s:['下呂温泉','下呂温泉合掌村','温泉寺 (下呂市)']},
+seki:{h:'郡上八幡城',s:['名もなき池','郡上八幡城','郡上市']},
+muro:{h:'室生寺',s:['龍鎮渓谷','室生寺','曽爾高原']},
+wakayama_marina:{h:'和歌山マリーナシティ',s:['和歌山マリーナシティ','白崎海洋公園','雑賀崎']},
+kushimoto:{h:'橋杭岩',s:['橋杭岩','太地町立くじらの博物館','潮岬']},
+kinosaki:{h:'城崎温泉',s:['城崎温泉','城崎温泉','玄武洞']},
+ine:{h:'天橋立',s:['伊根の舟屋','天橋立','伊根湾']},
+onomichi:{h:'千光寺公園',s:['千光寺 (尾道市)','尾道市','千光寺公園']},
+shimanami:{h:'来島海峡大橋',s:['亀老山','来島海峡大橋','耕三寺']},
+shimokita:{h:'仏ヶ浦',s:['仏ヶ浦','恐山','大間崎']},
+kashiwajima:{h:'柏島',s:['柏島','四万十川','足摺岬']},
+ufoline:{h:'石鎚山',s:['瓶ヶ森','石鎚山','長沢の滝']},
+hakkeijima:{h:'横浜・八景島シーパラダイス',s:['横浜・八景島シーパラダイス','横浜・八景島シーパラダイス','海の公園 (横浜市)']},
+akigawa:{h:'秋川渓谷',s:['秋川渓谷','払沢の滝','秋川渓谷']},
+hanno:{h:'宮沢湖',s:['宮沢湖','名栗湖','鳥居観音']},
+fujiq:{h:'富士急ハイランド',s:['富士急ハイランド','北口本宮冨士浅間神社','富士山レーダードーム館']},
+safari:{h:'富士サファリパーク',s:['富士サファリパーク','御殿場プレミアム・アウトレット','時之栖']},
+kamogawa:{h:'鴨川シーワールド',s:['鴨川シーワールド','鵜原理想郷','仁右衛門島']},
+oze:{h:'尾瀬ヶ原',s:['尾瀬ヶ原','尾瀬','尾瀬ヶ原']},
+mishaka:{h:'御射鹿池',s:['御射鹿池','白駒の池','横谷峡']},
+tadami:{h:'只見線',s:['只見線','只見川','圓藏寺']},
+senjojiki:{h:'千畳敷カール',s:['千畳敷カール','木曽駒ヶ岳','光前寺']},
+sasagawa:{h:'笹川流れ',s:['笹川流れ','村上市','瀬波温泉']},
+nabana:{h:'なばなの里',s:['なばなの里','ナガシマスパーランド','長島温泉']},
+awaji:{h:'あわじ花さじき',s:['あわじ花さじき','絵島','鳴門海峡']},
+chokai:{h:'元滝伏流水',s:['元滝伏流水','丸池様','鳥海山']},
+oga:{h:'入道崎',s:['入道崎','なまはげ','ゴジラ岩']},
+juniko:{h:'十二湖',s:['青池','十二湖','千畳敷海岸']},
+mikata:{h:'三方五湖',s:['三方五湖','瓜割の滝','熊川宿']},
+daisen:{h:'大山 (鳥取県)',s:['大山 (鳥取県)','大神山神社','植田正治写真美術館']},
+shikoku_karst:{h:'四国カルスト',s:['四国カルスト','天狗高原','四国カルスト']},
+kokonoe:{h:'九酔渓',s:['九酔渓','タデ原湿原','九重山']},
+amakusa:{h:'天草諸島',s:['天草諸島','崎津集落','天草五橋']}
+};
+const wikiCache={};
+function wikiThumb(title,cb){
+ if(Object.prototype.hasOwnProperty.call(wikiCache,title)){var c=wikiCache[title];cb(c&&c.b,c&&c.s);return;}
+ if(typeof fetch==='undefined'){wikiCache[title]=null;cb(null,null);return;}
+ fetch('https://ja.wikipedia.org/api/rest_v1/page/summary/'+encodeURIComponent(title))
+ .then(function(r){return r.ok?r.json():null;})
+ .then(function(j){
+  if(!(j&&j.thumbnail&&j.thumbnail.source)){wikiCache[title]=null;cb(null,null);return;}
+  var s=j.thumbnail.source,b=s;
+  var ow=(j.originalimage&&j.originalimage.width)||0;
+  if(ow>=640){b=s.replace(/\/\d+px-/,'/640px-');}
+  else if(j.originalimage&&j.originalimage.source){b=j.originalimage.source;}
+  wikiCache[title]={b:b,s:s};
+  cb(b,b===s?null:s);
+ })
+ .catch(function(){wikiCache[title]=null;cb(null,null);});
+}
+function heroKey(d){return USER_PHOTOS[d.id]||d.photo||(WIKI[d.id]&&WIKI[d.id].h)||d.mapq;}
+function spotKey(d,i,s){return USER_PHOTOS[d.id+'-'+(i+1)]||s.photo||(WIKI[d.id]&&WIKI[d.id].s&&WIKI[d.id].s[i])||s.n;}
+function hydratePhotos(){
+ if(!state.photos)return;
+ document.querySelectorAll('[data-photo]').forEach(function(el){
+  if(el.getAttribute('data-hyd'))return;
+  el.setAttribute('data-hyd','1');
+  var key=el.getAttribute('data-photo');
+  var put=function(u,fb){
+   if(!u)return;
+   var im=document.createElement('img');
+   im.className='real';im.alt='';im.decoding='async';im.referrerPolicy='no-referrer';
+   im.onload=function(){im.classList.add('on');};
+   im.onerror=function(){if(im.parentNode)im.parentNode.removeChild(im);if(fb)put(fb,null);};
+   el.insertBefore(im,el.firstChild);
+   im.src=u;
+  };
+  if(/^(https?:|\.{0,2}\/)/.test(key)){put(key,null);}
+  else{wikiThumb(key,function(b,s){put(b,s);});}
+ });
+}
+function togglePhotos(v){
+ state.photos=!!v;
+ rerenderCurrent();
+ openSettings();
+ toast(state.photos?'写真を読み込みます':'イラストのみの表示にしました');
+}
+function rerenderCurrent(){
+ var m={home:renderHome,setup:renderSetup,swipe:renderSwipe,results:renderResults,detail:renderDetail};
+ (m[state.screen]||renderHome)();
+}
+/* ---------- home ---------- */
+function renderHome(){
+ const favPrefs=[];state.favs.forEach(id=>{const p=byId(id).pref;if(favPrefs.indexOf(p)<0)favPrefs.push(p);});
+ let lower='';
+ if(state.favs.length){
+  lower='<div class="sec-head" style="margin-top:24px"><span>あなたの旅の候補</span><button class="link" onclick="goResults()">一覧を見る ›</button></div><div class="hrow">'
+   +state.favs.map(id=>{const d=byId(id),b=calcBudget(d);
+     return '<div class="live-card" onclick="goDetail(\''+d.id+'\',\'home\')"><div class="live-ph" data-photo="'+heroKey(d)+'">'+SCENES[d.scene]+'</div><div class="live-name">'+d.emoji+' '+d.name+'<span style="color:var(--orange);font-weight:800;font-size:13px;margin-left:6px">約'+man(b.total)+'万円</span></div></div>';}).join('')
+   +'</div>';
+ }else{
+  lower='<div class="empty"><div class="pl">'+PLANE_BIG+'</div><h3>まだ旅行がありません</h3><p>上のボタンから旅行を作成しましょう</p></div>';
+ }
+ $('#scr-home').innerHTML=
+  '<div class="home-top"><div class="brand">'+LOGO+'<b>Towavel Japan</b></div><button class="iconbtn" onclick="openSettings()" aria-label="設定">'+ICO.gear+'</button></div>'
+ +'<div class="jmap-wrap">'+buildJmap()+'</div>'
+ +'<div class="map-legend"><span class="lg on-base">拠点</span><span class="lg on-vis">行った県</span><span class="lg on-want">行きたい県</span><span class="lg">未踏</span><button class="lg-edit" onclick="openVisited()">✏️ リストで編集</button></div>'
+ +'<div class="stats-card"><div class="stat-half" onclick="statLeft()"><div class="stat-num teal" id="cntWant">'+favPrefs.length+'</div><div class="stat-lab">行きたい県</div></div>'
+ +'<div class="stat-half" onclick="openVisited()"><div class="stat-num org" id="cntVisited">'+state.visited.length+'</div><div class="stat-lab">行った県</div></div></div>'
+ +'<div class="cta-wrap static"><button class="cta" onclick="goSetup()">旅行をはじめる <span style="font-size:20px">→</span></button></div>'
+ +lower;
+ hydratePhotos();
+}
+/* ---------- setup ---------- */
+const QDEFS=[
+ {id:'date',lab:'日付を選ぶ',ic:'plane'},
+ {id:'party',lab:'誰と行きますか？',ic:'people'},
+ {id:'theme',lab:'メインの旅行テーマは？',ic:'target'},
+ {id:'style',lab:'旅のスタイルは？',ic:'hsm'},
+ {id:'range',lab:'どこまで走る？（片道）',ic:'car'},
+ {id:'origin',lab:'出発地はどこですか？',ic:'pin'}
+];
+function qValue(id){
+ const s=state.search;
+ if(id==='date'){if(s.date==null||s.nights==null)return null;const st=new Date(s.date);return s.nights===0?fdate(st)+'（日帰り）':fdate(st)+' から '+fdate(addD(st,s.nights));}
+ if(id==='party')return s.party==null?null:PARTY[s.party].label;
+ if(id==='theme')return s.theme==null?null:THEMES[s.theme].k;
+ if(id==='style')return s.style==null?null:STYLES[s.style];
+ if(id==='range')return s.range==null?null:RANGES[s.range].label;
+ if(id==='origin')return s.origin==null?null:ORIGINS[s.origin];
+ return null;
+}
+function dateOpts(){const t=new Date();const off=(6-t.getDay()+7)%7;return[{l:'今日',d:t},{l:'明日',d:addD(t,1)},{l:'今週末（土）',d:addD(t,off)}];}
+function qExpanded(id){
+ if(id==='date'){
+  const dchips=dateOpts().map((o,i)=>'<button class="chip '+(state.tmpDateIdx===i?'on':'')+'" onclick="pickDate('+i+')">'+o.l+'</button>').join('');
+  const custom='<input class="date-inp" type="date" value="'+(state.tmpDate?isoDate(state.tmpDate):'')+'" onchange="pickDateCustom(this.value)" aria-label="出発日を指定">';
+  const nlabs=['日帰り','1泊2日','2泊3日','3泊4日'];
+  const nchips=nlabs.map((l,i)=>'<button class="chip '+(state.tmpNights===i?'on':'')+'" onclick="pickNights('+i+')">'+l+'</button>').join('');
+  return '<div class="panel"><h4>出発日</h4><div class="chips">'+dchips+custom+'</div><h4>泊数</h4><div class="chips">'+nchips+'</div></div>';
+ }
+ if(id==='party')return PARTY.map((p,i)=>'<button class="opt '+(state.search.party===i?'on':'')+'" onclick="pickParty('+i+')"><span class="oi" style="color:var(--teal)">'+ICO.people+'</span>'+p.label+'</button>').join('');
+ if(id==='theme')return THEMES.map((t,i)=>'<button class="opt '+(state.search.theme===i?'on':'')+'" onclick="pickTheme('+i+')"><span class="oi">'+ICO[t.ic]+'</span>'+t.k+'</button>').join('');
+ if(id==='style'){var sic=[ICO.check,ICO.pin,ICO.target];return STYLES.map((t,i)=>'<button class="opt '+(state.search.style===i?'on':'')+'" onclick="pickStyle('+i+')"><span class="oi" style="color:var(--teal)">'+sic[i]+'</span>'+t+'</button>').join('');}
+ if(id==='range')return RANGES.map((r,i)=>'<button class="opt '+(state.search.range===i?'on':'')+'" onclick="pickRange('+i+')"><span class="oi" style="color:var(--teal)">'+ICO.car+'</span>'+r.label+'</button>').join('');
+ if(id==='origin')return ORIGINS.map((o,i)=>'<button class="opt '+(state.search.origin===i?'on':'')+'" onclick="pickOrigin('+i+')"><span class="oi" style="color:var(--teal)">'+ICO.pin+'</span>'+o+'</button>').join('');
+ return '';
+}
+function renderSetup(){
+ let html='',answered=0,expanded=false,blocked=false;
+ for(let qi=0;qi<QDEFS.length;qi++){
+  const q=QDEFS[qi],val=qValue(q.id),editing=state.editing===q.id;
+  if(!editing&&val!=null){
+   answered++;
+   html+='<div class="q-lab"><span class="qic">'+ICO[q.ic]+'</span>'+q.lab+'</div><button class="q-box" onclick="editQ(\''+q.id+'\')">'+val+'</button>';
+   continue;
+  }
+  if(!expanded){
+   expanded=true;
+   const sub=q.id==='theme'?'最も重視するものを1つ選んでください':(q.id==='date'?'出発日と泊数を選んでください':'');
+   html+='<div class="q-h2">'+q.lab+'</div>'+(sub?'<p class="q-sub">'+sub+'</p>':'')+qExpanded(q.id);
+   if(val==null){blocked=true;break;}
+  }else{blocked=true;break;}
+ }
+ const allVals=QDEFS.every(q=>qValue(q.id)!=null);
+ if(allVals&&!blocked){
+  html+='<div class="budget-h">全体の予算は？</div><p class="budget-sub">1人あたりの目安。含める項目は下で選べます</p>'
+   +'<input type="range" min="0" max="2" step="1" value="'+state.search.budget+'" oninput="slideBudget(this.value)" aria-label="予算の目安">'
+   +'<div class="slider-labs">'+BUDGETS.map((b,i)=>'<span class="'+(i===state.search.budget?'on':'')+'">'+b.label+'</span>').join('')+'</div>'
+   +'<div class="q-lab" style="margin-top:28px">予算に含めるもの</div>'
+   +'<div class="chips">'+Object.keys(INC_LABELS).map(function(k){return '<button class="chip '+(state.search.inc[k]?'on':'')+'" onclick="toggleInc(\''+k+'\')">'+(state.search.inc[k]?'✓ ':'')+INC_LABELS[k]+'</button>';}).join('')+'</div>';
+ }
+ const prog=Math.round((answered+(allVals?1:0))/7*100);
+ $('#scr-setup').innerHTML=
+  '<div class="hd"><button class="back" onclick="goHome()" aria-label="戻る">'+ICO.back+'</button><div class="ttl">旅行をはじめる</div><div class="prog" style="width:'+prog+'%"></div></div>'
+ +'<div class="form">'+html+'</div>'
+ +'<div class="cta-wrap"><button class="cta '+(allVals?'':'disabled')+'" onclick="startSearch()">自分の条件にあう旅行先をみつける <span style="font-size:19px">→</span></button></div>';
+}
+function editQ(id){
+ if(id==='date'){const s=state.search;state.tmpDate=s.date?new Date(s.date):null;state.tmpDateIdx=-1;state.tmpNights=s.nights;}
+ state.editing=id;renderSetup();window.scrollTo(0,0);
+}
+function pickDate(i){state.tmpDateIdx=i;state.tmpDate=dateOpts()[i].d;tryCloseDate();}
+function pickDateCustom(v){if(!v)return;state.tmpDateIdx=-1;state.tmpDate=new Date(v+'T09:00:00');tryCloseDate();}
+function pickNights(i){state.tmpNights=i;tryCloseDate();}
+function tryCloseDate(){
+ if(state.tmpDate&&state.tmpNights!=null){state.search.date=state.tmpDate.getTime();state.search.nights=state.tmpNights;state.editing=null;}
+ renderSetup();
+}
+function pickParty(i){state.search.party=i;state.editing=null;renderSetup();}
+function pickTheme(i){state.search.theme=i;state.editing=null;renderSetup();}
+function pickStyle(i){state.search.style=i;state.editing=null;renderSetup();}
+function pickRange(i){state.search.range=i;state.editing=null;renderSetup();}
+function pickOrigin(i){state.search.origin=i;state.editing=null;renderSetup();}
+const INC_LABELS={trans:'ガソリン+高速',stay:'宿泊',food:'食事'};
+function toggleInc(k){
+ const inc=state.search.inc;
+ if(inc[k]&&!Object.keys(inc).some(function(o){return o!==k&&inc[o];})){toast('最低1つは含めてください');return;}
+ inc[k]=!inc[k];
+ renderSetup();
+}
+function slideBudget(v){state.search.budget=+v;const labs=document.querySelectorAll('.slider-labs span');labs.forEach((l,i)=>l.classList.toggle('on',i===+v));}
+function startSearch(){
+ state.skipped=[];
+ state.candidates=findCandidates();state.idx=0;
+ renderSwipe();nav('swipe');
+}
+/* ---------- swipe ---------- */
+function renderSwipe(){
+ const list=state.candidates;
+ if(state.idx>=list.length){
+  goResults();
+  if(!state.favs.length)toast('条件を変えてもう一度さがせます');
+  return;
+ }
+ const d=byId(list[state.idx]);
+ const b=calcBudget(d);
+ const m=(state.search.date?new Date(state.search.date):new Date()).getMonth()+1;
+ const ds=driveSub(d.hours);
+ const stats=
+  '<div class="stat">'+markIco(mTrans(b.trans))+'<div class="stat-l">'+ICO.gas+'<span>交通費</span></div><div class="stat-v">'+(b.inc.trans?'約'+man(b.trans)+'万円':'ー')+'</div><div class="stat-sub">'+(b.inc.trans?'/1人':'含めない')+'</div></div>'
+ +'<div class="stat">'+markIco(mDrive(d.hours))+'<div class="stat-l">'+ICO.clock+'<span>ドライブ</span></div><div class="stat-v">約'+fh(d.hours)+'時間</div><div class="stat-sub '+ds.c+'">'+ds.t+'</div></div>'
+ +'<div class="stat">'+markIco(mClim(d.clim[1]))+'<div class="stat-l">'+ICO.wea+'<span>気候('+m+'月)</span></div><div class="stat-v">'+d.clim[0]+'〜'+d.clim[1]+'°C</div></div>'
+ +'<div class="stat">'+markIco(mPrice(d.price))+'<div class="stat-l">'+ICO.wal+'<span>物価</span></div><div class="stat-v">'+d.price+'</div></div>';
+ $('#scr-swipe').innerHTML=
+  '<div class="hd center"><button class="back" onclick="goSetup()" aria-label="条件に戻る">'+ICO.back+'</button><div class="ttl">気になる旅先を選択</div></div>'
+ +'<div class="swipe-body">'
+ +'<div class="dest-card" id="swipeCard">'
+ +'<div class="dc-title">'+dTitle(d)+'</div>'
+ +'<div class="ph hero" data-photo="'+heroKey(d)+'">'+SCENES[d.scene]+'<span class="badge">'+d.badge+'</span></div>'
+ +'<div class="stat-grid">'+stats+'</div>'
+ +'<div class="bb"><div class="bb-head"><span class="l">予算の目安 <em>/ 1人</em></span><span class="bb-total">約<b>'+man(b.total)+'</b>万円</span></div>'
+ +'<div class="bb-grid"><div class="bb-cell"><div class="k">交通費</div><div class="v">'+(b.inc.trans?'約'+man(b.trans)+'万円':'ー')+'</div></div>'
+ +'<div class="bb-cell"><div class="k">宿泊</div><div class="v">'+(b.inc.stay?'約'+man(b.stay)+'万円':'ー')+'</div></div>'
+ +'<div class="bb-cell"><div class="k">食事</div><div class="v">'+(b.inc.food?'約'+man(b.food)+'万円':'ー')+'</div></div></div>'
+ +'<div class="bb-note">※交通費はガソリン+高速の合計を'+b.n+'人で割り勘した目安</div></div>'
+ +'</div>'
+ +'<div class="swipe-btns"><button class="cbtn skip" onclick="swipeGo(false)" aria-label="スキップ">'+ICO.xmark+'</button>'
+ +'<button class="cbtn like" onclick="swipeGo(true)" aria-label="お気に入りに追加">'+ICO.heart+'</button></div>'
+ +'<div class="swipe-count">お気に入り '+state.favs.length+' 件 ・ 残り '+(list.length-state.idx)+' 件</div>'
+ +'</div>';
+ attachDrag();
+ hydratePhotos();
+}
+function swipeGo(like){
+ if(state.anim)return;
+ state.anim=true;
+ const d=byId(state.candidates[state.idx]);
+ const c=$('#swipeCard');
+ if(c)c.classList.add(like?'fly-r':'fly-l');
+ if(like&&state.favs.indexOf(d.id)<0)state.favs.push(d.id);
+ if(!like&&state.skipped.indexOf(d.id)<0)state.skipped.push(d.id);
+ setTimeout(function(){
+  state.anim=false;
+  state.idx++;
+  renderSwipe();
+  if(like){toast('お気に入りに追加しました ♥');}
+  else if(state.idx<state.candidates.length){openSkipWhy(d.id);}
+ },330);
+}
+function attachDrag(){
+ const c=$('#swipeCard');
+ if(!c)return;
+ let sx=0,dx=0,on=false;
+ const up=function(){
+  if(!on)return;
+  on=false;
+  c.style.transition='';
+  if(dx>90){swipeGo(true);}
+  else if(dx<-90){swipeGo(false);}
+  else{c.style.transform='';}
+  dx=0;
+ };
+ c.addEventListener('pointerdown',function(e){on=true;sx=e.clientX;dx=0;c.setPointerCapture(e.pointerId);c.style.transition='none';});
+ c.addEventListener('pointermove',function(e){if(!on)return;dx=e.clientX-sx;c.style.transform='translateX('+dx+'px) rotate('+(dx/22)+'deg)';});
+ c.addEventListener('pointerup',up);
+ c.addEventListener('pointercancel',up);
+}
+/* ---------- results ---------- */
+function resCard(id){
+  const d=byId(id),b=calcBudget(d),ds=driveSub(d.hours);
+  return '<div class="res-card" onclick="goDetail(\''+d.id+'\',\'results\')">'
+  +'<div class="res-top"><div class="res-th" data-photo="'+heroKey(d)+'">'+SCENES[d.scene]+'</div>'
+  +'<div class="res-tt"><div class="res-name">'+dTitle(d)+'</div><div class="res-desc">'+d.desc+'</div><span class="res-chev">'+ICO.chev+'</span></div></div>'
+  +'<div class="res-stats">'
+  +'<div class="rs"><div class="k">交通費</div><div class="v">'+(b.inc.trans?'約'+man(b.trans)+'万円/人':'ー')+'</div></div>'
+  +'<div class="rs"><div class="k">ドライブ</div><div class="v">約'+fh(d.hours)+'時間</div><div class="s '+ds.c+'">'+ds.t+'</div></div>'
+  +'<div class="rs"><div class="k">気候</div><div class="v">'+d.clim[0]+'〜'+d.clim[1]+'°C</div></div>'
+  +'<div class="rs"><div class="k">物価</div><div class="v">'+d.price+'</div></div>'
+  +'</div>'
+  +'<div class="res-foot"><span class="k">予算の目安</span><span class="v">約<b>'+man(b.total)+'</b>万円</span></div>'
+  +'</div>';
+ }
+function recAlternatives(){
+ if(!state.favs.length)return[];
+ var ft={},fa={};
+ state.favs.forEach(function(id){var d=byId(id);fa[d.area||d.pref]=1;d.themes.forEach(function(t){ft[t]=1;});});
+ var pool=DEST.filter(function(d){return state.favs.indexOf(d.id)<0&&state.skipped.indexOf(d.id)<0&&!fa[d.area||d.pref];});
+ var sc=pool.map(function(d){var s=0;d.themes.forEach(function(t){if(ft[t])s++;});return{d:d,s:s,r:Math.random()};});
+ sc.sort(function(a,b){return b.s-a.s||a.r-b.r;});
+ return sc.slice(0,3).map(function(x){return x.d.id;});
+}
+function renderResults(){
+ const s=state.search;
+ let dr='';
+ if(s.date!=null&&s.nights!=null){
+  const st=new Date(s.date);
+  dr=s.nights===0?sdate(st)+'（日帰り）':sdate(st)+'〜'+sdate(addD(st,s.nights));
+ }
+ const cards=state.favs.map(resCard).join('');
+ const alts=cards?recAlternatives():[];
+ const altHtml=alts.length?'<div class="alt-divider"><span>こちらも好きかも？</span></div>'+alts.map(resCard).join(''):'';
+ const empty='<div class="empty"><div class="pl">'+PLANE_BIG+'</div><h3>お気に入りがまだありません</h3><p>♥ した旅先がここに並びます</p>'
+  +'<div style="margin-top:24px"><button class="cta" style="height:52px;font-size:16px" onclick="goSetup()">条件を変えてさがす →</button></div></div>';
+ $('#scr-results').innerHTML=
+  '<div class="hd"><button class="back" onclick="goHome()" aria-label="ホームへ">'+ICO.back+'</button><div><div class="ttl">旅行先候補'+(dr?' '+dr:'')+'</div><div class="sub">お気に入りした旅先</div></div></div>'
+ +'<div class="res-list">'+(cards||empty)+altHtml
+ +(cards?'<p class="foot-note">※金額・所要時間はサンプルの目安です。実際の道路状況・料金をご確認ください。</p>':'')
+ +'</div>';
+ hydratePhotos();
+}
+/* ---------- detail ---------- */
+function buildCourse(d){
+ const org=state.search.origin!=null?ORIGINS[state.search.origin]:'横浜';
+ const T=function(h){return p2(Math.floor(h))+':'+p2(Math.round(h%1*60));};
+ if(d.hours>=7){
+  const dep=d.hours>=12?2:5,arr=dep+d.hours;
+  const meal=arr+1.8>=16?'夕ごはん':'ランチ';
+  const c=[
+   [T(dep),org+'を出発（片道 約'+fh(d.hours)+'時間・休憩をはさみつつ）'],
+   [T(arr),d.spots[0].n+' に到着・散策'],
+   [T(Math.min(arr+1.8,19)),'「'+d.eats[0].n+'」で'+meal]
+  ];
+  if(nightsN()>0){
+   c.push([T(Math.min(arr+3.2,20)),'ホテルにチェックイン・温泉と街ぶら']);
+   c.push(['翌朝',d.spots[1].n+' → '+d.spots[2].n]);
+   c.push(['翌昼','おみやげ → 帰路へ（約'+fh(d.hours)+'時間）']);
+  }else{
+   c.push([T(Math.min(arr+3,20)),'帰路へ（約'+fh(d.hours)+'時間・交代運転と仮眠を）']);
+  }
+  return c;
+ }
+ const dep=d.hours>4?6:8;
+ const arr=dep+d.hours;
+ const c=[
+  [T(dep),org+'を出発（片道 約'+fh(d.hours)+'時間）'],
+  [T(arr),d.spots[0].n+' に到着・散策'],
+  [T(arr+1.6),'「'+d.eats[0].n+'」でランチ'],
+  [T(arr+2.9),d.spots[1].n],
+  [T(arr+4.1),d.spots[2].n]
+ ];
+ if(nightsN()>0){
+  c.push([T(Math.min(arr+5.3,17.5)),'ホテルにチェックイン・街ぶら＆温泉']);
+  c.push(['翌日','ゆっくり朝ごはん → おみやげ → 帰路へ']);
+ }else{
+  c.push([T(arr+5.2),'おみやげ・カフェ休憩']);
+  c.push([T(arr+6),'帰路へ（約'+fh(d.hours)+'時間）']);
+ }
+ return c;
+}
+function renderDetail(){
+ const d=byId(state.detailId);
+ if(!d){goHome();return;}
+ const b=calcBudget(d);
+ const fav=state.favs.indexOf(d.id)>=0;
+ const vis=state.visited.indexOf(d.pref)>=0;
+ const org=state.search.origin!=null?ORIGINS[state.search.origin]:'横浜';
+ const mapUrl='https://www.google.com/maps/dir/?api=1&origin='+encodeURIComponent(org+'駅')+'&destination='+encodeURIComponent(d.mapq)+'&travelmode=driving';
+ const spots=d.spots.map(function(s,i){return '<div class="spot-card"><div class="ph spot-ph" data-photo="'+spotKey(d,i,s)+'">'+SCENES[s.s]+'</div><div class="spot-bd"><div class="spot-n">'+s.n+'</div><div class="spot-d">'+s.d+'</div></div></div>';}).join('');
+ const hotels=d.hotels.map(function(h){return '<div class="spot-card"><div class="ph hotel-ph"'+(h.photo?' data-photo="'+h.photo+'"':'')+'>'+SCENES.hotel+'</div><div class="spot-bd"><div class="spot-n">'+h.n+'</div><div class="stars">'+'★'.repeat(h.star)+'</div><div class="price-y">¥'+yen(h.price)+'<span> /泊〜</span></div></div></div>';}).join('');
+ const eats=d.eats.map(function(e){return '<div class="spot-card"><div class="ph spot-ph"'+(e.photo?' data-photo="'+e.photo+'"':'')+'>'+SCENES.food+'</div><div class="spot-bd"><div class="spot-n">'+e.n+'</div><div class="spot-d">'+e.d+'</div><div class="eat-meta"><span class="st">★ '+e.star.toFixed(1)+'</span><span class="pr">'+e.price+'</span></div></div></div>';}).join('');
+ const course=buildCourse(d).map(function(c){return '<div class="c-row"><span class="c-t">'+c[0]+'</span><span class="c-x">'+c[1]+'</span></div>';}).join('');
+ $('#scr-detail').innerHTML=
+  '<div class="hd"><button class="back" onclick="backDetail()" aria-label="戻る">'+ICO.back+'</button><div class="ttl">'+dTitle(d)+'</div></div>'
+ +'<div class="dt-body">'
+ +'<div class="ph dt-hero" data-photo="'+heroKey(d)+'">'+SCENES[d.scene]+'<span class="badge">'+d.badge+'</span></div>'
+ +'<div class="dt-sum"><div class="bb-head"><span class="l">予算の目安 <em>/ 1人</em></span><span class="bb-total">約<b>'+man(b.total)+'</b>万円</span></div>'
+ +'<div class="bb-grid"><div class="bb-cell"><div class="k">交通費</div><div class="v">'+(b.inc.trans?'約'+man(b.trans)+'万円':'ー')+'</div></div>'
+ +'<div class="bb-cell"><div class="k">宿泊</div><div class="v">'+(b.inc.stay?'約'+man(b.stay)+'万円':'ー')+'</div></div>'
+ +'<div class="bb-cell"><div class="k">食事</div><div class="v">'+(b.inc.food?'約'+man(b.food)+'万円':'ー')+'</div></div></div></div>'
+ +'<p class="dt-note">※ガソリン価格・高速料金・混雑状況により変動する目安です（サンプル値）</p>'
+ +'<div class="dt-actions">'
+ +'<button class="pill-btn '+(fav?'done':'fill')+'" onclick="toggleFav(\''+d.id+'\')">'+ICO.hsm+(fav?'候補に追加済み':'候補に追加')+'</button>'
+ +'<button class="pill-btn '+(vis?'done':'')+'" onclick="markVisited(\''+d.id+'\')">'+ICO.check+(vis?'行った県に追加済み':'行った県に追加')+'</button>'
+ +'<a class="pill-btn" href="'+mapUrl+'" target="_blank" rel="noopener">'+ICO.map+'ルートをマップで開く</a>'
+ +'</div>'
+ +'<div class="band"><h3>観光スポット</h3><div class="hrow">'+spots+'</div></div>'
+ +'<div class="band"><h3>ホテル</h3><div class="hrow">'+hotels+'</div></div>'
+ +'<div class="band"><h3>レストラン</h3><div class="hrow">'+eats+'</div></div>'
+ +'<div class="band"><h3>モデルコース</h3><div class="course">'+course+'</div></div>'
+ +'<p class="foot-note">※店舗・料金・時刻はこのモック用のサンプルです。おでかけ前に最新情報をご確認ください。</p>'
+ +'</div>';
+ hydratePhotos();
+}
+function toggleFav(id){
+ const i=state.favs.indexOf(id);
+ if(i>=0){state.favs.splice(i,1);toast('候補から外しました');}
+ else{state.favs.push(id);toast('お気に入りに追加しました ♥');}
+ renderDetail();
+}
+function markVisited(id){
+ const d=byId(id);
+ if(state.visited.indexOf(d.pref)<0){state.visited.push(d.pref);toast(d.pref+'を「行った県」に追加しました');}
+ renderDetail();
+}
+/* ---------- modals ---------- */
+function openSkipWhy(id){
+ openModal(mHead('なぜスキップした？')
+ +'<p class="m-note">教えてくれると次の提案が良くなります</p>'
+ +'<button class="opt" onclick="applySkip(\'cheap\',\''+id+'\')"><span class="oi" style="color:var(--teal)">'+ICO.wal+'</span>予算が高い</button>'
+ +'<button class="opt" onclick="applySkip(\'near\',\''+id+'\')"><span class="oi" style="color:var(--teal)">'+ICO.car+'</span>遠すぎる</button>'
+ +'<button class="opt" onclick="applySkip(\'vibe\',\''+id+'\')"><span class="oi" style="color:var(--teal)">'+ICO.target+'</span>雰囲気がちがう</button>'
+ +'<button class="opt" onclick="applySkip(\'been\',\''+id+'\')"><span class="oi" style="color:var(--teal)">'+ICO.check+'</span>行ったことがある</button>'
+ +'<button class="opt" onclick="applySkip(\'meh\',\'\')"><span class="oi" style="color:var(--mut)">'+ICO.hsm+'</span>何となく</button>');
+}
+function vScore(d,sk){var s=0;for(var i=0;i<d.themes.length;i++){if(sk.themes.indexOf(d.themes[i])>=0)s+=2;}if(d.badge===sk.badge)s+=1;return s;}
+function applySkip(k,id){
+ if(k!=='meh'&&id){
+  var rest=state.candidates.slice(state.idx).map(byId);
+  var arr=rest.slice();
+  if(k==='cheap')arr.sort(function(a,b){return calcBudget(a).total-calcBudget(b).total;});
+  if(k==='near')arr.sort(function(a,b){return a.hours-b.hours;});
+  if(k==='vibe'){var sk=byId(id);arr.sort(function(a,b){return vScore(a,sk)-vScore(b,sk);});}
+  if(k==='been'){var p=byId(id).pref;arr=arr.filter(function(d){return d.pref!==p;}).concat(arr.filter(function(d){return d.pref===p;}));}
+  state.candidates=state.candidates.slice(0,state.idx).concat(arr.map(function(d){return d.id;}));
+ }
+ closeModal();
+ renderSwipe();
+ if(k!=='meh')toast('次の提案を調整しました ✨');
+}
+function openModal(html){$('#modalBox').innerHTML=html;$('#veil').classList.remove('hidden');}
+function closeModal(){$('#veil').classList.add('hidden');}
+function mHead(t){return '<div class="m-head"><b>'+t+'</b><button class="m-x" onclick="closeModal()" aria-label="閉じる">✕</button></div>';}
+function openVisited(){
+ openModal(mHead('都道府県を編集')
+ +'<p class="m-note">タップで「行った県」を切り替えられます。🩷拠点は設定の出発地、🩵行きたい県は ♥ した旅先に連動します。</p>'
+ +'<div class="pref-grid">'+PREF_LIST.map(function(p){return '<button class="pchip '+prefClass(p)+'" id="pc-'+p+'" onclick="togglePref(\''+p+'\')">'+p+'</button>';}).join('')+'</div>');
+}
+const UI_COLORS=[
+{n:'コバルト',v:{'--teal':'#2E6BDF','--teal-dk':'#1E4FB8','--teal-bg':'#E9F0FD','--teal-bd':'#5583E8','--teal-dis':'#B7CCF5','--ring':'rgba(46,107,223,.5)','--want-bg':'#A9C4F6','--want-bd':'#6E93EC','--want-tx':'#1D3E8F'}},
+{n:'エメラルド',v:{'--teal':'#1BC7CD','--teal-dk':'#0E9AA2','--teal-bg':'#E2F7F9','--teal-bd':'#2FCBD1','--teal-dis':'#A9E6EA','--ring':'rgba(27,199,205,.5)','--want-bg':'#8FE0E4','--want-bd':'#3FBFC6','--want-tx':'#0B5D63'}},
+{n:'ラベンダー',v:{'--teal':'#7C5CE0','--teal-dk':'#5B3EC2','--teal-bg':'#F1ECFC','--teal-bd':'#9B82E8','--teal-dis':'#CFC2F2','--ring':'rgba(124,92,224,.5)','--want-bg':'#CBBCF6','--want-bd':'#A08AEA','--want-tx':'#3B2779'}},
+{n:'フォレスト',v:{'--teal':'#2FA05A','--teal-dk':'#1F7D43','--teal-bg':'#E9F6EE','--teal-bd':'#5CBB82','--teal-dis':'#B7E2C7','--ring':'rgba(47,160,90,.5)','--want-bg':'#AEDFC0','--want-bd':'#6BC08D','--want-tx':'#155C36'}}
+];
+function applyUiColor(i){state.uiColor=i;var v=UI_COLORS[i].v;for(var k in v)document.documentElement.style.setProperty(k,v[k]);}
+function setUiColor(i){applyUiColor(i);rerenderCurrent();openSettings();toast('カラーを「'+UI_COLORS[i].n+'」にしました 🎨');}
+function openSettings(){
+ openModal(mHead('設定')
+ +'<div class="m-sub">デフォルトの出発地</div>'
+ +'<div class="chips">'+ORIGINS.map(function(o,i){return '<button class="chip '+(state.search.origin===i?'on':'')+'" onclick="setOrigin('+i+')">'+o+'</button>';}).join('')+'</div>'
+ +'<div class="m-sub">UIカラー</div>'
+ +'<div class="chips">'+UI_COLORS.map(function(t,i){return '<button class="chip '+(state.uiColor===i?'on':'')+'" onclick="setUiColor('+i+')"><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:'+t.v['--teal']+';margin-right:6px;vertical-align:-1px"></span>'+t.n+'</button>';}).join('')+'</div>'
+ +'<div class="m-sub">写真</div>'
+ +'<div class="chips"><button class="chip '+(state.photos?'on':'')+'" onclick="togglePhotos(true)">Wikipediaの写真</button><button class="chip '+(state.photos?'':'on')+'" onclick="togglePhotos(false)">イラストのみ</button></div>'
+ +'<div class="m-sub">データ</div>'
+ +'<button class="chip" style="color:#E5443C;border-color:#F2B6B2" onclick="resetAll()">お気に入り・検索条件をリセット</button>'
+ +'<p style="color:var(--mut2);font-size:12px;line-height:1.7;margin-top:22px">Towavel Japan v4.0 — 国内・車の弾丸旅行用モック。データはこのページを開いている間だけ保持されます。写真はWikipedia／Wikimedia Commonsの各記事サムネイルを利用しています（通信できない場合や記事が見つからない場合はイラストを表示）。USER_PHOTOSで指定した画像は、提供元の利用条件の範囲でお使いください。</p>');
+}
+function setOrigin(i){state.search.origin=i;openSettings();toast('出発地を「'+ORIGINS[i]+'」にしました');}
+function resetAll(){
+ state.favs=[];state.visited=['神奈川'];
+ state.search={date:null,nights:null,party:null,theme:null,style:null,range:null,origin:null,budget:1,inc:{trans:true,stay:true,food:true}};
+ state.candidates=[];state.idx=0;
+ closeModal();goHome();toast('リセットしました');
+}
+/* ---------- init ---------- */
+$('#veil').addEventListener('click',function(e){if(e.target.id==='veil')closeModal();});
+applyUiColor(state.uiColor);
+goHome();
+</script>
+</body>
+</html>
